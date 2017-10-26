@@ -58,4 +58,3 @@ typings/
 .env
 
 # Project specific ignored files
-public/bundle.js

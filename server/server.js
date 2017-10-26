@@ -1,15 +1,15 @@
-import Express from 'express'
+const express = require('express');
 
 // Import required modules
-import serverConfig from './config'
+const serverConfig = require('./config');
 
-// Initialize the Express App
-const app = new Express()
+// Initialize the express App
+const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello world!')
-})
+app.get('/api', (req, res) => {
+  res.send('Hello world!');
+});
 
 app.listen(serverConfig.port, serverConfig.host, () => {
-  console.info(`Express is running on: ${serverConfig.serverUrl()}`)
-})
+  console.info(`Express is running on: ${serverConfig.serverUrl()}`);
+});
