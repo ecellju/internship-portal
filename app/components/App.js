@@ -1,21 +1,23 @@
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-
+import axios from 'axios';
+const demoData=()=>{
+  axios.get('/api/hello')
+    .then((res)=>{
+      console.log(res);
+      return res.data
+    })
+}
 const App = () => (
-  <MuiThemeProvider>
+  
+    <div>
     <div style={{ width: '100%' }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography type="title" color="inherit">
-            Internship Portal
-          </Typography>
-        </Toolbar>
-      </AppBar>
+    Internship Portal
+   </div>
+    <div>
+      {demoData()}
+    </div> 
     </div>
-  </MuiThemeProvider>
+  
 );
 
 export default App;
