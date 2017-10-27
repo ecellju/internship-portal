@@ -1,6 +1,7 @@
-const config = {
-  mongoURL: process.env.MONGO_URL || 'mongodb://localhost:27017/mern-starter',
-  port: process.env.PORT || 8000,
+module.exports = {
+  port: process.env.PORT || 3000,
+  host: process.env.HOST || '0.0.0.0',
+  serverUrl() {
+    return `http://${this.host}:${this.port}`;
+  },
 };
-
-export default config;
