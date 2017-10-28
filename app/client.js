@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from './components/Navbar';
-import PostView from './post/PostView';
+import Navbar from './user/components/Navbar';
+import PostView from './user/post/PostView';
 
 require('./globals.scss');
 
