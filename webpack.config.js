@@ -8,6 +8,7 @@ module.exports = {
   entry: `./${APP_ROOT}/client`,
   devtool: 'inline-source-map',
   devServer: {
+    historyApiFallback: true,
     contentBase: './dist',
     hot: true,
     proxy: {

@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from './user/components/Navbar';
-import PostView from './user/post/PostView';
+import { BrowserRouter } from 'react-router-dom';
+import App from './auth/components/App';
 
 require('./globals.scss');
 
 ReactDOM.render(
-  <div className="root">
-    <Navbar />
-    <PostView />
-  </div>,
-  document.getElementById('app'),
+  (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  ), document.getElementById('app'),
 );
