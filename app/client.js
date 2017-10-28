@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import Navbar from './components/Navbar';
+import PostView from './post/PostView';
 
 require('./globals.scss');
 
 ReactDOM.render(
-  <App />,
+  <div className="root">
+    <Navbar />
+    <PostView />
+  </div>,
   document.getElementById('app'),
 );
