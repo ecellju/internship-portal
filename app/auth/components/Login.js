@@ -1,17 +1,10 @@
 import React from 'react';
 import { Container, Grid, Form, Button, Card } from 'semantic-ui-react';
 
-const styles = {
-  root: {
-    marginTop: '7em',
-  },
-  formLabels: {
-    textAlign: 'left',
-  },
-};
+import './Login.scss';
 
 const Login = () => (
-  <Container style={styles.root}>
+  <Container className="login-container">
     <Grid centered>
       <Grid.Row>
         <Card>
@@ -23,13 +16,13 @@ const Login = () => (
           <Card.Content extra>
             <Form>
               <Form.Field>
-                <label htmlFor="email" style={styles.formLabels}>
+                <label htmlFor="email" className="form-labels">
                   Email
                   <input id="email" placeholder="Email" />
                 </label>
               </Form.Field>
               <Form.Field>
-                <label htmlFor="password" style={styles.formLabels}>
+                <label htmlFor="password" className="form-labels">
                   Password
                   <input id="password" type="password" placeholder="Password" />
                 </label>
