@@ -19,7 +19,8 @@
             "some": [ "nesting", "id" ]
         },
         "allowChildren": false
-    }]
+    }],
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }]
   }
 }
 
