@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import HomeTab from './HomeTab';
-import PostView from '../../user/post/PostView';
+import PostView from '../post/PostView';
 
 
 const HomeNavigate = ({ match }) => (

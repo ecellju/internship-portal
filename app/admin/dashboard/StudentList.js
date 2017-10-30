@@ -1,13 +1,30 @@
 import React from 'react';
-import { Table, Menu, Icon } from 'semantic-ui-react';
+import { Table, Menu, Icon, Input, Container, Button } from 'semantic-ui-react';
 import _ from 'lodash';
 import StudentListItem from './StudentListItem';
 
+const handleApplyfilter = (event) => {
+  console.log(event);
+};
 
 const StudentList = () => {
   const studentItems = _.times(10, n => <StudentListItem key={n.toString()} />);
   return (
-    <div className="StudentList">
+    <Container className="StudentList">
+      <Menu >
+        <Menu.Item>
+          <Input className="studentName" icon="search" placeholder="Student Name" />
+        </Menu.Item>
+        <Menu.Item>
+          <Input className="Department" icon="search" placeholder="Department" />
+        </Menu.Item>
+        <Menu.Item>
+          <Input className="Year" icon="search" placeholder="Current Year" />
+        </Menu.Item>
+        <Menu.Item position="right" >
+          <Button primary content="Apply" onClick={handleApplyfilter} />
+        </Menu.Item>
+      </Menu>
       <Table celled selectable>
         <Table.Header>
           <Table.Row>
@@ -38,7 +55,7 @@ const StudentList = () => {
           </Table.Row>
         </Table.Footer>
       </Table>
-    </div>
+    </Container>
   );
 };
 

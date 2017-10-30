@@ -22,7 +22,7 @@ class Navbar extends Component {
   }
   render() {
     return (
-      <Menu pointing attached size="huge" >
+      <Menu attached size="huge" style={{ margin: 10 }} >
         <Menu.Menu>
           <Menu.Item header as={Link} to="/">
             Internship Portal
