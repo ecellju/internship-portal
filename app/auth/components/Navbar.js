@@ -2,8 +2,10 @@ import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 
+import './Navbar.scss';
+
 const Navbar = () => (
-  <Menu attached size="huge">
+  <Menu attached size="huge" className="navbar">
     <Menu.Menu>
       <Menu.Item header as={Link} to="/">
         Internship Portal
