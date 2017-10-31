@@ -9,7 +9,7 @@ require('./models').connect(config.dbUri);
 
 // Initialize the express App
 const app = express();
-
+app.use(bodyParser.json());
 // tell the app to parse HTTP body messages
 app.use(bodyParser.urlencoded({ extended: false }));
 // pass the passport middleware
@@ -38,4 +38,3 @@ app.listen(config.port, config.host, () => {
   console.info(`Express is running on: ${config.serverUrl()}`);
 });
 
-app.use('/admin', require('./routes/routes')());

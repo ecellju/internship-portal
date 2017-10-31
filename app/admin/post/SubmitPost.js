@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
 import { TextArea, Form, Button, Label, Segment } from 'semantic-ui-react';
+import axios from 'axios';
+import Auth from '../../auth/modules/Auth';
+
+const config = {
+  headers: {
+    Authorization: `bearer ${Auth.getToken()}`,
+  },
+};
+const submitPost = post =>
+  axios.post('/api/admin/posts', post, config)
+    .then(res => res.data);
 
 class SubmitPost extends Component {
   constructor() {
     super();
-    this.initialState = { post: '' };
-    this.state = this.initialState;
+    this.state = { post: { title: '', description: '' } };
+    this.handleChange = (e, { name, value }) =>
+      this.setState({ post: { ...this.state.post, [name]: value } });
     this.handleSubmit = (event) => {
       event.preventDefault();
-      const post = event.target.querySelector('textarea').value;
-      event.target.querySelector('textarea').value = '';
-      console.log(post);
-      this.state = this.initialState;
+      console.log('state is ', this.state);
+      submitPost(this.state.post)
+        .then(res => console.log('response on submit is', res));
+      this.setState({ post: { title: '', description: '' } });
+      console.log(this.state);
     };
   }
   render() {
@@ -29,6 +42,9 @@ class SubmitPost extends Component {
               placeholder="Add Post Title here"
               rows={2}
               style={{ margibottom: '10px' }}
+              value={this.state.post.title}
+              name="title"
+              onChange={this.handleChange}
             />
           </Form.Field>
           <Form.Field>
@@ -36,6 +52,9 @@ class SubmitPost extends Component {
               className="postDescription"
               placeholder="Add Post Description here"
               rows={8}
+              value={this.state.post.description}
+              name="description"
+              onChange={this.handleChange}
             />
           </Form.Field>
           <Button type="submit">Submit</Button>

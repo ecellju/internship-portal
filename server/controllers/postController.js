@@ -11,7 +11,7 @@ exports.createPost = (req, res) => {
 exports.getAllPost = (req, res) => {
   PostModel.find({ }, (err, docs) => {
     if (err) res.status(200).json({ message: 'database error' });
-    else res.status(200).json({ message: docs });
+    else res.status(200).json(docs);
   });
 };
 exports.getPost = (req, res) => {
