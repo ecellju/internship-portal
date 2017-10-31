@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import SignupForm from './SignupForm';
+import SignupForm from '../../components/AuthPage/SignupForm';
 
 class SignupPage extends React.Component {
   constructor(props) {

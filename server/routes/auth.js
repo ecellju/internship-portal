@@ -115,7 +115,6 @@ router.post('/login', (req, res, next) => {
     });
   }
 
-
   return passport.authenticate('local-login', (err, token, userData) => {
     if (err) {
       if (err.name === 'IncorrectCredentialsError') {
@@ -130,7 +129,6 @@ router.post('/login', (req, res, next) => {
         message: 'Could not process the form.',
       });
     }
-
 
     return res.json({
       success: true,
