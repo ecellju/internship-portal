@@ -11,9 +11,10 @@ module.exports = {
     historyApiFallback: true,
     contentBase: './dist',
     hot: true,
-    proxy: {
-      '/api': 'http://localhost:3000',
-    },
+    proxy: [{
+      context: ['/auth', '/api'],
+      target: 'http://localhost:3000',
+    }],
   },
   module: {
     rules: [
