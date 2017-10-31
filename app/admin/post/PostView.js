@@ -8,7 +8,7 @@ const handleSubmitEdits = (event) => {
 };
 const handleViewApplicants = (event) => {
   console.log('View Applicants :', event);
-  browserHistory.push('/students');
+  browserHistory.push('/dashboard/students');
 };
 const PostView = () => (
   <Container text className="main" textAlign="justified">

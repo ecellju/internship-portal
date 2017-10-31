@@ -7,9 +7,11 @@ import SignupPage from '../../containers/AuthPage/SignupPage';
 import './styles.scss';
 
 const AuthPage = props => (
-  <div className="auth-page-container">
+  <div>
     <Navbar />
-    {props.isSignup ? <SignupPage /> : <LoginPage />}
+    <div className="auth-page-container">
+      {props.isSignup ? <SignupPage /> : <LoginPage />}
+    </div>
   </div>
 );
 
