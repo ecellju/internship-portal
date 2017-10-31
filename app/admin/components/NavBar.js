@@ -24,13 +24,13 @@ class Navbar extends Component {
     return (
       <Menu attached size="huge" style={{ margin: 10 }} >
         <Menu.Menu>
-          <Menu.Item header as={Link} to="/">
+          <Menu.Item header as={Link} to="/dashboard">
             Internship Portal
           </Menu.Item>
-          <Menu.Item name="home" active={this.state.activeItem === 'home'} as={Link} to="/" onClick={this.handleItemClick}>
+          <Menu.Item name="home" active={this.state.activeItem === 'home'} as={Link} to="/dashboard" onClick={this.handleItemClick}>
             Home
           </Menu.Item>
-          <Menu.Item name="students" active={this.state.activeItem === 'students'} as={Link} to="/students" onClick={this.handleItemClick}>
+          <Menu.Item name="students" active={this.state.activeItem === 'students'} as={Link} to="/dashboard/students" onClick={this.handleItemClick}>
             Student List
           </Menu.Item>
         </Menu.Menu>

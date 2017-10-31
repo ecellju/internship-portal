@@ -26,7 +26,7 @@ export default class PostItem extends React.Component {
   render() {
     return (
       <div>
-        <Card fluid>
+        <Card fluid style={{ margin: 10 }}>
           <Card.Content>
             <Card.Header as={Link} to="/posts/2" >Lorem Ipsum</Card.Header>
             <Card.Meta>Description</Card.Meta>

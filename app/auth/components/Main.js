@@ -21,7 +21,7 @@ const Main = () => {
       />
       <Route exact path="/signup" component={() => <AuthPage isSignup />} />
       <Route exact path="/login" component={AuthPage} />
-      <Route exact path="/dashboard" component={DashboardPage} />
+      <Route path="/dashboard" component={DashboardPage} />
     </Switch>
   );
 };
