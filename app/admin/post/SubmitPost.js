@@ -25,7 +25,16 @@ class SubmitPost extends Component {
           </Form.Field>
           <Form.Field>
             <TextArea
-              placeholder="Try adding multiple lines"
+              className="postTitle"
+              placeholder="Add Post Title here"
+              rows={2}
+              style={{ margibottom: '10px' }}
+            />
+          </Form.Field>
+          <Form.Field>
+            <TextArea
+              className="postDescription"
+              placeholder="Add Post Description here"
               rows={8}
             />
           </Form.Field>

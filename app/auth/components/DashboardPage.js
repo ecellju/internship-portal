@@ -1,18 +1,13 @@
 import React from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Auth from '../modules/Auth';
+import AdminDashboardNavigate from '../../admin/components/AdminDashboardNavigate';
+import Navbar from '../../admin/components/NavBar';
 
 class DashboardPage extends React.Component {
   /**
    * Class constructor.
    */
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      secretData: '',
-    };
-  }
-
   /**
    * This method will be executed after initial rendering.
    */
@@ -23,13 +18,6 @@ class DashboardPage extends React.Component {
     // set the authorization HTTP header
     xhr.setRequestHeader('Authorization', `bearer ${Auth.getToken()}`);
     xhr.responseType = 'json';
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        this.setState({
-          secretData: xhr.response.message,
-        });
-      }
-    });
     xhr.send();
   }
 
@@ -37,7 +25,17 @@ class DashboardPage extends React.Component {
    * Render the component.
    */
   render() {
-    return (<div>{this.state.secretData}</div>);
+    return (
+      <div>
+        <Navbar />
+        <div>
+          <Switch>
+            <Route path="/dashboard" component={AdminDashboardNavigate} />
+            <Route render={() => <h1>Not Found 1</h1>} />
+          </Switch>
+        </div>
+      </div>
+    );
   }
 }
 
