@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TextArea, Form, Button, Label, Segment } from 'semantic-ui-react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import Auth from '../../auth/modules/Auth';
 
 const config = {
@@ -22,9 +23,10 @@ class SubmitPost extends Component {
       event.preventDefault();
       console.log('state is ', this.state);
       submitPost(this.state.post)
-        .then(res => console.log('response on submit is', res));
+        .then(res => console.log('response on submit is', res))
+        .catch(console.error());
       this.setState({ post: { title: '', description: '' } });
-      console.log(this.state);
+      this.props.refetch();
     };
   }
   render() {
@@ -64,5 +66,8 @@ class SubmitPost extends Component {
   }
 }
 
+SubmitPost.propTypes = {
+  refetch: PropTypes.func.isRequired,
+};
 export default SubmitPost;
 
