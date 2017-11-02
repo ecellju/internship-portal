@@ -1,0 +1,5 @@
+GET /admin/posts : GETS ALL POSTS
+GET /admin/posts/id : GETS POST WITH ID
+POST /admin/posts : CREATES NEW POST . BODY HAS POST OBJECT
+PUT /admin/posts/id : UPDATES POST . BODY HAS UPDATED OBJECT
+DELETE /admin/posts/id : DELETES POST WITH ID
