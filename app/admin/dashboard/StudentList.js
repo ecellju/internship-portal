@@ -18,7 +18,7 @@ class StudentList extends Component {
   render() {
     return (
       <Container className="StudentList">
-        <Form onSubmit={this.handleApplyfilter.bind(this)}>
+        <Form onSubmit={this.handleApplyfilter}>
           <Form.Group widths="equal">
             <Form.Input
               className="studentName"
@@ -26,7 +26,7 @@ class StudentList extends Component {
               name="studentName"
               value={this.state.studentName}
               placeholder="Student Name"
-              onChange={this.handleChange.bind(this)}
+              onChange={this.handleChange}
             />
             <Form.Input
               className="Department"
@@ -34,7 +34,7 @@ class StudentList extends Component {
               name="department"
               value={this.state.department}
               placeholder="Department"
-              onChange={this.handleChange.bind(this)}
+              onChange={this.handleChange}
             />
             <Form.Input
               className="Year"

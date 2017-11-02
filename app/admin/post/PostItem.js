@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 // import PostView from '../../user/post/PostView';
 
 export default class PostItem extends React.Component {
@@ -28,12 +29,10 @@ export default class PostItem extends React.Component {
       <div>
         <Card fluid style={{ margin: 10 }}>
           <Card.Content>
-            <Card.Header as={Link} to="/dashboard/posts/2" >Lorem Ipsum</Card.Header>
+            <Card.Header as={Link} to={`/dashboard/posts/${this.props.id}`} > {this.props.postTitle}</Card.Header>
             <Card.Meta>Description</Card.Meta>
             <Card.Description>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste eaque ex asperiores
-              tempore at nostrum, obcaecati iure perspiciatis voluptatem temporibus cupiditate
-              aperiam, molestias quos sit vel dolorum similique velit consequatur!
+              {this.props.postDescription}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
@@ -49,3 +48,10 @@ export default class PostItem extends React.Component {
     );
   }
 }
+
+PostItem.propTypes = {
+  postTitle: PropTypes.string.isRequired,
+  postDescription: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+};
+
