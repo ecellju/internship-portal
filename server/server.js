@@ -37,3 +37,5 @@ app.use('/api', apiRoutes);
 app.listen(config.port, config.host, () => {
   console.info(`Express is running on: ${config.serverUrl()}`);
 });
+
+app.use('/admin', require('./routes/routes')());
