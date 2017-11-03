@@ -35,7 +35,8 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "semantic-ui-react": "^0.75.1",
-    "validator": "^9.1.1"
+    "validator": "^9.1.1",
+    "winston": "^3.0.0-rc1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

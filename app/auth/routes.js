@@ -9,19 +9,14 @@ import AdminRoutes from '../admin/routes';
 const Routes = () => {
   let rootRedirect = null;
   if (Auth.isUserAuthenticated()) {
-    console.log(User.isAdmin());
     if (User.isAdmin() === true) {
-      console.log(User.isAdmin());
-      console.log('Hi');
       rootRedirect = () => (<Redirect to="/admin" />);
     } else if (User.isAdmin() === false) {
-      console.log('Hi');
       rootRedirect = () => (<Redirect to="/user" />);
     }
   } else {
     rootRedirect = () => (<Redirect to="/login" />);
   }
-  console.log(rootRedirect);
   return (
     <Switch>
       <Route

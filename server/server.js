@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const logger = require('./logger');
 
 const config = require('./config');
 
@@ -34,5 +35,5 @@ app.use('/api', authCheckMiddleware, roleAssignMiddleware, apiRoutes);
 app.use('/auth', authRoutes);
 
 app.listen(config.port, config.host, () => {
-  console.info(`Express is running on: ${config.serverUrl()}`);
+  logger.log('info', `Express is running on: ${config.serverUrl()}`);
 });
