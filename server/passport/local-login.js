@@ -41,12 +41,18 @@ module.exports = new PassportLocalStrategy({
 
       const payload = {
         sub: user._id,
+        admin: user.isAdmin,
       };
+      console.log('---local-login.js---');
+      console.log(`Payload: ${JSON.stringify(payload)}`);
 
       // create a token string
       const token = jwt.sign(payload, config.jwtSecret);
+      console.log(`Token: ${JSON.stringify(token)}`);
       const data = {
+        id: user._id,
         name: user.name,
+        admin: user.isAdmin,
       };
 
       return done(null, token, data);

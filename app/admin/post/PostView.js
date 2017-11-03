@@ -12,7 +12,7 @@ const handleSubmitEdits = (event) => {
 };
 const handleViewApplicants = (event) => {
   console.log('View Applicants :', event);
-  browserHistory.push('/dashboard/students');
+  browserHistory.push('/admin/students');
 };
 
 const config = {

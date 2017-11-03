@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { Router } from 'react-router-dom';
-import MainRoutes from './auth/routes';
+import Routes from './auth/routes';
 import browserHistory from './history';
 
 
@@ -10,7 +10,7 @@ require('./globals.scss');
 // render the routes
 ReactDOM.render(
   <Router history={browserHistory}>
-    <MainRoutes />
+    <Routes />
   </Router>,
   document.getElementById('app'),
 );

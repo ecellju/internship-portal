@@ -5,13 +5,17 @@ import axios from 'axios';
 import PostItem from './PostItem';
 import Auth from '../../auth/modules/Auth';
 
-const config = {
-  headers: {
-    Authorization: `bearer ${Auth.getToken()}`,
-  },
-};
+// const config = {
+//   headers: {
+//     Authorization: `bearer ${Auth.getToken()}`,
+//   },
+// };
 const fetchPost = () =>
-  (axios.get('/api/admin/posts', config)
+  (axios.get('/api/admin/posts', {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
+    },
+  })
     .then((resp) => {
       console.log('response is ', resp);
       return resp.data;

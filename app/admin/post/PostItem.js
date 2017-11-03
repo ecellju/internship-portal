@@ -29,7 +29,7 @@ export default class PostItem extends React.Component {
       <div>
         <Card fluid style={{ margin: 10 }}>
           <Card.Content>
-            <Card.Header as={Link} to={`/dashboard/posts/${this.props.id}`} > {this.props.postTitle}</Card.Header>
+            <Card.Header as={Link} to={`/admin/posts/${this.props.id}`} > {this.props.postTitle}</Card.Header>
             <Card.Meta>Description</Card.Meta>
             <Card.Description>
               {this.props.postDescription}
