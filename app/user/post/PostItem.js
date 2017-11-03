@@ -1,37 +1,67 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, Icon } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import Axios from 'axios';
+import Auth from '../../auth/modules/Auth';
+import User from '../../auth/modules/User';
 
 export default class PostItem extends React.Component {
   constructor() {
     super();
 
-    this.favouritedState = { favourited: true, favouriteIcon: 'heart' };
-    this.unfavouritedState = { favourited: false, favouriteIcon: 'empty heart' };
+    this.state = { favouriteIcon: 'empty heart' };
 
-    this.state = this.unfavouritedState;
+    this.findFavouriteState = () => {
+      const userId = User.getId();
+      Axios.get(`/api/user/isFavourited/${userId}/${this.props.id}`, {
+        headers: {
+          Authorization: `bearer ${Auth.getToken()}`,
+        },
+      }).then(({ data }) => {
+        const { isFavourited } = data;
+        if (isFavourited) {
+          this.setState({ favouriteIcon: 'heart' });
+        } else {
+          this.setState({ favouriteIcon: 'empty heart' });
+        }
+      }).catch(console.error);
+    };
 
     this.handleFavouriteClick = () => {
       this.setState((state) => {
-        if (state.favourited) {
-          return this.unfavouritedState;
+        const userId = User.getId();
+        if (state.favouriteIcon === 'heart') {
+          Axios.post(`/api/user/${userId}/removeFavourite`, { postId: this.props.id }, {
+            headers: {
+              Authorization: `bearer ${Auth.getToken()}`,
+            },
+          }).then(console.log).catch(console.error);
+          return { favouriteIcon: 'empty heart' };
         }
-        return this.favouritedState;
+        Axios.post(`/api/user/${userId}/addFavourite`, { postId: this.props.id }, {
+          headers: {
+            Authorization: `bearer ${Auth.getToken()}`,
+          },
+        }).then(console.log).catch(console.error);
+        return { favouriteIcon: 'heart' };
       });
     };
   }
 
+  componentWillMount() {
+    this.findFavouriteState();
+  }
 
   render() {
+    const { title, description, id } = this.props;
+
     return (
       <Card fluid>
         <Card.Content>
-          <Card.Header as="a">Lorem Ipsum</Card.Header>
+          <Card.Header as={Link} to={`/user/posts/${id}`}>{title}</Card.Header>
           <Card.Meta>Description</Card.Meta>
-          <Card.Description>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste eaque ex asperiores
-            tempore at nostrum, obcaecati iure perspiciatis voluptatem temporibus cupiditate
-            aperiam, molestias quos sit vel dolorum similique velit consequatur!
-          </Card.Description>
+          <Card.Description>{description}</Card.Description>
         </Card.Content>
         <Card.Content extra>
           <Icon
@@ -45,3 +75,9 @@ export default class PostItem extends React.Component {
     );
   }
 }
+
+PostItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+};
