@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Header, Button } from 'semantic-ui-react';
 
 const PostView = () => (
-  <Container text className="main" textAlign="justified">
+  <Container text textAlign="justified">
     <Header as="h1">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quibusdam quos vero autem
     </Header>

@@ -37,7 +37,7 @@ export default class PostItem extends React.Component {
           <Icon
             name={this.state.favouriteIcon}
             size="large"
-            className="floated right link"
+            className="link floated right"
             onClick={this.handleFavouriteClick}
           />
         </Card.Content>

@@ -6,7 +6,7 @@ import PostItem from '../post/PostItem';
 const HomeTab = () => {
   const postItems = _.times(10, n => <PostItem key={n.toString()} />);
   return (
-    <Container text className="main">
+    <Container text>
       <Card.Group>
         {postItems}
       </Card.Group>
