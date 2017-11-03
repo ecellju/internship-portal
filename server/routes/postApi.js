@@ -1,3 +1,7 @@
+const express = require('express');
+
+const router = express.Router();
+
 const postController = require('../controllers/postController');
 const postValidator = require('../validators/postValidator');
 
@@ -9,12 +13,14 @@ function isAdmin(req, res, next) {
 }
 
 // /post/123 will be the route
-module.exports = (app) => {
-  app.post('/posts', isAdmin, postValidator.createPostValidation, postController.createPost);
-  app.get('/posts', isAdmin, postValidator.getAllPostValidation, postController.getAllPost);
-  app.get('/posts/:id', isAdmin, postValidator.getPostValidation, postController.getPost);
-  app.put('/posts/:id', isAdmin, postValidator.updatePostValidation, postController.updatePost);
-  app.delete('/posts/:id', isAdmin, postValidator.deletePostValidation, postController.deletePost);
-  // TODO : app.post(/posts/:id/addStudent) : adds student id into the students applied array
-  // TODO : app.post(/posts/:id/:status) : toggles isActive boolean
-};
+
+router.post('/posts', isAdmin, postValidator.createPostValidation, postController.createPost);
+router.get('/posts', isAdmin, postValidator.getAllPostValidation, postController.getAllPost);
+router.get('/posts/:id', isAdmin, postValidator.getPostValidation, postController.getPost);
+router.put('/posts/:id', isAdmin, postValidator.updatePostValidation, postController.updatePost);
+router.delete('/posts/:id', isAdmin, postValidator.deletePostValidation, postController.deletePost);
+// TODO : router.post(/posts/:id/addStudent) : adds student id into the students applied array
+// TODO : router.post(/posts/:id/:status) : toggles isActive boolean
+
+
+module.exports = router;
