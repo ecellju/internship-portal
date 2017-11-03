@@ -1,10 +1,10 @@
-// Acts as an accumulator of all api routes
 const express = require('express');
 
-const app = express();
-const postApi = require('../routes/postApi');
+const router = express.Router();
 
-module.exports = () => {
-  postApi(app);
-  return app;
-};
+const postApi = require('./postApi');
+const api = require('./api');
+
+router.use('', api);
+router.use('/admin', postApi);
+module.exports = router;

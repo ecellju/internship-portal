@@ -22,17 +22,14 @@ const localLoginStrategy = require('./passport/local-login');
 passport.use('local-signup', localSignupStrategy);
 passport.use('local-login', localLoginStrategy);
 
+
 // pass the authorization checker middleware
 const authCheckMiddleware = require('./middleware/auth-check');
-
-app.use('/api', authCheckMiddleware);
-
-// routes
 const authRoutes = require('./routes/auth');
-const apiRoutes = require('./routes/api');
+const routes = require('./routes/routes');
 
+app.use('/api', authCheckMiddleware, routes);
 app.use('/auth', authRoutes);
-app.use('/api', apiRoutes);
 
 app.listen(config.port, config.host, () => {
   console.info(`Express is running on: ${config.serverUrl()}`);
