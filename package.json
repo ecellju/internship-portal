@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack --progress --colors",
-    "dev-server": "nodemon server/server.js localhost 3000",
+    "dev-server": "nodemon server/server.js",
     "dev-client": "webpack-dev-server --open"
   },
   "repository": "https://github.com/tauoverpi/juecell-internship.git",
