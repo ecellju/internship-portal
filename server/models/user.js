@@ -8,6 +8,10 @@ const UserSchema = new mongoose.Schema({
   },
   password: String,
   name: String,
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 
@@ -47,6 +51,6 @@ UserSchema.pre('save', function saveHook(next) {
 });
 
 
-module.exports.callModel = () => {
+module.exports.createUserModel = () => {
   mongoose.model('User', UserSchema);
 };

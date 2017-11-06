@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('mongoose').model('User');
 const PassportLocalStrategy = require('passport-local').Strategy;
 const config = require('../config');
+const logger = require('../logger');
 
 /**
  * Return the Passport Local Strategy object.
@@ -41,12 +42,20 @@ module.exports = new PassportLocalStrategy({
 
       const payload = {
         sub: user._id,
+        admin: user.isAdmin,
       };
+
+      logger.log('debug', {
+        file: 'local-login.js',
+        payload: JSON.stringify(payload),
+      });
 
       // create a token string
       const token = jwt.sign(payload, config.jwtSecret);
       const data = {
+        id: user._id,
         name: user.name,
+        admin: user.isAdmin,
       };
 
       return done(null, token, data);

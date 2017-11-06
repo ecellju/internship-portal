@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Auth from '../../modules/Auth';
+import User from '../../modules/User';
 import LoginForm from '../../components/AuthPage/LoginForm';
 
 
@@ -61,6 +62,10 @@ class LoginPage extends React.Component {
 
         // save the token
         Auth.authenticateUser(xhr.response.token);
+
+        const { user } = xhr.response;
+        // save user details
+        User.create(user.id, user.name, user.admin);
 
         // change the current URL to /
         this.props.history.replace('/');

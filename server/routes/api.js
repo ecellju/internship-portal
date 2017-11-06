@@ -1,11 +1,11 @@
+// Acts as an accumulator of all api routes
 const express = require('express');
+const user = require('../authorisation');
 
 const router = express.Router();
 
-router.get('/dashboard', (req, res) => {
-  res.status(200).json({
-    message: "You're authorized to see this secret message.",
-  });
-});
+const adminApi = require('./admin');
+
+router.use('/admin', user.is('admin'), adminApi);
 
 module.exports = router;
