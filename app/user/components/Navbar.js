@@ -3,6 +3,7 @@ import { Button, Input, Grid, Menu, Sidebar } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import Auth from '../../auth/modules/Auth';
 import BrowserHistory from '../../history';
+import User from '../../auth/modules/User';
 
 export default class Navbar extends React.Component {
   constructor() {
@@ -15,6 +16,7 @@ export default class Navbar extends React.Component {
     };
 
     this.handleLogout = () => {
+      User.clear();
       Auth.deauthenticateUser();
       BrowserHistory.replace('/');
     };

@@ -11,17 +11,15 @@ import PostItem from './PostItem';
 // };
 
 const PostList = props => (
-  <Container text className="main">
+  <Container text >
     <Card.Group>
       {props.posts.map(post => (
-        <div key={post._id}>
-          <PostItem
-            key={post._id}
-            postTitle={post.title}
-            postDescription={post.description}
-            id={post._id}
-          />
-        </div>
+        <PostItem
+          key={post._id}
+          postTitle={post.title}
+          postDescription={post.description}
+          id={post._id}
+        />
         ))}
     </Card.Group>
   </Container>

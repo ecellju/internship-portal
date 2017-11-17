@@ -42,7 +42,7 @@ class StudentList extends Component {
               name="year"
               value={this.state.year}
               placeholder="Current Year"
-              onChange={this.handleChange.bind(this)}
+              onChange={this.handleChange}
             />
             <Form.Button floated="right" type="submit" content="Apply" />
           </Form.Group>

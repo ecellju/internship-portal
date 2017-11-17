@@ -6,14 +6,13 @@ import PropTypes from 'prop-types';
 import browserHistory from '../../history';
 import Auth from '../../auth/modules/Auth';
 
-const config = {
-  headers: {
-    Authorization: `bearer ${Auth.getToken()}`,
-  },
-};
 
 const fetchPostById = postId =>
-  (axios.get(`/api/admin/posts/${postId}`, config)
+  (axios.get(`/api/admin/posts/${postId}`, {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
+    },
+  })
     .then((resp) => {
       console.log('response is ', resp);
       return resp.data;
@@ -21,7 +20,11 @@ const fetchPostById = postId =>
     .catch(console.error));
 
 const SubmitEdits = (postId, post) =>
-  (axios.put(`/api/admin/posts/${postId}`, post, config)
+  (axios.put(`/api/admin/posts/${postId}`, post, {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
+    },
+  })
     .then((resp) => {
       console.log('response is ', resp);
       return resp.data;
@@ -31,7 +34,7 @@ const SubmitEdits = (postId, post) =>
 
 const handleViewApplicants = (event) => {
   console.log('View Applicants :', event);
-  browserHistory.push('/dashboard/students');
+  browserHistory.push('/admin/students');
 };
 
 class PostView extends Component {
@@ -46,7 +49,7 @@ class PostView extends Component {
     this.handleSubmitEdits = () => {
       const post = { ...this.state.post };
       SubmitEdits(post._id, post);
-      browserHistory.push('/dashboard/posts');
+      browserHistory.push('/admin/posts');
     };
   }
   render() {

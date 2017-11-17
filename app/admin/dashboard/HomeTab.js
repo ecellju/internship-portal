@@ -7,13 +7,12 @@ import PostList from '../post/PostList';
 // import PostView from '../../user/post/PostView';
 import Auth from '../../auth/modules/Auth';
 
-const config = {
-  headers: {
-    Authorization: `bearer ${Auth.getToken()}`,
-  },
-};
 const fetchPost = () =>
-  (axios.get('/api/admin/posts', config)
+  (axios.get('/api/admin/posts', {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
+    },
+  })
     .then((resp) => {
       console.log('response is ', resp);
       return resp.data;
@@ -25,17 +24,21 @@ class HomeTab extends Component {
     super();
     this.state = { posts: [] };
     this.fetchPost = fetchPost.bind(this);
+    this.refetch = () => {
+      // console.log(this);
+      // console.log('in refetch');
+      this.fetchPost()
+        .then(posts => this.setState({ ...this.state, posts }));
+    };
+    this.refetch = this.refetch.bind(this);
+  }
+
+  componentWillMount() {
     this.fetchPost()
       .then((posts) => {
         this.setState({ ...this.state, posts });
         console.log('Sagnik', this, this.state);
       });
-    this.refetch = () => {
-      console.log(this);
-      this.fetchPost()
-        .then(posts => this.setState({ ...this.state, posts }));
-    };
-    this.refetch = this.refetch.bind(this);
   }
   render() {
     return (

@@ -23,7 +23,7 @@ exports.me = (req, res) => {
 };
 
 exports.getAllPost = (req, res) => {
-  PostModel.find({ }, (err, docs) => {
+  PostModel.find({ }, null, { sort: { _id: -1 } }, (err, docs) => {
     if (err) res.status(200).json({ message: 'database error' });
     else res.status(200).json(docs);
   });
