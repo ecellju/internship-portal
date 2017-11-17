@@ -1,13 +1,12 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { Router } from 'react-router-dom';
-import Routes from './auth/routes';
+import Routes from './routes';
 import browserHistory from './history';
 
+import './globals.scss';
 
-require('./globals.scss');
 
-// render the routes
 ReactDOM.render(
   <Router history={browserHistory}>
     <Routes />

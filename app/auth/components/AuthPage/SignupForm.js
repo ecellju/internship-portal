@@ -74,7 +74,7 @@ const SignupForm = ({
           }
         </Form.Field>
         <div className="centered-button-wrapper">
-          <Button type="submit">Sign Up</Button>
+          <Button primary type="submit">Sign Up</Button>
         </div>
       </Form>
       <Card.Description className="bottom-text">

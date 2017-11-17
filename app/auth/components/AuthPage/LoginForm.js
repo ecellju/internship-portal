@@ -65,7 +65,7 @@ const LoginForm = ({
           }
         </Form.Field>
         <div className="centered-button-wrapper">
-          <Button type="submit">Log In</Button>
+          <Button primary type="submit">Log In</Button>
         </div>
       </Form>
       <Card.Description className="bottom-text">

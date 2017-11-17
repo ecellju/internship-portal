@@ -12,6 +12,8 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  postsApplied: [{ type: mongoose.Schema.Types.ObjectId }],
+  postsFavourited: [{ type: mongoose.Schema.Types.ObjectId }],
 });
 
 
