@@ -26,25 +26,23 @@ export default class PostItem extends React.Component {
 
   render() {
     return (
-      <div>
-        <Card fluid style={{ margin: 10 }}>
-          <Card.Content>
-            <Card.Header as={Link} to={`/admin/posts/${this.props.id}`} > {this.props.postTitle}</Card.Header>
-            <Card.Meta>Description</Card.Meta>
-            <Card.Description>
-              {this.props.postDescription}
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <Icon
-              name={this.state.favouriteIcon}
-              size="large"
-              className="floated right link"
-              onClick={this.handleFavouriteClick}
-            />
-          </Card.Content>
-        </Card>
-      </div>
+      <Card fluid >
+        <Card.Content>
+          <Card.Header as={Link} to={`/admin/posts/${this.props.id}`} > {this.props.postTitle}</Card.Header>
+          <Card.Meta>Description</Card.Meta>
+          <Card.Description>
+            {this.props.postDescription}
+          </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <Icon
+            name={this.state.favouriteIcon}
+            size="large"
+            className="floated right link"
+            onClick={this.handleFavouriteClick}
+          />
+        </Card.Content>
+      </Card>
     );
   }
 }

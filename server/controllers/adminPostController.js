@@ -17,7 +17,7 @@ exports.getAllPost = (req, res) => {
 exports.getPost = (req, res) => {
   PostModel.findById({ _id: req.params.id }, (err, docs) => {
     if (err || !docs) res.status(200).json({ message: 'database error' });
-    else { res.status(200).json({ message: docs }); }
+    else { res.status(200).json(docs); }
   });
 };
 

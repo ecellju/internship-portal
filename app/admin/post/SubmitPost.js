@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { TextArea, Form, Button, Label, Segment } from 'semantic-ui-react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import Auth from '../../auth/modules/Auth';
 
-const config = {
-  headers: {
-    Authorization: `bearer ${Auth.getToken()}`,
-  },
-};
 const submitPost = post =>
-  axios.post('/api/admin/posts', post, config)
+  axios.post('/api/admin/posts', post, {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
+    },
+  })
     .then(res => res.data);
 
 class SubmitPost extends Component {
@@ -22,9 +22,13 @@ class SubmitPost extends Component {
       event.preventDefault();
       console.log('state is ', this.state);
       submitPost(this.state.post)
-        .then(res => console.log('response on submit is', res));
-      this.setState({ post: { title: '', description: '' } });
-      console.log(this.state);
+        .then((res) => {
+          // console.log('THIS ', this);
+          console.log('response on submit is', res);
+          this.setState({ post: { title: '', description: '' } });
+          this.props.refetch();
+        })
+        .catch(console.error());
     };
   }
   render() {
@@ -64,5 +68,8 @@ class SubmitPost extends Component {
   }
 }
 
+SubmitPost.propTypes = {
+  refetch: PropTypes.func.isRequired,
+};
 export default SubmitPost;
 

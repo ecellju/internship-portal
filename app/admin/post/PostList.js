@@ -1,56 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card, Container } from 'semantic-ui-react';
 import _ from 'lodash';
-import axios from 'axios';
+import PropTypes from 'prop-types';
 import PostItem from './PostItem';
-import Auth from '../../auth/modules/Auth';
 
 // const config = {
 //   headers: {
 //     Authorization: `bearer ${Auth.getToken()}`,
 //   },
 // };
-const fetchPost = () =>
-  (axios.get('/api/admin/posts', {
-    headers: {
-      Authorization: `bearer ${Auth.getToken()}`,
-    },
-  })
-    .then((resp) => {
-      console.log('response is ', resp);
-      return resp.data;
-    })
-    .catch(console.error));
 
-class PostList extends Component {
-  constructor() {
-    super();
-    this.state = { posts: [] };
-    this.fetchPost = fetchPost.bind(this);
-    this.fetchPost()
-      .then((posts) => {
-        this.setState({ ...this.state, posts });
-        console.log('Sagnik', posts);
-      });
-  }
-  render() {
-    return (
-      <Container text className="main">
-        <Card.Group>
-          {this.state.posts.map(post => (
-            <div key={post._id}>
-              <PostItem
-                key={post._id}
-                postTitle={post.title}
-                postDescription={post.description}
-                id={post._id}
-              />
-            </div>
-            ))}
-        </Card.Group>
-      </Container>
-    );
-  }
-}
+const PostList = props => (
+  <Container text >
+    <Card.Group>
+      {props.posts.map(post => (
+        <PostItem
+          key={post._id}
+          postTitle={post.title}
+          postDescription={post.description}
+          id={post._id}
+        />
+        ))}
+    </Card.Group>
+  </Container>
+);
 
+PostList.propTypes = {
+  posts: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+
+  })).isRequired,
+};
 export default PostList;
