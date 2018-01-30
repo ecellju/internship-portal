@@ -33,6 +33,7 @@ const apiRoutes = require('./routes/api');
 
 app.use('/api', authCheckMiddleware, roleAssignMiddleware, apiRoutes);
 app.use('/auth', authRoutes);
+app.use(express.static('dist'));
 
 app.listen(config.port, config.host, () => {
   logger.log('info', `Express is running on: ${config.serverUrl()}`);
