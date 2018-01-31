@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -32,7 +33,9 @@ const apiRoutes = require('./routes/api');
 
 app.use('/api', authCheckMiddleware, roleAssignMiddleware, apiRoutes);
 app.use('/auth', authRoutes);
+
 app.use(express.static('dist'));
+app.get('/*', (req, res) => res.sendFile(path.resolve('dist', 'index.html')));
 
 app.listen(config.port, () => {
   console.log(`Express is running on: ${config.serverUrl()}`);
