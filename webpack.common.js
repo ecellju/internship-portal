@@ -1,20 +1,12 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
+const HtmlWebpackPlugin = require('html-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 
 const APP_ROOT = 'app';
 
 module.exports = {
-  entry: `./${APP_ROOT}/client`,
-  devtool: 'inline-source-map',
-  devServer: {
-    historyApiFallback: true,
-    contentBase: './dist',
-    hot: true,
-    proxy: [{
-      context: ['/auth', '/api'],
-      target: 'http://localhost:3000',
-    }],
+  entry: {
+    app: `./${APP_ROOT}/client`,
   },
   module: {
     rules: [
@@ -38,10 +30,11 @@ module.exports = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
+      title: 'Internship Portal',
       template: `./${APP_ROOT}/index.html`,
     }),
-    new webpack.HotModuleReplacementPlugin(),
   ],
   output: {
     filename: '[name].bundle.js',
