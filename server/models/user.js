@@ -9,9 +9,34 @@ const UserSchema = new mongoose.Schema({
     index: { unique: true },
   },
   password: String,
+  firstName: String,
+  lastName: String,
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  postsApplied: [{ type: mongoose.Schema.Types.ObjectId }],
+  postsFavourited: [{ type: mongoose.Schema.Types.ObjectId }],
+  profile: {
+    firstName: String,
+    middleName: String,
+    lastName: String,
+    DOB: String,
+    gender: String,
+    contactNo: String,
+    branch: String,
+    currentYear: String,
+    Email: String,
+    degree: String,
+    cgpa: String,
+    joiningYear: String,
+    higherSecondaryMarks: String,
+    higherSecondaryYear: String,
+    secondaryMarks: String,
+    secondaryYear: String,
+
+  },
 }, options);
-
-
 /**
  * Compare the passed password with the value in the database. A model method.
  *
