@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const logger = require('../logger');
 
 const user = require('./user');
 
@@ -11,7 +10,7 @@ module.exports.connect = (uri) => {
   mongoose.Promise = global.Promise;
 
   mongoose.connection.on('error', (err) => {
-    logger.log('error', `Mongoose connection error: ${err}`);
+    console.log(`Mongoose connection error: ${err}`);
     process.exit(1);
   });
 

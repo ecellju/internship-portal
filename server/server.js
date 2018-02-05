@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load(); // eslint-disable-line
+}
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
