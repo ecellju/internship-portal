@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Card, Container, Form, Label, Segment } from 'semantic-ui-react';
 import axios from 'axios';
 import Auth from '../../auth/modules/Auth';
+import User from '../../auth/modules/User';
 
 const genderOptions = [
   { key: 'm', text: 'Male', value: 'Male' },
@@ -21,7 +22,8 @@ const submitPost = formData =>
 
 const saveProfile = (profile) => {
   console.log('profile to be saved is ', profile);
-  return axios.post('/api/user/profile', profile, {
+  const userId = User.getId();
+  return axios.post('/api/user/profile', { userId, profile }, {
     headers: {
       Authorization: `bearer ${Auth.getToken()}`,
     },
@@ -32,6 +34,18 @@ const saveProfile = (profile) => {
     });
 };
 
+const getProfile = () => {
+  const userId = User.getId();
+  return axios.get('/api/user/profile', {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
+    },
+    params: {
+      userId,
+    },
+  })
+    .then(res => res);
+};
 export default class ProfilePage extends React.Component {
   constructor() {
     super();
@@ -42,12 +56,20 @@ export default class ProfilePage extends React.Component {
         firstName: 'Sagnik', middleName: '', lastName: 'Mondal', DOB: '', gender: 'Male', contactNo: '1234567899', branch: 'Computer Science', currentYear: '4th', Email: 'demo@demo.com', degree: '', cgpa: '', joinYear: '', hsMarks: '', hsYear: '', secondaryMarks: '', secondaryYear: '',
       },
     };
+    getProfile()
+      .then((res) => {
+      // console.log('THIS ', this);
+        console.log('response on constructor call is ', res);
+        this.setState({ profile: res });
+      })
+      .catch(console.error());
     this.toggleEditability = () => {
       if (this.state.editable) {
         saveProfile(this.state.profile)
           .then((res) => {
           // console.log('THIS ', this);
             console.log('response on Profile Save is', res);
+            this.setState({ profile: res });
           })
           .catch(console.error());
       }
@@ -74,6 +96,10 @@ export default class ProfilePage extends React.Component {
         .catch(console.error());
       console.log('back here ok');
     };
+  }
+
+  componentWillMount() {
+    console.log('Mounting');
   }
 
   render() {

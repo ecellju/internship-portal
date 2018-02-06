@@ -17,6 +17,7 @@ const UserSchema = new mongoose.Schema({
   },
   postsApplied: [{ type: mongoose.Schema.Types.ObjectId }],
   postsFavourited: [{ type: mongoose.Schema.Types.ObjectId }],
+  demo: [],
   profile: {
     firstName: String,
     middleName: String,
