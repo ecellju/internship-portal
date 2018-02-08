@@ -73,6 +73,22 @@ const SignupForm = ({
             </Label>
           }
         </Form.Field>
+        <Divider />
+        <Form.Field>
+          <input
+            id="signup-retype-password"
+            name="retype-password"
+            placeholder="Retype password"
+            value={user.retypePassword}
+            onChange={onChange}
+            type="password"
+          />
+          {_.has(errors, 'retype-password') &&
+            <Label htmlFor="signup-retype-password" basic color="red" pointing>
+              {errors.password}
+            </Label>
+          }
+        </Form.Field>
         <div className="centered-button-wrapper">
           <Button primary type="submit">Sign Up</Button>
         </div>
@@ -96,6 +112,7 @@ SignupForm.propTypes = {
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
+    retypePassword: PropTypes.string.isRequired,
   }).isRequired,
 };
 

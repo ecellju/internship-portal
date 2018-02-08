@@ -13,6 +13,7 @@ class SignupPage extends React.Component {
         name: '',
         email: '',
         password: '',
+        retypePassword: '',
       },
     };
 
@@ -28,7 +29,11 @@ class SignupPage extends React.Component {
   changeUser(event) {
     const field = event.target.name;
     const { user } = this.state;
-    user[field] = event.target.value;
+    if (field === 'retype-password') {
+      user.retypePassword = event.target.value;
+    } else {
+      user[field] = event.target.value;
+    }
     this.setState({
       user,
     });
@@ -41,6 +46,22 @@ class SignupPage extends React.Component {
    */
   processForm(event) {
     event.preventDefault();
+
+    if (this.state.user.password !== this.state.user.retypePassword) {
+      const { user } = this.state;
+      this.setState({
+        user: {
+          name: user.name,
+          email: user.email,
+          password: '',
+          retypePassword: '',
+        },
+        errors: {
+          summary: 'The two passwords do not match.',
+        },
+      });
+      return;
+    }
 
     // create a string for an HTTP body message
     const name = encodeURIComponent(this.state.user.name);
