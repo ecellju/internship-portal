@@ -20,12 +20,12 @@ exports.uploadCV = (req, res) => {
 };
 
 exports.saveProfile = (req, res) => {
-  console.log(req.body.userId);
+  console.log('Profile Save ', req.body.profile);
   UserModel.findByIdAndUpdate(
     req.body.userId, { $set: { profile: req.body.profile } },
     (err, docs) => {
       if (err || !docs) return res.status(200).json({ message: docs });
-      return res.status(200).json({ message: 'Profile updated' });
+      return res.status(200).json({ message: docs });
     },
   );
 };
@@ -33,8 +33,9 @@ exports.saveProfile = (req, res) => {
 exports.getProfile = (req, res) => {
   console.log(req.query);
   UserModel.findById({ _id: req.query.userId }, (err, docs) => {
-    if (err || !docs) res.status(200).json({ message: 'database error' });
-    else { res.status(200).json(docs.profile); }
+    if (err || !docs) return res.status(200).json({ message: 'database error' });
+    console.log('get profile ', docs.profile);
+    return res.status(200).json(docs.profile);
   });
 };
 
