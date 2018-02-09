@@ -26,21 +26,38 @@ const SignupForm = ({
         />
       }
       <Form onSubmit={onSubmit}>
-        <Form.Field>
-          <input
-            id="signup-name"
-            name="name"
-            placeholder="Name"
-            value={user.name}
-            onChange={onChange}
-            type="text"
-          />
-          {_.has(errors, 'name') &&
-            <Label htmlFor="signup-name" basic color="red" pointing>
-              {errors.name}
-            </Label>
-          }
-        </Form.Field>
+        <Form.Group widths="equal">
+          <Form.Field>
+            <input
+              id="signup-first-name"
+              name="first-name"
+              placeholder="First name"
+              value={user.firstName}
+              onChange={onChange}
+              type="text"
+            />
+            {_.has(errors, 'firstName') &&
+              <Label htmlFor="signup-first-name" basic color="red" pointing>
+                {errors.firstName}
+              </Label>
+            }
+          </Form.Field>
+          <Form.Field>
+            <input
+              id="signup-last-name"
+              name="last-name"
+              placeholder="Last name"
+              value={user.lastName}
+              onChange={onChange}
+              type="text"
+            />
+            {_.has(errors, 'lastName') &&
+              <Label htmlFor="signup-last-name" basic color="red" pointing>
+                {errors.lastName}
+              </Label>
+            }
+          </Form.Field>
+        </Form.Group>
         <Divider />
         <Form.Field>
           <input
@@ -73,6 +90,22 @@ const SignupForm = ({
             </Label>
           }
         </Form.Field>
+        <Divider />
+        <Form.Field>
+          <input
+            id="signup-retype-password"
+            name="retype-password"
+            placeholder="Retype password"
+            value={user.retypePassword}
+            onChange={onChange}
+            type="password"
+          />
+          {_.has(errors, 'retype-password') &&
+            <Label htmlFor="signup-retype-password" basic color="red" pointing>
+              {errors.password}
+            </Label>
+          }
+        </Form.Field>
         <div className="centered-button-wrapper">
           <Button primary type="submit">Sign Up</Button>
         </div>
@@ -96,6 +129,7 @@ SignupForm.propTypes = {
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
+    retypePassword: PropTypes.string.isRequired,
   }).isRequired,
 };
 

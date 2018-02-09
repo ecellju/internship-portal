@@ -10,9 +10,11 @@ class SignupPage extends React.Component {
       errors: {
       },
       user: {
-        name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
+        retypePassword: '',
       },
     };
 
@@ -28,7 +30,15 @@ class SignupPage extends React.Component {
   changeUser(event) {
     const field = event.target.name;
     const { user } = this.state;
-    user[field] = event.target.value;
+    if (field === 'first-name') {
+      user.firstName = event.target.value;
+    } else if (field === 'last-name') {
+      user.lastName = event.target.value;
+    } else if (field === 'retype-password') {
+      user.retypePassword = event.target.value;
+    } else {
+      user[field] = event.target.value;
+    }
     this.setState({
       user,
     });
@@ -42,11 +52,25 @@ class SignupPage extends React.Component {
   processForm(event) {
     event.preventDefault();
 
+    if (this.state.user.password !== this.state.user.retypePassword) {
+      const { user } = this.state;
+      user.password = '';
+      user.retypePassword = '';
+      this.setState({
+        user,
+        errors: {
+          summary: 'The two passwords do not match.',
+        },
+      });
+      return;
+    }
+
     // create a string for an HTTP body message
-    const name = encodeURIComponent(this.state.user.name);
+    const firstName = encodeURIComponent(this.state.user.firstName);
+    const lastName = encodeURIComponent(this.state.user.lastName);
     const email = encodeURIComponent(this.state.user.email);
     const password = encodeURIComponent(this.state.user.password);
-    const formData = `name=${name}&email=${email}&password=${password}`;
+    const formData = `firstName=${firstName}&lastName=${lastName}&email=${email}&password=${password}`;
 
     // create an AJAX request
     const xhr = new XMLHttpRequest();
