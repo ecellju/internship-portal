@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const user = require('./user');
+const admin = require('./admin');
+const student = require('./student');
+const post = require('./post');
 
 module.exports.connect = (uri) => {
   mongoose.connect(uri, {
@@ -15,4 +18,7 @@ module.exports.connect = (uri) => {
   });
 
   user.createUserModel();
+  admin.createAdminModel();
+  student.createStudentModel();
+  post.createPostModel();
 };

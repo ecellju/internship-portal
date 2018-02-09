@@ -2,8 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 
-const postController = require('../controllers/userPostController');
-const postValidator = require('../validators/postValidator');
+const postController = require('../controllers/student-post');
+const postValidator = require('../validators/post');
 
 router.get('/posts', postValidator.getAllPostValidation, postController.getAllPost);
 router.get('/posts/:id', postValidator.getPostValidation, postController.getPost);

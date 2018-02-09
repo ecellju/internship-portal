@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const PostModel = require('../models/postSchema');
 const config = require('../config');
 const _ = require('lodash');
 
-const User = mongoose.model('User');
+const PostModel = mongoose.model('Post');
+const Student = mongoose.model('Student');
 
 exports.me = (req, res) => {
   if (!req.headers.authorization) {
@@ -17,8 +17,8 @@ exports.me = (req, res) => {
     if (err) {
       return res.status(401).end();
     }
-    const userId = decoded.sub;
-    return res.status(200).send({ userId });
+    const studentId = decoded.sub;
+    return res.status(200).send({ studentId });
   });
 };
 
@@ -38,16 +38,16 @@ exports.getPost = (req, res) => {
 
 exports.addStudentToPost = (req, res) => {
   const postId = req.params.id;
-  const { userId } = req.body;
+  const { studentId } = req.body;
 
-  User.findOneAndUpdate(
-    { _id: userId },
+  Student.findOneAndUpdate(
+    { _id: studentId },
     { $addToSet: { postsApplied: postId } },
     (err2, docs2) => {
       if (err2 || !docs2) res.status(200).json({ message: 'database error' });
       PostModel.findOneAndUpdate(
         { _id: postId },
-        { $addToSet: { studentsApplied: userId } },
+        { $addToSet: { studentsApplied: studentId } },
         (err1, docs1) => {
           if (err1 || !docs1) res.status(200).json({ message: 'database error' });
           res.status(200).json({ message: 'update successful' });
@@ -58,11 +58,11 @@ exports.addStudentToPost = (req, res) => {
 };
 
 exports.addFavouritePostToStudent = (req, res) => {
-  const userId = req.params.id;
+  const studentId = req.params.id;
   const { postId } = req.body;
 
-  User.findOneAndUpdate(
-    { _id: userId },
+  Student.findOneAndUpdate(
+    { _id: studentId },
     { $addToSet: { postsFavourited: postId } },
     (err2, docs2) => {
       if (err2 || !docs2) res.status(200).json({ message: 'database error' });
@@ -72,11 +72,11 @@ exports.addFavouritePostToStudent = (req, res) => {
 };
 
 exports.removeFavouritePostFromStudent = (req, res) => {
-  const userId = req.params.id;
+  const studentId = req.params.id;
   const { postId } = req.body;
 
-  User.findOneAndUpdate(
-    { _id: userId },
+  Student.findOneAndUpdate(
+    { _id: studentId },
     { $pull: { postsFavourited: postId } },
     (err2, docs2) => {
       if (err2 || !docs2) res.status(200).json({ message: 'database error' });
@@ -86,9 +86,9 @@ exports.removeFavouritePostFromStudent = (req, res) => {
 };
 
 exports.getAllApplications = (req, res) => {
-  const userId = req.params.id;
+  const studentId = req.params.id;
 
-  User.findOne({ _id: userId }, (err1, docs1) => {
+  Student.findOne({ _id: studentId }, (err1, docs1) => {
     if (err1 || !docs1) res.status(200).json({ message: 'database error' });
     const { postsApplied } = docs1;
     const postsAppliedObjs = postsApplied.map(id => mongoose.Types.ObjectId(id));
@@ -100,9 +100,9 @@ exports.getAllApplications = (req, res) => {
 };
 
 exports.getAllFavourites = (req, res) => {
-  const userId = req.params.id;
+  const studentId = req.params.id;
 
-  User.findOne({ _id: userId }, (err1, docs1) => {
+  Student.findOne({ _id: studentId }, (err1, docs1) => {
     if (err1 || !docs1) res.status(200).json({ message: 'database error' });
     const { postsFavourited } = docs1;
     const postsFavouritedObjs = postsFavourited.map(id => mongoose.Types.ObjectId(id));
@@ -114,9 +114,9 @@ exports.getAllFavourites = (req, res) => {
 };
 
 exports.isFavourited = (req, res) => {
-  const { userId, postId } = req.params;
+  const { studentId, postId } = req.params;
 
-  User.findOne({ _id: userId }, (err, docs) => {
+  Student.findOne({ _id: studentId }, (err, docs) => {
     if (err || !docs) res.status(200).json({ message: 'database error' });
 
     const { postsFavourited } = docs;

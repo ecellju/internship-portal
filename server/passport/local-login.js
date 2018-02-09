@@ -55,7 +55,7 @@ module.exports = new PassportLocalStrategy({
       const data = {
         id: user._id,
         name: user.name,
-        admin: user.isAdmin,
+        admin: (user.kind === 'Admin'),
       };
 
       return done(null, token, data);

@@ -1,21 +1,15 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+const options = { discriminatorKey: 'kind' };
+
 const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     index: { unique: true },
   },
   password: String,
-  firstName: String,
-  lastName: String,
-  isAdmin: {
-    type: Boolean,
-    default: false,
-  },
-  postsApplied: [{ type: mongoose.Schema.Types.ObjectId }],
-  postsFavourited: [{ type: mongoose.Schema.Types.ObjectId }],
-});
+}, options);
 
 
 /**
