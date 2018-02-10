@@ -35,9 +35,14 @@ export default class Navbar extends React.Component {
                 Home
               </Menu.Item>
               <Menu.Item name="students" as={NavLink} exact to="/admin/students">
-                Student List
+                Students
               </Menu.Item>
               <Menu.Menu position="right">
+                {User.isSuperAdmin() &&
+                  <Menu.Item as={NavLink} exact to="/admin/access-control">
+                    Control access
+                  </Menu.Item>
+                }
                 <Menu.Item onClick={this.handleLogout}>Logout</Menu.Item>
               </Menu.Menu>
             </Grid.Row>
@@ -67,6 +72,11 @@ export default class Navbar extends React.Component {
                 <Menu.Item name="students" as={NavLink} exact to="/admin/students">
                   Student List
                 </Menu.Item>
+                {User.isSuperAdmin() &&
+                  <Menu.Item as={NavLink} exact to="/admin/access-control">
+                    Control access
+                  </Menu.Item>
+                }
                 <Menu.Item onClick={this.handleLogout}>Logout</Menu.Item>
               </Sidebar>
             </Grid.Row>

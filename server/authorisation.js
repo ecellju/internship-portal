@@ -9,7 +9,11 @@ const user = new ConnectRoles({
 });
 
 user.use('admin', req => (
-  req.user.role === 'admin'
+  req.user.role === 'admin' || req.user.role === 'super-admin'
+));
+
+user.use('super-admin', req => (
+  req.user.role === 'super-admin'
 ));
 
 module.exports = user;

@@ -43,7 +43,7 @@ class HomeTab extends Component {
       .catch((error) => {
         console.error(error);
         // redirect to login page if 401 (unauthorized) response
-        if (error.response.status === 401) {
+        if (error.response.status === 401 || error.response.status === 403) {
           this.props.history.replace('/login');
         }
       });

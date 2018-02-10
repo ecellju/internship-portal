@@ -1,4 +1,4 @@
-// Acts as an accumulator of all admin routes
+// Acts as an accumulator of all user routes
 const express = require('express');
 
 const router = express.Router();

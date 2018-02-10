@@ -65,7 +65,7 @@ class LoginPage extends React.Component {
 
         const { user } = xhr.response;
         // save user details
-        User.create(user.id, user.name, user.admin);
+        User.create(user);
 
         // change the current URL to /
         this.props.history.replace('/');
