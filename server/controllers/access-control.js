@@ -13,7 +13,7 @@ module.exports.getAdminListController = (req, res) => {
       console.log('Database error');
       return;
     }
-    const adminList = admins.map(admin => _.omit(admin, ['password']));
+    const adminList = admins.map(admin => _.omit(admin.toObject(), ['password']));
     res.status(200).json({
       success: true,
       successMessage: 'Admin list sent',

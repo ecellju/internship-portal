@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Table } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import AdminRemoveButton from './AdminRemoveButton';
 
 const AdminListItem = props => (
   <Table.Row>
@@ -12,7 +13,12 @@ const AdminListItem = props => (
     </Table.Cell>
     <Table.Cell>
       {!props.admin.isSuperAdmin &&
-        <Button>Remove</Button>
+        <AdminRemoveButton
+          onButtonClick={props.onRemoveAdminClick}
+          admin={props.admin}
+        >
+          Remove
+        </AdminRemoveButton>
       }
     </Table.Cell>
   </Table.Row>
@@ -23,6 +29,7 @@ AdminListItem.propTypes = {
     email: PropTypes.string.isRequired,
     isSuperAdmin: PropTypes.bool.isRequired,
   }).isRequired,
+  onRemoveAdminClick: PropTypes.func.isRequired,
 };
 
 export default AdminListItem;

@@ -11,7 +11,10 @@ class AccessControlPage extends React.Component {
     super(props, context);
     this.state = {
       admins: [],
+      errorMessage: '',
+      loading: false,
     };
+    this.removeAdmin = this.removeAdmin.bind(this);
 
     axios.get('/api/super-admin/admin-list', {
       headers: {
@@ -33,6 +36,32 @@ class AccessControlPage extends React.Component {
       });
   }
 
+  removeAdmin(admin) {
+    this.setState({
+      loading: true,
+    });
+    axios.post('/api/super-admin/remove-admin', {
+      email: admin.email,
+    }, {
+      headers: {
+        Authorization: `bearer ${Auth.getToken()}`,
+      },
+    })
+      .then(() => {
+        this.setState({
+          loading: false,
+        });
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error(error);
+        this.setState({
+          loading: false,
+          errorMessage: 'Could not be removed',
+        });
+      });
+  }
+
   render() {
     return (
       <Container>
@@ -40,7 +69,10 @@ class AccessControlPage extends React.Component {
           history={this.props.history}
         />
         <AdminList
+          errorMessage={this.state.errorMessage}
           admins={this.state.admins}
+          onRemoveAdminClick={this.removeAdmin}
+          showLoading={this.state.loading}
         />
       </Container>
     );
