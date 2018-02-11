@@ -17,7 +17,6 @@ class AddAdminModal extends React.Component {
         password: '',
         retypePassword: '',
       },
-      hasAddedAtleastOne: false,
     };
 
     this.changeAdmin = this.changeAdmin.bind(this);
@@ -26,9 +25,6 @@ class AddAdminModal extends React.Component {
   }
 
   onModalClose() {
-    if (this.state.hasAddedAtleastOne) {
-      this.props.onAdminAdd();
-    }
     this.setState({
       admin: {
         email: '',
@@ -85,8 +81,8 @@ class AddAdminModal extends React.Component {
           },
           successMessage: res.data.successMessage,
           errors: {},
-          hasAddedAtleastOne: true,
         });
+        this.props.onAdminAdd();
       })
       .catch((error) => {
         console.error(error);
