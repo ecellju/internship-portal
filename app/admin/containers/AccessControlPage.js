@@ -15,7 +15,12 @@ class AccessControlPage extends React.Component {
       loading: false,
     };
     this.removeAdmin = this.removeAdmin.bind(this);
+    this.refreshList = this.refreshList.bind(this);
 
+    this.refreshList();
+  }
+
+  refreshList() {
     axios.get('/api/super-admin/admin-list', {
       headers: {
         Authorization: `bearer ${Auth.getToken()}`,
@@ -51,7 +56,7 @@ class AccessControlPage extends React.Component {
         this.setState({
           loading: false,
         });
-        window.location.reload();
+        this.refreshList();
       })
       .catch((error) => {
         console.error(error);
@@ -67,6 +72,7 @@ class AccessControlPage extends React.Component {
       <Container>
         <AddAdminModal
           history={this.props.history}
+          onAdminAdd={this.refreshList}
         />
         <AdminList
           errorMessage={this.state.errorMessage}

@@ -27,7 +27,7 @@ class AddAdminModal extends React.Component {
 
   onModalClose() {
     if (this.state.hasAddedAtleastOne) {
-      window.location.reload();
+      this.props.onAdminAdd();
     }
     this.setState({
       admin: {
@@ -35,6 +35,7 @@ class AddAdminModal extends React.Component {
         password: '',
         retypePassword: '',
       },
+      successMessage: '',
       errors: {},
     });
   }
@@ -122,6 +123,7 @@ AddAdminModal.propTypes = {
   history: PropTypes.shape({
     replace: PropTypes.func.isRequired,
   }).isRequired,
+  onAdminAdd: PropTypes.func.isRequired,
 };
 
 export default AddAdminModal;
