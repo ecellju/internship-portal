@@ -139,12 +139,11 @@ export default class ProfileInfo extends React.Component {
                  // width={4}
                 />
                 <Form.Select
-                  //readOnly={!editable}
-                  disabled = {!editable}
+                  readOnly={!editable}
                   label="Gender"
                   name="gender"
                   options={genderOptions}
-                  value = {this.state.profile.gender || this.state.selectedOption}
+                  value={this.state.profile.gender || ''}
                   onChange={(e, { value }) => this.setState({ profile: { ...this.state.profile, gender: value } })}
                   // width={6}
                 />
