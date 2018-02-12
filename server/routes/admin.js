@@ -3,8 +3,8 @@ const express = require('express');
 
 const router = express.Router();
 
-const adminPostApi = require('./adminPostApi');
-const commonPostApi = require('./commonPostApi');
+const adminPostApi = require('./admin-post-api');
+const commonPostApi = require('./common-post-api');
 
 // all calls will be forwarded to postApi
 // TODO: add different routers for different routes

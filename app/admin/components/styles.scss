@@ -1,0 +1,21 @@
+.access-control-header-box {
+  margin-bottom: 1.5em;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+form {
+  .centered-button-wrapper-modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5em;
+    margin-bottom: -1.5em;
+  }
+}
+
+.admin-remove-button {
+  display: flex;
+  justify-content: center;
+}

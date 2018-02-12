@@ -5,7 +5,9 @@ const logger = require('../logger');
  */
 module.exports = (req, res, next) => {
   req.user = {};
-  if (req.decoded.admin) {
+  if (req.decoded.isSuperAdmin) {
+    req.user.role = 'super-admin';
+  } else if (req.decoded.isAdmin) {
     req.user.role = 'admin';
   } else {
     req.user.role = 'user';

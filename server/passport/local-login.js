@@ -42,7 +42,8 @@ module.exports = new PassportLocalStrategy({
 
       const payload = {
         sub: user._id,
-        admin: user.isAdmin,
+        isAdmin: user.kind === 'Admin',
+        isSuperAdmin: (user.kind === 'Admin' && user.isSuperAdmin),
       };
 
       logger.log('debug', {
@@ -55,7 +56,8 @@ module.exports = new PassportLocalStrategy({
       const data = {
         id: user._id,
         name: user.name,
-        admin: user.isAdmin,
+        isAdmin: (user.kind === 'Admin'),
+        isSuperAdmin: (user.kind === 'Admin' && user.isSuperAdmin),
       };
 
       return done(null, token, data);

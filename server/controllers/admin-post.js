@@ -1,4 +1,4 @@
-const PostModel = require('../models/postSchema');
+const PostModel = require('mongoose').model('Post');
 
 exports.createPost = (req, res) => {
   const newPost = new PostModel(req.body);

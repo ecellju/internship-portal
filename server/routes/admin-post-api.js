@@ -2,8 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 
-const postController = require('../controllers/adminPostController');
-const postValidator = require('../validators/postValidator');
+const postController = require('../controllers/admin-post');
+const postValidator = require('../validators/post');
 
 router.post('/posts', postValidator.createPostValidation, postController.createPost);
 router.put('/posts/:id', postValidator.updatePostValidation, postController.updatePost);

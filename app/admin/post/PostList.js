@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Container } from 'semantic-ui-react';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import PostItem from './PostItem';
 

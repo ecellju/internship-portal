@@ -1,8 +1,9 @@
+const fields = ['id', 'name', 'isAdmin', 'isSuperAdmin'];
 class User {
-  static create(id, name = '', isAdmin = false) {
-    localStorage.setItem('id', JSON.stringify(id));
-    localStorage.setItem('name', JSON.stringify(name));
-    localStorage.setItem('isAdmin', JSON.stringify(isAdmin));
+  static create(userDetails) {
+    fields.forEach((field) => {
+      localStorage.setItem(field, JSON.stringify(userDetails[field]));
+    });
   }
 
   static getId() {
@@ -14,12 +15,17 @@ class User {
   }
 
   static isAdmin() {
-    return JSON.parse(localStorage.getItem('isAdmin'));
+    return JSON.parse(localStorage.getItem('isAdmin')) || JSON.parse(localStorage.getItem('isSuperAdmin'));
+  }
+
+  static isSuperAdmin() {
+    return JSON.parse(localStorage.getItem('isSuperAdmin'));
   }
 
   static clear() {
-    localStorage.removeItem('name');
-    localStorage.removeItem('isAdmin');
+    fields.forEach((field) => {
+      localStorage.removeItem(field);
+    });
   }
 }
 
