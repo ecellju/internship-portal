@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Container } from 'semantic-ui-react';
+import { Divider, Header, Container, Button } from 'semantic-ui-react';
 import axios from 'axios';
-import SubmitPost from '../post/SubmitPost';
+// import SubmitPost from '../post/SubmitPost';
 import PostList from '../post/PostList';
 // import PostItem from '../post/PostItem';
 // import PostView from '../../user/post/PostView';
 import Auth from '../../auth/modules/Auth';
+
+import './styles.scss';
 
 class HomeTab extends Component {
   constructor() {
     super();
     this.state = { posts: [] };
     this.fetchPost = this.fetchPost.bind(this);
+    this.redirectToSubmitPostPage = this.redirectToSubmitPostPage.bind(this);
     this.refetch = () => {
       // console.log(this);
       // console.log('in refetch');
@@ -49,13 +52,30 @@ class HomeTab extends Component {
       });
   }
 
+  redirectToSubmitPostPage() {
+    this.props.history.push('/admin/submit-post');
+  }
+
   render() {
     return (
       <div className="Home" >
+        <div className="home-header-container">
+          <div className="internships-header">
+            <Header as="h3">Internships</Header>
+          </div>
+          <div className="post-new-internship-button">
+            <Button primary onClick={this.redirectToSubmitPostPage}>Post New Internship</Button>
+          </div>
+        </div>
+        <div className="home-header-divider">
+          <Divider />
+        </div>
         <Container className="main">
+          {/*
           <Container text className="main">
             <SubmitPost refetch={this.refetch} />
           </Container>
+          */}
           <PostList posts={this.state.posts} />
         </Container>
 
@@ -67,6 +87,7 @@ class HomeTab extends Component {
 HomeTab.propTypes = {
   history: PropTypes.shape({
     replace: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 

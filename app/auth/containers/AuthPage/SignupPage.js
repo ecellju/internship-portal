@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import SignupForm from '../../components/AuthPage/SignupForm';
@@ -29,7 +30,7 @@ class SignupPage extends React.Component {
    */
   changeUser(event) {
     const field = event.target.name;
-    const { user } = this.state;
+    const user = _.clone(this.state.user);
     if (field === 'first-name') {
       user.firstName = event.target.value;
     } else if (field === 'last-name') {

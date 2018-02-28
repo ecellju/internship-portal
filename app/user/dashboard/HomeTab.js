@@ -3,7 +3,6 @@ import { Card, Container } from 'semantic-ui-react';
 import Axios from 'axios';
 import PostItem from '../post/PostItem';
 import Auth from '../../auth/modules/Auth';
-import User from '../../auth/modules/User';
 
 export default class HomeTab extends React.Component {
   constructor() {

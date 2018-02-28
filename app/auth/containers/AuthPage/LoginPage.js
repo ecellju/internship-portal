@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
 import Auth from '../../modules/Auth';
 import User from '../../modules/User';
 import LoginForm from '../../components/AuthPage/LoginForm';
-
 
 class LoginPage extends React.Component {
   constructor(props, context) {
@@ -91,7 +91,7 @@ class LoginPage extends React.Component {
    */
   changeUser(event) {
     const field = event.target.name;
-    const { user } = this.state;
+    const user = _.clone(this.state.user);
     user[field] = event.target.value;
 
     this.setState({

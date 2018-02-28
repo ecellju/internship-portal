@@ -38,7 +38,7 @@ class AddAdminModal extends React.Component {
 
   changeAdmin(event) {
     const field = event.target.name;
-    const { admin } = this.state;
+    const admin = _.clone(this.state.admin);
     if (field === 'retype-password') {
       admin.retypePassword = event.target.value;
     } else {
