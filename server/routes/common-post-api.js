@@ -12,7 +12,7 @@ router.get('/:id/applications', postValidator.applicationsValidation, postContro
 router.post('/:id/addFavourite', postValidator.addFavouriteValidation, postController.addFavouritePostToStudent);
 router.post('/:id/removeFavourite', postValidator.removeFavouriteValidation, postController.removeFavouritePostFromStudent);
 router.get('/:id/favourites', postValidator.favouritesValidation, postController.getAllFavourites);
-router.get('/isFavourited/:userId/:postId', postValidator.isFavouritedValidation, postController.isFavourited);
+router.get('/isFavourited/:studentId/:postId', postValidator.isFavouritedValidation, postController.isFavourited);
 router.get('/me', postController.me);
 
 module.exports = router;

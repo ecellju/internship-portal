@@ -4,7 +4,7 @@ const Admin = require('mongoose').model('Admin');
 module.exports.getAdminListController = (req, res) => {
   Admin.find({}, (err, admins) => {
     if (err) {
-      res.status(400).json({
+      res.status(500).json({
         success: false,
         errors: {
           summary: 'Database error',
@@ -42,7 +42,7 @@ module.exports.createAdminController = (req, res) => {
         });
         console.log('A user with this email address already exists.');
       } else {
-        res.status(400).json({
+        res.status(500).json({
           success: false,
           errors: {
             summary: 'Database error',
@@ -64,7 +64,7 @@ module.exports.removeAdminController = (req, res) => {
   const adminEmail = req.body.email.trim();
   Admin.findOne({ email: adminEmail }, (err, admin) => {
     if (err) {
-      res.status(400).json({
+      res.status(500).json({
         success: false,
         errors: {
           summary: 'Database error',
@@ -95,7 +95,7 @@ module.exports.removeAdminController = (req, res) => {
 
     admin.remove((removeErr) => {
       if (removeErr) {
-        res.status(400).json({
+        res.status(500).json({
           success: false,
           errors: {
             summary: 'Database error',
