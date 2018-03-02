@@ -9,36 +9,6 @@ const UserSchema = new mongoose.Schema({
     index: { unique: true },
   },
   password: String,
-  firstName: String,
-  lastName: String,
-  isAdmin: {
-    type: Boolean,
-    default: false,
-  },
-  postsApplied: [{ type: mongoose.Schema.Types.ObjectId }],
-  postsFavourited: [{ type: mongoose.Schema.Types.ObjectId }],
-  demo: [],
-  profile: {
-    type: mongoose.Schema.Types.Mixed,
-    default: {
-      firstName: '',
-      middleName: '',
-      lastName: '',
-      DOB: '',
-      gender: '',
-      contactNo: '',
-      branch: '',
-      currentYear: '',
-      Email: '',
-      degree: '',
-      cgpa: '',
-      joiningYear: '',
-      higherSecondaryMarks: '',
-      higherSecondaryYear: '',
-      secondaryMarks: '',
-      secondaryYear: '',
-    },
-  },
 }, options);
 /**
  * Compare the passed password with the value in the database. A model method.

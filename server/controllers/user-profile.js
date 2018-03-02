@@ -1,7 +1,9 @@
 const path = require('path');
 const fs = require('fs');
 const Busboy = require('busboy');
-const UserModel = require('mongoose').model('User');
+const mongoose = require('mongoose');
+
+const StudentModel = mongoose.model('Student');
 
 exports.uploadCV = (req, res) => {
   console.log('Upload cv end point');
@@ -21,8 +23,12 @@ exports.uploadCV = (req, res) => {
 
 exports.saveProfile = (req, res) => {
   console.log('Profile Save ', req.body.profile);
-  UserModel.findByIdAndUpdate(
-    req.body.userId, { $set: { profile: req.body.profile } },
+  StudentModel.findByIdAndUpdate(
+    req.body.userId, {
+      $set: {
+        profile: req.body.profile, firstName: req.body.profile.firstName, lastName: req.body.profile.lastName, email: req.body.profile.Email,
+      },
+    },
     (err, docs) => {
       if (err || !docs) return res.status(200).json({ message: docs });
       return res.status(200).json({ message: docs });
@@ -32,10 +38,14 @@ exports.saveProfile = (req, res) => {
 
 exports.getProfile = (req, res) => {
   console.log(req.query);
-  UserModel.findById({ _id: req.query.userId }, (err, docs) => {
+  StudentModel.findById({ _id: req.query.userId }, (err, docs) => {
     if (err || !docs) return res.status(200).json({ message: 'database error' });
-    console.log('get profile ', docs.profile);
-    return res.status(200).json(docs.profile);
+    const { profile } = docs;
+    profile.firstName = docs.firstName;
+    profile.lastName = docs.lastName;
+    profile.Email = docs.email;
+    console.log('get profile ', docs);
+    return res.status(200).json(profile);
   });
 };
 
