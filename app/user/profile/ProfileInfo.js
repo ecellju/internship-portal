@@ -133,6 +133,7 @@ export default class ProfileInfo extends React.Component {
                 <Form.Input
                   readOnly={!editable}
                   label="Birth date"
+                  type="date"
                   name="DOB"
                   value={this.state.profile.DOB || ''}
                   onChange={this.handleChange}
