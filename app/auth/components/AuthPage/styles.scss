@@ -1,12 +1,207 @@
 .auth-page-container {
-  margin-top: 7em;
-  form {
-    .centered-button-wrapper {
-      display: flex;
-      justify-content: center;
-    }
+  
+  margin-top: 64px;
+
+  .button-row {
+    margin-bottom: 24px;
   }
-  .bottom-text {
-    text-align: center;
+
+  .fingerprint-row {
+    margin-top: 24px;
+  }
+
+  .forgot-password {
+    color: #D0D4D7;
+    font-size: 12px;
+    font-weight: 300;
+    margin: 36px 0px 0px 8px;
+  }
+
+  .info-group {
+    position: absolute;
+    bottom: 16px;
+  }
+
+  .login-button-wrapper {
+    float: right;
+  }
+
+  .right-sidebar {
+    margin-top: 48px;
+    margin-bottom: 48px;
+  }
+
+  .sidebar-info {
+    color: #2EC4B6;
+    font-family: 'Josefin Sans';
+
+    padding: 8px;
+  }
+
+  .signup-button-wrapper {
+    float: left;
+  }
+
+  .signup-container {
+    position: absolute;
+    border-radius: 8px;
+    padding: 16px;
+
+    overflow: hidden;
+
+    font-family: 'Josefin Sans';
+
+    -webkit-box-shadow: 0px 0px 24px 0px rgba(0,0,0,0.1);
+    -moz-box-shadow:    0px 0px 24px 0px rgba(0,0,0,0.1);
+    box-shadow:         0px 0px 24px 0px rgba(0,0,0,0.1);
+  }
+
+  .signup-container::before {
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:-5%;
+    width:60%;
+    background:#011627;
+    transform:skew(3deg);
+
+    font-family: 'Josefin Sans';
+
+    -webkit-box-shadow: 0px 0px 36px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow:    0px 0px 36px 0px rgba(0,0,0,0.2);
+    box-shadow:         0px 0px 36px 0px rgba(0,0,0,0.2);
+  }
+
+  .ui.basic.ecell-red.pointing {
+    border-color: #E71D36;
+    border-radius: 100px;
+    border-width: 1px;
+    color: #E71D36;
+
+    font-family: "Work Sans";
+    font-weight: normal;
+  }
+
+  .ui.button.ecell-primary-button {
+    border-radius: 100px;
+
+    font-family: 'Josefin Sans';
+    font-size: 16px;
+    
+    border-color: #2EC4B6;
+    border-style: solid;
+    border-width: 1px;
+
+    color: #2EC4B6;
+    background-color: rgba(255,255,255,0);
+
+    margin-top: 24px;
+    padding: 12px 24px 9px 24px;
+
+    -webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05);
+    -moz-box-shadow:    0px 0px 12px 0px rgba(0,0,0,0.05);
+    box-shadow:         0px 0px 12px 0px rgba(0,0,0,0.05);
+
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition:    all 0.5s ease-out;
+    -o-transition:      all 0.5s ease-out;
+    transition:         all 0.5s ease-out;
+  }
+
+  .ui.button.ecell-primary-button:hover {
+    border-radius: 100px;
+
+    font-family: 'Josefin Sans';
+    font-size: 16px;
+    
+    border-color: #2EC4B6;
+    border-style: solid;
+    border-width: 1px;
+
+    background-color: #2EC4B6;
+    color: rgba(255,255,255,1);
+
+    margin-top: 24px;
+    padding: 12px 24px 9px 24px;
+
+    -webkit-box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.1);
+    -moz-box-shadow:    0px 0px 16px 0px rgba(0,0,0,0.1);
+    box-shadow:         0px 0px 16px 0px rgba(0,0,0,0.1);
+  }
+
+  .ui.button.ecell-primary-button:active {
+    border-radius: 100px;
+
+    font-family: 'Josefin Sans';
+    font-size: 16px;
+    
+    border-color: #228F85;
+    border-style: solid;
+    border-width: 1px;
+
+    background-color: #228F85;
+    color: rgba(255,255,255,1);
+
+    margin-top: 24px;
+    padding: 12px 24px 9px 24px;
+
+    -webkit-box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.05);
+    -moz-box-shadow:    0px 0px 16px 0px rgba(0,0,0,0.05);
+    box-shadow:         0px 0px 16px 0px rgba(0,0,0,0.05);
+  }
+
+  .ui.error.message {
+    border-color: #E71D36;
+    border-style: solid;
+    border-radius: 100px;
+    border-width: 1PX;    
+    color: #E71D36;
+    background-color: rgba(0,0,0,0);
+
+    font-family: "Work Sans";
+    font-weight: normal;
+
+    box-shadow: 0 0 0 0 rgba(0,0,0,0) inset;
+  }
+
+  .ui.form {
+    margin: 0px 24px 0px 8px;
+  }
+
+  .ui.form .field {
+    
+    margin-top: 40px;
+  }
+
+  .ui.form input[type=text],
+  .ui.form input[type=password] {
+    border-radius: 0px;
+    border-style: none none solid none;
+    border-width: 1px;
+
+    margin: 0px 0px 0px 8px;
+    padding: 8px 0px 8px 0px;
+  }
+
+  .ui.form input[type=text]:focus,
+  .ui.form input[type=password]:focus {
+    border-radius: 0px;
+    border-style: none none solid none;
+    border-width: 1px;
+    border-color: #2EC4B6;
+
+    margin: 0px 0px 0px 8px;
+    padding: 8px 0px 8px 0px;
+  }
+
+  .ui.form .field>label {
+
+    color: #011627;
+    font-size: 16px;
+    padding: 8px;
+    margin: 0px;
   }
 }
+
+
