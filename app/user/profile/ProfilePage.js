@@ -1,99 +1,56 @@
 import React from 'react';
-import { Button, Card, Container, Form } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
+import axios from 'axios';
+import Auth from '../../auth/modules/Auth';
+import User from '../../auth/modules/User';
+import ProfileInfo from './ProfileInfo';
 
-const genderOptions = [
-  { key: 'm', text: 'Male', value: 'Male' },
-  { key: 'f', text: 'Female', value: 'Female' },
-];
-
+const getProfile = () => {
+  const userId = User.getId();
+  return axios.get('/api/user/profile', {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
+    },
+    params: {
+      userId,
+    },
+  })
+    .then(res => res);
+};
 export default class ProfilePage extends React.Component {
   constructor() {
     super();
-    this.state = { editable: false };
-    this.toggleEditability = () => this.setState({ editable: !this.state.editable });
+    // console.log('Parent constructor');
+    this.state = {
+      // editable: false,
+      // CV: null,
+      /* profile: {
+        firstName: 'Sagnik', middleName: '', lastName: 'Mondal', DOB: '',
+        gender: 'Male', contactNo: '1234567899', branch: 'Computer Science',
+        currentYear: '4th',
+        Email: 'demo@demo.com', degree: '', cgpa: '', joinYear: '',
+        hsMarks: '', hsYear: '', secondaryMarks: '', secondaryYear: '',
+      }, */
+      profile: {},
+    };
+  }
+
+  componentWillMount() {
+    // console.log('Mounting parent');
+    getProfile()
+      .then((res) => {
+      // console.log('THIS ', this);
+        console.log('Get Profile ', res.data);
+        this.setState({ profile: res.data });
+        // console.log('get', this.state);
+      })
+      .catch(console.error());
   }
 
   render() {
-    const { editable } = this.state;
-
     return (
-      <Container text>
-        <Card fluid>
-          <Card.Content>
-            <Card.Header>
-              {editable ? 'Edit Profile Information' : 'Profile Information'}
-              <Button
-                primary
-                floated="right"
-                content={editable ? 'Save' : 'Edit'}
-                onClick={this.toggleEditability}
-              />
-            </Card.Header>
-          </Card.Content>
-          <Card.Content>
-            <Form>
-              <Form.Group>
-                <Form.Input
-                  readOnly={!editable}
-                  label="First name"
-                  value="Soumik"
-                  width={6}
-                />
-                <Form.Input
-                  readOnly={!editable}
-                  label="Middle name"
-                  value=""
-                  width={4}
-                />
-                <Form.Input
-                  readOnly={!editable}
-                  label="Last name"
-                  value="Chatterjee"
-                  width={6}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Input
-                  readOnly={!editable}
-                  label="Birth date"
-                  value="26/07/1995"
-                  width={4}
-                />
-                <Form.Select
-                  readOnly={!editable}
-                  label="Gender"
-                  options={genderOptions}
-                  value="Male"
-                  width={6}
-                />
-                <Form.Input
-                  readOnly={!editable}
-                  label="Lives at"
-                  value="Serampore, Hooghly"
-                  width={6}
-                />
-              </Form.Group>
-            </Form>
-          </Card.Content>
-          <Card.Content>
-            <Form>
-              <Form.Group>
-                <Form.Input
-                  readOnly={!editable}
-                  label="Institution"
-                  value="Jadavpur University"
-                  width={6}
-                />
-                <Form.Input
-                  readOnly={!editable}
-                  label="Branch"
-                  value="Computer Science and Engineering"
-                  width={10}
-                />
-              </Form.Group>
-            </Form>
-          </Card.Content>
-        </Card>
+      <Container text >
+        <ProfileInfo profile={this.state.profile} />
       </Container>
     );
   }

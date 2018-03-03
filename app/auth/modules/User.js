@@ -1,4 +1,4 @@
-const fields = ['id', 'name', 'isAdmin', 'isSuperAdmin'];
+const fields = ['id', 'name', 'isAdmin', 'isSuperAdmin', 'email'];
 class User {
   static create(userDetails) {
     fields.forEach((field) => {
@@ -8,6 +8,10 @@ class User {
 
   static getId() {
     return JSON.parse(localStorage.getItem('id'));
+  }
+
+  static getEmail() {
+    return JSON.parse(localStorage.getItem('email'));
   }
 
   static getName() {

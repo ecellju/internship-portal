@@ -10,8 +10,34 @@ const options = { discriminatorKey: 'kind' };
 const StudentSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   postsApplied: [{ type: mongoose.Schema.Types.ObjectId }],
   postsFavourited: [{ type: mongoose.Schema.Types.ObjectId }],
+  demo: [],
+  profile: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      DOB: '',
+      gender: '',
+      contactNo: '',
+      branch: '',
+      currentYear: '',
+      Email: '',
+      degree: '',
+      cgpa: '',
+      joiningYear: '',
+      higherSecondaryMarks: '',
+      higherSecondaryYear: '',
+      secondaryMarks: '',
+      secondaryYear: '',
+    },
+  },
 }, options);
 
 module.exports.createStudentModel = () => {

@@ -56,6 +56,7 @@ module.exports = new PassportLocalStrategy({
       const data = {
         id: user._id,
         name: user.name,
+        email: user.email,
         isAdmin: (user.kind === 'Admin'),
         isSuperAdmin: (user.kind === 'Admin' && user.isSuperAdmin),
       };
