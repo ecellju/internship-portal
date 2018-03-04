@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
-import { Message, Divider, Label, Form, Card, Button } from 'semantic-ui-react';
+import { Message, Label, Form, Button, Grid } from 'semantic-ui-react';
+
+import Page from '../../../assets/page.svg';
+import User from '../../../assets/user.svg';
 
 import './styles.scss';
 
@@ -12,109 +15,172 @@ const SignupForm = ({
   errors,
   user,
 }) => (
-  <Card centered>
-    <Card.Content>
-      <Card.Header textAlign="center">
-        Sign Up for Internship Portal
-      </Card.Header>
-    </Card.Content>
-    <Card.Content>
-      {_.has(errors, 'summary') &&
-        <Message
-          error
-          content={errors.summary}
-        />
-      }
-      <Form onSubmit={onSubmit}>
-        <Form.Group widths="equal">
-          <Form.Field>
-            <input
-              id="signup-first-name"
-              name="first-name"
-              placeholder="First name"
-              value={user.firstName}
-              onChange={onChange}
-              type="text"
-            />
-            {_.has(errors, 'firstName') &&
-              <Label htmlFor="signup-first-name" basic color="red" pointing>
-                {errors.firstName}
-              </Label>
-            }
-          </Form.Field>
-          <Form.Field>
-            <input
-              id="signup-last-name"
-              name="last-name"
-              placeholder="Last name"
-              value={user.lastName}
-              onChange={onChange}
-              type="text"
-            />
-            {_.has(errors, 'lastName') &&
-              <Label htmlFor="signup-last-name" basic color="red" pointing>
-                {errors.lastName}
-              </Label>
-            }
-          </Form.Field>
-        </Form.Group>
-        <Divider />
-        <Form.Field>
-          <input
-            id="signup-email"
-            name="email"
-            placeholder="Email"
-            value={user.email}
-            onChange={onChange}
-            type="text"
-          />
-          {_.has(errors, 'email') &&
-            <Label htmlFor="signup-email" basic color="red" pointing>
-              {errors.email}
-            </Label>
-          }
-        </Form.Field>
-        <Divider />
-        <Form.Field>
-          <input
-            id="signup-password"
-            name="password"
-            placeholder="Password"
-            value={user.password}
-            onChange={onChange}
-            type="password"
-          />
-          {_.has(errors, 'password') &&
-            <Label htmlFor="signup-password" basic color="red" pointing>
-              {errors.password}
-            </Label>
-          }
-        </Form.Field>
-        <Divider />
-        <Form.Field>
-          <input
-            id="signup-retype-password"
-            name="retype-password"
-            placeholder="Retype password"
-            value={user.retypePassword}
-            onChange={onChange}
-            type="password"
-          />
-          {_.has(errors, 'retype-password') &&
-            <Label htmlFor="signup-retype-password" basic color="red" pointing>
-              {errors.password}
-            </Label>
-          }
-        </Form.Field>
-        <div className="centered-button-wrapper">
-          <Button primary type="submit">Sign Up</Button>
-        </div>
-      </Form>
-      <Card.Description className="bottom-text">
-        Already have an account? <Link to="/login">Log in</Link>
-      </Card.Description>
-    </Card.Content>
-  </Card>
+    <Grid centered>
+      <Grid.Row>
+      <Grid.Column width={11} className="signup-container">
+        <Grid>
+          <Grid.Row>
+
+            <Grid.Column width={9}>
+              <div className="sidebar-info-signup">
+                <Grid>
+                  <Grid.Row>
+                    <Grid.Column width={16}>
+                      <Page height="256" />
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Column width={16}>
+                      <div>
+                        <p className="sidebar-line-a">Welcome to</p>
+                        <p className="sidebar-line-b">Internship Portal</p>
+                        <p className="sidebar-line-c">
+                          Already have an account?
+                        </p>
+
+                        <div className="signup-button-wrapper">
+                          <Button as={Link} to="/login" className="ecell-primary-button">Log In</Button>
+                        </div>
+                      </div>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>                
+              </div>
+            </Grid.Column>
+
+            <Grid.Column width={7}>
+              <div className="right-sidebar">
+
+                <div className="message-row">
+                  {_.has(errors, 'summary') &&
+                    <Message error content={errors.summary} />
+                  }
+                </div>
+
+                <Grid>
+                  <Grid.Row className="user-row">
+                    <Grid.Column width={6}></Grid.Column>
+                    <Grid.Column width={4}>
+                      <User />
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+
+                <Form onSubmit={onSubmit}>
+                  <Form.Group widths="equal">
+                    <Form.Field>
+                      <label>First Name</label>
+                      <input
+                        id="signup-first-name"
+                        name="first-name"
+                        value={user.firstName}
+                        onChange={onChange}
+                        type="text"
+                        autoComplete="given-name"
+                      />
+                      <div className="pointer-message-error">
+                        {_.has(errors, 'firstName') &&
+                            <Label htmlFor="signup-first-name" basic className="ecell-red" pointing>
+                            {errors.firstName}
+                          </Label>
+                        }
+                      </div>
+                      
+                    </Form.Field>
+                    <Form.Field>
+                      <label>Last Name</label>
+                      <input
+                        id="signup-last-name"
+                        name="last-name"
+                        value={user.lastName}
+                        onChange={onChange}
+                        type="text"
+                        autoComplete="family-name"
+                      />
+                      
+                      <div className="pointer-message-error">
+                        {_.has(errors, 'lastName') &&
+                          <Label htmlFor="signup-last-name" basic className="ecell-red" pointing>
+                            {errors.lastName}
+                          </Label>
+                        }
+                      </div>
+                      
+                    </Form.Field>
+                  </Form.Group>
+                  <Form.Field>
+                    <label>E-mail</label>
+                    <input
+                      id="signup-email"
+                      name="email"
+                      value={user.email}
+                      onChange={onChange}
+                      type="text"
+                      autoComplete="email"
+                    />
+                    
+                    <div className="pointer-message-error">
+                      {_.has(errors, 'email') &&
+                        <Label htmlFor="signup-email" basic color="red" className="ecell-red" pointing>
+                          {errors.email}
+                        </Label>
+                      }
+                    </div>
+                    
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Password</label>
+                    <input
+                      id="signup-password"
+                      name="password"
+                      value={user.password}
+                      onChange={onChange}
+                      type="password"
+                      autoComplete="new-password"
+                    />
+
+                    <div className="pointer-message-error">
+                      {_.has(errors, 'password') &&
+                        <Label htmlFor="signup-password" basic className="ecell-red" pointing>
+                          {errors.password}
+                        </Label>
+                      }
+                    </div>
+                    
+                  </Form.Field>
+                    
+                  <Form.Field>
+                    <label>Re-type Password</label>
+                    <input
+                      id="signup-retype-password"
+                      name="retype-password"
+                      value={user.retypePassword}
+                      onChange={onChange}
+                      type="password"
+                      autoComplete="new-password"
+                    />
+
+                      {_.has(errors, 'retype-password') &&
+                        <Label htmlFor="signup-retype-password" className="ecell-red" pointing>
+                          {errors.password}
+                        </Label>
+                      }
+                    
+                  </Form.Field>
+                  <div className="login-button-wrapper">
+                    <Button primary type="submit" className="ecell-primary-button">Sign Up</Button>
+                  </div>
+                </Form>
+              
+              </div>
+            </Grid.Column>
+
+          </Grid.Row>
+        </Grid>
+      </Grid.Column>
+
+    </Grid.Row>
+  </Grid>
 );
 
 SignupForm.propTypes = {
@@ -126,7 +192,8 @@ SignupForm.propTypes = {
     password: PropTypes.string,
   }).isRequired,
   user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
     retypePassword: PropTypes.string.isRequired,

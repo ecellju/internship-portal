@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
-import { Message, Divider, Label, Form, Card, Button } from 'semantic-ui-react';
+import { Message, Label, Form, Button, Grid } from 'semantic-ui-react';
 
+import Fingerprint from '../../../assets/fingerprint.svg';
+import Page from '../../../assets/page.svg';
 import './styles.scss';
+
 
 const LoginForm = ({
   onSubmit,
@@ -13,66 +16,133 @@ const LoginForm = ({
   successMessage,
   user,
 }) => (
-  <Card centered>
-    <Card.Content>
-      <Card.Header textAlign="center">
-        Log In to Internship Portal
-      </Card.Header>
-    </Card.Content>
-    <Card.Content>
-      { successMessage.length > 0 &&
-        <Message
-          success
-          content={successMessage}
-        />
-      }
-      {_.has(errors, 'summary') &&
-        <Message
-          error
-          content={errors.summary}
-        />
-      }
-      <Form onSubmit={onSubmit}>
-        <Form.Field>
-          <input
-            id="login-email"
-            name="email"
-            placeholder="Email"
-            value={user.email}
-            onChange={onChange}
-            type="text"
-          />
-          {_.has(errors, 'email') &&
-            <Label htmlFor="login-email" basic color="red" pointing>
-              {errors.email}
-            </Label>
-          }
-        </Form.Field>
-        <Divider />
-        <Form.Field>
-          <input
-            id="login-password"
-            name="password"
-            placeholder="Password"
-            value={user.password}
-            onChange={onChange}
-            type="password"
-          />
-          {_.has(errors, 'password') &&
-            <Label htmlFor="login-password" basic color="red" pointing>
-              {errors.password}
-            </Label>
-          }
-        </Form.Field>
-        <div className="centered-button-wrapper">
-          <Button primary type="submit">Log In</Button>
-        </div>
-      </Form>
-      <Card.Description className="bottom-text">
-        Don&#39;t have an account? <Link to="/signup">Sign Up</Link>
-      </Card.Description>
-    </Card.Content>
-  </Card>
+  <Grid centered>
+    <Grid.Row>
+      <Grid.Column width={11} className="login-container">
+        <Grid>
+          <Grid.Row>
+
+            <Grid.Column width={9}>
+              <div className="sidebar-info">
+                <Grid>
+                  <Grid.Row>
+                    <Grid.Column width={16}>
+                      <Page height="256" />
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Column width={16}>
+                      <div>
+                        <p className="sidebar-line-a">Welcome to</p>
+                        <p className="sidebar-line-b">Internship Portal</p>
+                        <p className="sidebar-line-c">
+                          Don&#39;t have an account?
+                        </p>
+                        <div className="signup-button-wrapper">
+                          <Button as={Link} to="/signup" className="ecell-primary-button">Sign Up</Button>
+                        </div>
+                      </div>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </div>
+            </Grid.Column>
+
+            <Grid.Column width={7}>
+              <div className="right-sidebar">
+
+              <div className="message-row">
+                {successMessage.length > 0 &&
+                  <Message success content={successMessage} />
+                }
+                {_.has(errors, 'summary') &&
+                  <Message error content={errors.summary} />
+                }
+              </div>
+              
+
+              <Grid>
+                <Grid.Row className="fingerprint-row">
+                  <Grid.Column width={6}></Grid.Column>
+                  <Grid.Column width={4}>
+                    <Fingerprint/>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+              
+              <Form onSubmit={onSubmit}>
+                <Form.Field className="signup-field">
+                  
+                  <label>E-mail</label>
+                  
+                  <input
+                    id="login-email"
+                    name="email"
+                    value={user.email}
+                    onChange={onChange}
+                    type="text"
+
+                    autoComplete="username"
+                  />
+                  
+                  <div className="pointer-message-error">
+                    {_.has(errors, 'email') &&
+                      <Label htmlFor="login-email" basic pointing className="ecell-red">
+                        {errors.email}
+                      </Label>
+                    }
+                  </div>
+                  
+                </Form.Field>
+
+                <Form.Field>
+                  <label>Password</label>
+                  
+                  <input
+                    id="login-password"
+                    name="password"
+                    value={user.password}
+                    onChange={onChange}
+                    type="password"
+
+                    autoComplete="current-password"
+                  />
+
+                  <div className="pointer-message-error">
+                    {_.has(errors, 'password') &&
+                      <Label htmlFor="login-password" basic pointing className="ecell-red">
+                        {errors.password}
+                      </Label>
+                    }
+                  </div>
+                  
+                </Form.Field>
+
+                <Grid>
+                  <Grid.Row className="button-row">
+                    <Grid.Column width={8}>
+                      <div className="forgot-password">
+                        Forgot Password
+                      </div>
+                    </Grid.Column>
+
+                    <Grid.Column width={8}>
+                        <div className="login-button-wrapper">
+                          <Button type="submit" className="ecell-primary-button">Log In</Button>
+                        </div>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Form>
+              </div>
+            </Grid.Column>
+
+          </Grid.Row>
+        </Grid>
+      </Grid.Column>
+
+    </Grid.Row>
+  </Grid>
 );
 
 LoginForm.propTypes = {
@@ -88,5 +158,6 @@ LoginForm.propTypes = {
     password: PropTypes.string.isRequired,
   }).isRequired,
 };
+
 
 export default LoginForm;
