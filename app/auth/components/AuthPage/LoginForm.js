@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
-import GridColumn, { Message, Label, Form, Button, Grid } from 'semantic-ui-react';
+import { Message, Label, Form, Button, Grid } from 'semantic-ui-react';
 
 import Fingerprint from '../../../assets/fingerprint.svg';
 import Page from '../../../assets/page.svg';
@@ -36,7 +36,7 @@ const LoginForm = ({
                         <p className="sidebar-line-a">Welcome to</p>
                         <p className="sidebar-line-b">Internship Portal</p>
                         <p className="sidebar-line-c">
-                          Already have an account ?
+                          Don&#39;t have an account?
                         </p>
                         <div className="signup-button-wrapper">
                           <Button as={Link} to="/signup" className="ecell-primary-button">Sign Up</Button>

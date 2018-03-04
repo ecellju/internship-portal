@@ -35,7 +35,7 @@ const SignupForm = ({
                         <p className="sidebar-line-a">Welcome to</p>
                         <p className="sidebar-line-b">Internship Portal</p>
                         <p className="sidebar-line-c">
-                          Already have an account ?
+                          Already have an account?
                         </p>
 
                         <div className="signup-button-wrapper">
