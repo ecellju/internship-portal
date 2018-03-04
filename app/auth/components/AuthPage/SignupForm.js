@@ -15,11 +15,9 @@ const SignupForm = ({
   errors,
   user,
 }) => (
-    <Grid>
+    <Grid centered>
       <Grid.Row>
-
-      <Grid.Column width={1}></Grid.Column>
-      <Grid.Column width={14} className="login-container">
+      <Grid.Column width={11} className="signup-container">
         <Grid>
           <Grid.Row>
 
@@ -35,7 +33,7 @@ const SignupForm = ({
                     <Grid.Column width={16}>
                       <div>
                         <p style={{ fontSize: '1.2em', fontWeight: '300' }}>Welcome to</p>
-                        <p style={{ fontSize: '3.5em', lineHeight: '85%' }}>Internship Portal</p>
+                        <p style={{ fontSize: '3em', lineHeight: '85%' }}>Internship Portal</p>
                         <p style={{ fontSize: '1em', fontWeight: '300' }}>
                           Already have an account ?
                         </p>
@@ -162,13 +160,11 @@ const SignupForm = ({
                       autoComplete="new-password"
                     />
 
-                    <div className="pointer-message-error">
                       {_.has(errors, 'retype-password') &&
                         <Label htmlFor="signup-retype-password" className="ecell-red" pointing>
                           {errors.password}
                         </Label>
                       }
-                    </div>
                     
                   </Form.Field>
                   <div className="login-button-wrapper">

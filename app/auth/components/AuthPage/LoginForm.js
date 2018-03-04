@@ -16,11 +16,9 @@ const LoginForm = ({
   successMessage,
   user,
 }) => (
-  <Grid>
+  <Grid centered>
     <Grid.Row>
-
-      <Grid.Column width={1}></Grid.Column>
-      <Grid.Column width={14} className="signup-container">
+      <Grid.Column width={11} className="login-container">
         <Grid>
           <Grid.Row>
 
@@ -36,7 +34,7 @@ const LoginForm = ({
                     <Grid.Column width={16}>
                       <div>
                         <p style={{ fontSize: '1.2em', fontWeight: '300' }}>Welcome to</p>
-                        <p style={{ fontSize: '3.5em', lineHeight: '85%' }}>Internship Portal</p>
+                        <p style={{ fontSize: '3em', lineHeight: '85%' }}>Internship Portal</p>
                         <p style={{ fontSize: '1em', fontWeight: '300' }}>
                           Already have an account ?
                         </p>

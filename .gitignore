@@ -62,3 +62,6 @@ typings/
 
 # Webpack output directory
 dist/
+
+# Sendgrid environment variables file
+sendgrid.env
