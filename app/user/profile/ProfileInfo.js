@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import Auth from '../../auth/modules/Auth';
 import User from '../../auth/modules/User';
-import SkillList from './SkillList';
+import ModalSkillList from './ModalSkillList';
+import ProfileSkillList from './ProfileSkillList';
 // const config = {
 //   headers: {
 //     Authorization: `bearer ${Auth.getToken()}`,
@@ -289,11 +290,11 @@ export default class ProfileInfo extends React.Component {
                 </Form.Field>
               </Grid.Column>
               <Grid.Column style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }} floated="right" width={5}>
-                <SkillList refreshSkillList={this.refreshSkillList} />
+                <ModalSkillList refreshSkillList={this.refreshSkillList} />
               </Grid.Column>
             </Grid>
             <Form>
-              <List items={this.state.skills} />
+              <ProfileSkillList skills={this.state.skills} />
             </Form>
           </Segment>
         </Card.Content>
