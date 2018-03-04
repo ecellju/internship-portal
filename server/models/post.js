@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // isActive : denotes whether the post is viscible to students or not
 const PostSchema = new mongoose.Schema({
-  /* position: {
+  position: {
     type: String,
     required: true,
   },
@@ -26,16 +26,15 @@ const PostSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  applyBy: {
+    type: Date,
+    required: true,
+  },
+  description: { type: String, default: '' },
   postedOn: {
     type: Date,
     required: true,
   },
-  applyBy: {
-    type: Date,
-    required: true,
-  }, */
-  title: { type: String, required: true },
-  description: { type: String, required: true },
   studentsApplied: [{ type: mongoose.Schema.Types.ObjectId }],
   isActive: { type: Boolean, default: true },
 });
