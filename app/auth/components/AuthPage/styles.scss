@@ -7,24 +7,31 @@
   }
 
   .fingerprint-row {
-    margin-top: 24px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  .message-row {
+    margin-top: 0.5em;
+    min-height: 4em;
   }
 
   .user-row {
-    margin-top: 8px;
+    margin-top: 0.25em;;
+    margin-bottom: 1em;
   }
 
   .forgot-password {
     color: #D0D4D7;
     font-family: 'Work Sans';
-    font-size: 12px;
+    font-size: 0.8em;
     font-weight: 300;
-    margin: 36px 0px 0px 8px;
+    margin: 16px 0px 0px 8px;
   }
 
   .info-group {
     position: absolute;
-    bottom: 16px;
+    bottom: 8px;
   }
 
   .login-container {
@@ -57,13 +64,14 @@
   }
 
   .login-button-wrapper {
-    margin-top: 24px;
-    margin-bottom: 12px;
     float: right;
   }
 
+  .pointer-message-error {
+    min-height: 3em;
+  }
+
   .right-sidebar {
-    margin-top: 48px;
     margin-bottom: 48px;
   }
 
@@ -71,7 +79,14 @@
     color: #2EC4B6;
     font-family: 'Work Sans';
 
-    padding: 48px 8px 8px 8px;
+    padding: 1.5em 1em 1.5em 1em;
+  }
+
+  .sidebar-info-signup {
+    color: #2EC4B6;
+    font-family: 'Work Sans';
+
+    padding: 3.6em 1em 1.5em 1em;
   }
 
   .signup-button-wrapper {
@@ -114,7 +129,7 @@
     color: #E71D36;
 
     font-family: "Work Sans";
-    font-weight: normal;
+    font-weight: 300;
   }
 
   .ui.button.ecell-primary-button {
@@ -129,7 +144,7 @@
     color: #2EC4B6;
     background-color: rgba(255,255,255,0);
 
-    padding: 12px 24px 12px 24px;
+    padding: 1em 2em 1em 2em;
 
     -webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05);
     -moz-box-shadow:    0px 0px 12px 0px rgba(0,0,0,0.05);
@@ -152,9 +167,9 @@
     color: rgba(255,255,255,1);
 
 
-    -webkit-box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.1);
-    -moz-box-shadow:    0px 0px 16px 0px rgba(0,0,0,0.1);
-    box-shadow:         0px 0px 16px 0px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0px 0px 1.5em 0px rgba(0,0,0,0.1);
+    -moz-box-shadow:    0px 0px 1.5em 0px rgba(0,0,0,0.1);
+    box-shadow:         0px 0px 1.5em 0px rgba(0,0,0,0.1);
   }
 
   .ui.button.ecell-primary-button:active {
@@ -167,9 +182,9 @@
     background-color: #228F85;
     color: rgba(255,255,255,1);
 
-    -webkit-box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.05);
-    -moz-box-shadow:    0px 0px 16px 0px rgba(0,0,0,0.05);
-    box-shadow:         0px 0px 16px 0px rgba(0,0,0,0.05);
+    -webkit-box-shadow: 0px 0px 1.5em 0px rgba(0,0,0,0.05);
+    -moz-box-shadow:    0px 0px 1.5em 0px rgba(0,0,0,0.05);
+    box-shadow:         0px 0px 1.5em 0px rgba(0,0,0,0.05);
   }
 
   .ui.error.message {
@@ -181,7 +196,7 @@
     background-color: rgba(0,0,0,0);
 
     font-family: "Work Sans";
-    font-weight: normal;
+    font-weight: 300;
 
     box-shadow: 0 0 0 0 rgba(0,0,0,0) inset;
   }
@@ -191,8 +206,7 @@
   }
 
   .ui.form .field {
-    
-    margin-top: 16px;
+    margin: 0em;
   }
 
   .ui.form input[type=text],
@@ -206,7 +220,7 @@
     font-family: "Work Sans";
 
     margin: 0px 0px 0px 8px;
-    padding: 8px 0px 8px 0px;
+    padding: 8px 0px 0px 0px;
   }
 
   .ui.form input[type=text]:focus,
@@ -219,15 +233,15 @@
     font-family: "Work Sans";
 
     margin: 0px 0px 0px 8px;
-    padding: 8px 0px 8px 0px;
+    padding: 8px 0px 0px 0px;
   }
 
   .ui.form .field>label {
 
     color: #011627;
-    font-size: 16px;
+    font-size: 1.2em;
     font-weight: 400;
-    padding: 8px;
+    padding: 8px 0px 0px 8px;
     margin: 0px;
   }
 

@@ -19,46 +19,49 @@ const LoginForm = ({
   <Grid>
     <Grid.Row>
 
-      <Grid.Column width={3}></Grid.Column>
-      <Grid.Column width={10} className="signup-container">
+      <Grid.Column width={1}></Grid.Column>
+      <Grid.Column width={14} className="signup-container">
         <Grid>
           <Grid.Row>
 
             <Grid.Column width={9}>
               <div className="sidebar-info">
-
                 <Grid>
                   <Grid.Row>
-                    <Grid.Column width={4}></Grid.Column>
-                    <Grid.Column width={8}>
-                      <Page height="192"/>
+                    <Grid.Column width={16}>
+                      <Page height="256" />
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Column width={16}>
+                      <div>
+                        <p style={{ fontSize: '1.2em', fontWeight: '300' }}>Welcome to</p>
+                        <p style={{ fontSize: '3.5em', lineHeight: '85%' }}>Internship Portal</p>
+                        <p style={{ fontSize: '1em', fontWeight: '300' }}>
+                          Already have an account ?
+                        </p>
+                        <div className="signup-button-wrapper">
+                          <Button as={Link} to="/signup" className="ecell-primary-button">Sign Up</Button>
+                        </div>
+                      </div>
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>
-                <br/>
-                <div className="info-group">
-                  <p style={{ fontSize: '16px', fontWeight: '300' }}>Welcome to</p>
-                  <p style={{ fontSize: '40px', lineHeight: '85%' }}>Internship Portal</p>
-                  <p style={{ fontSize: '12px', fontWeight: '300' }}>
-                    Don&#39;t have an accout yet?
-                  </p>
-
-                  <div className="signup-button-wrapper">
-                    <Button as={Link} to="/signup" className="ecell-primary-button">Sign Up</Button>
-                  </div>
-                </div>
               </div>
             </Grid.Column>
 
             <Grid.Column width={7}>
               <div className="right-sidebar">
 
-              {successMessage.length > 0 &&
-                <Message success content={successMessage}/>
-              }
-              {_.has(errors, 'summary') &&
-                <Message error content={errors.summary}/>
-              }
+              <div className="message-row">
+                {successMessage.length > 0 &&
+                  <Message success content={successMessage} />
+                }
+                {_.has(errors, 'summary') &&
+                  <Message error content={errors.summary} />
+                }
+              </div>
+              
 
               <Grid>
                 <Grid.Row className="fingerprint-row">
@@ -71,7 +74,9 @@ const LoginForm = ({
               
               <Form onSubmit={onSubmit}>
                 <Form.Field className="signup-field">
-                  <label>e-mail</label>
+                  
+                  <label>E-mail</label>
+                  
                   <input
                     id="login-email"
                     name="email"
@@ -81,15 +86,20 @@ const LoginForm = ({
 
                     autoComplete="username"
                   />
-                  {_.has(errors, 'email') &&
-                    <Label htmlFor="login-email" basic pointing className="ecell-red">
-                      {errors.email}
-                    </Label>
-                  }
+                  
+                  <div className="pointer-message-error">
+                    {_.has(errors, 'email') &&
+                      <Label htmlFor="login-email" basic pointing className="ecell-red">
+                        {errors.email}
+                      </Label>
+                    }
+                  </div>
+                  
                 </Form.Field>
 
                 <Form.Field>
                   <label>Password</label>
+                  
                   <input
                     id="login-password"
                     name="password"
@@ -99,11 +109,15 @@ const LoginForm = ({
 
                     autoComplete="current-password"
                   />
-                  {_.has(errors, 'password') &&
-                    <Label htmlFor="login-password" basic pointing className="ecell-red">
-                      {errors.password}
-                    </Label>
-                  }
+
+                  <div className="pointer-message-error">
+                    {_.has(errors, 'password') &&
+                      <Label htmlFor="login-password" basic pointing className="ecell-red">
+                        {errors.password}
+                      </Label>
+                    }
+                  </div>
+                  
                 </Form.Field>
 
                 <Grid>
