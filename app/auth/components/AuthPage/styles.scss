@@ -18,7 +18,7 @@
 
   .user-row {
     margin-top: 0.25em;;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
   }
 
   .forgot-password {
@@ -207,6 +207,10 @@
 
   .ui.form .field {
     margin: 0em;
+  }
+
+  .ui.form .fields {
+    margin: 0em -0.5em 0em -0.5em;
   }
 
   .ui.form input[type=text],
