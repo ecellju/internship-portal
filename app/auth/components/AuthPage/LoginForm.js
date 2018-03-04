@@ -38,7 +38,7 @@ const LoginForm = ({
                 <br/>
                 <div className="info-group">
                   <p style={{ fontSize: '16px', fontWeight: '300' }}>Welcome to</p>
-                  <p style={{ fontSize: '40px', lineHeight: '50%' }}>Internship Portal</p>
+                  <p style={{ fontSize: '40px', lineHeight: '85%' }}>Internship Portal</p>
                   <p style={{ fontSize: '12px', fontWeight: '300' }}>
                     Don&#39;t have an accout yet?
                   </p>
