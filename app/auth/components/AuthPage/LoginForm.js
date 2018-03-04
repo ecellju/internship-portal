@@ -2,94 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
-import GridColumn, { Message, Divider, Label, Form, Card, Button, Grid } from 'semantic-ui-react';
+import GridColumn, { Message, Label, Form, Button, Grid } from 'semantic-ui-react';
 
 import Fingerprint from '../../../assets/fingerprint.svg';
 import Page from '../../../assets/page.svg';
 import './styles.scss';
 
-// const LoginForm = ({
-//   onSubmit,
-//   onChange,
-//   errors,
-//   successMessage,
-//   user,
-// }) => (
-//   <Card centered>
-//     <Card.Content>
-//       <Card.Header textAlign="center">
-//         Log In to Internship Portal
-//       </Card.Header>
-//     </Card.Content>
-//     <Card.Content>
-//       { successMessage.length > 0 &&
-//         <Message
-//           success
-//           content={successMessage}
-//         />
-//       }
-//       {_.has(errors, 'summary') &&
-//         <Message
-//           error
-//           content={errors.summary}
-//         />
-//       }
-      // <Form onSubmit={onSubmit}>
-      //   <Form.Field>
-      //     <input
-      //       id="login-email"
-      //       name="email"
-      //       placeholder="Email"
-      //       value={user.email}
-      //       onChange={onChange}
-      //       type="text"
-      //     />
-      //     {_.has(errors, 'email') &&
-      //       <Label htmlFor="login-email" basic color="red" pointing>
-      //         {errors.email}
-      //       </Label>
-      //     }
-      //   </Form.Field>
-      //   <Divider />
-      //   <Form.Field>
-      //     <input
-      //       id="login-password"
-      //       name="password"
-      //       placeholder="Password"
-      //       value={user.password}
-      //       onChange={onChange}
-      //       type="password"
-      //     />
-      //     {_.has(errors, 'password') &&
-      //       <Label htmlFor="login-password" basic color="red" pointing>
-      //         {errors.password}
-      //       </Label>
-      //     }
-      //   </Form.Field>
-      //   <div className="centered-button-wrapper">
-      //     <Button primary type="submit">Log In</Button>
-      //   </div>
-      // </Form>
-//       <Card.Description className="bottom-text">
-//         Don&#39;t have an account? <Link to="/signup">Sign Up</Link>
-//       </Card.Description>
-//     </Card.Content>
-//   </Card>
-// );
-
-// LoginForm.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-//   onChange: PropTypes.func.isRequired,
-//   errors: PropTypes.shape({
-//     email: PropTypes.string,
-//     password: PropTypes.string,
-//   }).isRequired,
-//   successMessage: PropTypes.string.isRequired,
-//   user: PropTypes.shape({
-//     email: PropTypes.string.isRequired,
-//     password: PropTypes.string.isRequired,
-//   }).isRequired,
-// };
 
 const LoginForm = ({
   onSubmit,
@@ -119,21 +37,21 @@ const LoginForm = ({
                 </Grid>
                 <br/>
                 <div className="info-group">
-                  <p style={{fontSize: '16px', fontWeight: '300'}}>WELCOME TO</p>
-                  <p style={{ fontSize: '40px'}}>INTERNSHIP PORTAL</p>
+                  <p style={{ fontSize: '16px', fontWeight: '300' }}>Welcome to</p>
+                  <p style={{ fontSize: '40px', lineHeight: '50%' }}>Internship Portal</p>
                   <p style={{ fontSize: '12px', fontWeight: '300' }}>
-                    DON&#39;T HAVE AN ACCOUNT YET?
+                    Don&#39;t have an accout yet?
                   </p>
 
                   <div className="signup-button-wrapper">
-                    <Button type="submit" className="ecell-primary-button">SIGN UP</Button>
+                    <Button as={Link} to="/signup" className="ecell-primary-button">Sign Up</Button>
                   </div>
                 </div>
               </div>
             </Grid.Column>
 
             <Grid.Column width={7}>
-              <div class="right-sidebar">
+              <div className="right-sidebar">
 
               {successMessage.length > 0 &&
                 <Message success content={successMessage}/>
@@ -153,7 +71,7 @@ const LoginForm = ({
               
               <Form onSubmit={onSubmit}>
                 <Form.Field className="signup-field">
-                  <label>E-MAIL</label>
+                  <label>e-mail</label>
                   <input
                     id="login-email"
                     name="email"
@@ -171,7 +89,7 @@ const LoginForm = ({
                 </Form.Field>
 
                 <Form.Field>
-                  <label>PASSWORD</label>
+                  <label>Password</label>
                   <input
                     id="login-password"
                     name="password"
@@ -192,13 +110,13 @@ const LoginForm = ({
                   <Grid.Row className="button-row">
                     <Grid.Column width={8}>
                       <div className="forgot-password">
-                        FORGOT PASSWORD
+                        Forgot Password
                       </div>
                     </Grid.Column>
 
                     <Grid.Column width={8}>
                         <div className="login-button-wrapper">
-                          <Button type="submit" className="ecell-primary-button">LOG IN</Button>
+                          <Button type="submit" className="ecell-primary-button">Log In</Button>
                         </div>
                     </Grid.Column>
                   </Grid.Row>

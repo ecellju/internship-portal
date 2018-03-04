@@ -18,11 +18,15 @@ const Navbar = (props) => {
   const SwitchWhenUnauthenticated = (
     <Switch>
       <Route exact path="/login">
-        <Menu.Item as={Link} to="/signup">Sign Up</Menu.Item>
+        <Menu.Item as={Link} to="/signup" className="ecell-primary">
+          Sign Up
+        </Menu.Item>
       </Route>
 
       <Route exact path="/signup">
-        <Menu.Item as={Link} to="/login">Login</Menu.Item>
+        <Menu.Item as={Link} to="/login" className="ecell-primary">
+          Login
+        </Menu.Item>
       </Route>
     </Switch>
   );
@@ -30,7 +34,9 @@ const Navbar = (props) => {
   return (
     <Menu attached size="huge" className="navbar">
       <Menu.Menu>
-        <Menu.Item header as={Link} to="/">Internship Portal</Menu.Item>
+        <Menu.Item header as={Link} to="/" className="ecell-header">
+          Internship Portal
+        </Menu.Item>
       </Menu.Menu>
       <Menu.Menu position="right">
         {Auth.isUserAuthenticated() ? LogoutMenuItem : SwitchWhenUnauthenticated}

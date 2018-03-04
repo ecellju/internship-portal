@@ -1,6 +1,6 @@
 .auth-page-container {
   
-  margin-top: 64px;
+  margin-top: 24px;
 
   .button-row {
     margin-bottom: 24px;
@@ -10,8 +10,13 @@
     margin-top: 24px;
   }
 
+  .user-row {
+    margin-top: 8px;
+  }
+
   .forgot-password {
     color: #D0D4D7;
+    font-family: 'Work Sans';
     font-size: 12px;
     font-weight: 300;
     margin: 36px 0px 0px 8px;
@@ -22,7 +27,38 @@
     bottom: 16px;
   }
 
+  .login-container {
+    position: absolute;
+    border-radius: 8px;
+    padding: 8px 16px 16px 16px;
+
+    overflow: hidden;
+
+    font-family: 'Work Sans';
+
+    -webkit-box-shadow: 0px 0px 24px 0px rgba(0,0,0,0.1);
+    -moz-box-shadow:    0px 0px 24px 0px rgba(0,0,0,0.1);
+    box-shadow:         0px 0px 24px 0px rgba(0,0,0,0.1);
+  }
+
+  .login-container::before {
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:-5%;
+    width:60%;
+    background:#011627;
+    transform:skew(3deg);
+
+    -webkit-box-shadow: 0px 0px 36px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow:    0px 0px 36px 0px rgba(0,0,0,0.2);
+    box-shadow:         0px 0px 36px 0px rgba(0,0,0,0.2);
+  }
+
   .login-button-wrapper {
+    margin-top: 24px;
+    margin-bottom: 12px;
     float: right;
   }
 
@@ -33,9 +69,9 @@
 
   .sidebar-info {
     color: #2EC4B6;
-    font-family: 'Josefin Sans';
+    font-family: 'Work Sans';
 
-    padding: 8px;
+    padding: 48px 8px 8px 8px;
   }
 
   .signup-button-wrapper {
@@ -49,7 +85,7 @@
 
     overflow: hidden;
 
-    font-family: 'Josefin Sans';
+    font-family: 'Work Sans';
 
     -webkit-box-shadow: 0px 0px 24px 0px rgba(0,0,0,0.1);
     -moz-box-shadow:    0px 0px 24px 0px rgba(0,0,0,0.1);
@@ -65,8 +101,6 @@
     width:60%;
     background:#011627;
     transform:skew(3deg);
-
-    font-family: 'Josefin Sans';
 
     -webkit-box-shadow: 0px 0px 36px 0px rgba(0,0,0,0.2);
     -moz-box-shadow:    0px 0px 36px 0px rgba(0,0,0,0.2);
@@ -84,36 +118,31 @@
   }
 
   .ui.button.ecell-primary-button {
-    border-radius: 100px;
-
-    font-family: 'Josefin Sans';
-    font-size: 16px;
-    
+    border-radius: 100px;    
     border-color: #2EC4B6;
     border-style: solid;
     border-width: 1px;
 
+    font-family: 'Work Sans';
+    font-weight: 400;
+
     color: #2EC4B6;
     background-color: rgba(255,255,255,0);
 
-    margin-top: 24px;
-    padding: 12px 24px 9px 24px;
+    padding: 12px 24px 12px 24px;
 
     -webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05);
     -moz-box-shadow:    0px 0px 12px 0px rgba(0,0,0,0.05);
     box-shadow:         0px 0px 12px 0px rgba(0,0,0,0.05);
 
-    -webkit-transition: all 0.5s ease-out;
-    -moz-transition:    all 0.5s ease-out;
-    -o-transition:      all 0.5s ease-out;
-    transition:         all 0.5s ease-out;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition:    all 0.5s ease;
+    -o-transition:      all 0.5s ease;
+    transition:         all 0.5s ease;
   }
 
   .ui.button.ecell-primary-button:hover {
     border-radius: 100px;
-
-    font-family: 'Josefin Sans';
-    font-size: 16px;
     
     border-color: #2EC4B6;
     border-style: solid;
@@ -122,8 +151,6 @@
     background-color: #2EC4B6;
     color: rgba(255,255,255,1);
 
-    margin-top: 24px;
-    padding: 12px 24px 9px 24px;
 
     -webkit-box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.1);
     -moz-box-shadow:    0px 0px 16px 0px rgba(0,0,0,0.1);
@@ -132,9 +159,6 @@
 
   .ui.button.ecell-primary-button:active {
     border-radius: 100px;
-
-    font-family: 'Josefin Sans';
-    font-size: 16px;
     
     border-color: #228F85;
     border-style: solid;
@@ -142,9 +166,6 @@
 
     background-color: #228F85;
     color: rgba(255,255,255,1);
-
-    margin-top: 24px;
-    padding: 12px 24px 9px 24px;
 
     -webkit-box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.05);
     -moz-box-shadow:    0px 0px 16px 0px rgba(0,0,0,0.05);
@@ -171,7 +192,7 @@
 
   .ui.form .field {
     
-    margin-top: 40px;
+    margin-top: 16px;
   }
 
   .ui.form input[type=text],
@@ -179,6 +200,8 @@
     border-radius: 0px;
     border-style: none none solid none;
     border-width: 1px;
+
+    color: #011627;
 
     font-family: "Work Sans";
 
@@ -203,8 +226,23 @@
 
     color: #011627;
     font-size: 16px;
+    font-weight: 400;
     padding: 8px;
     margin: 0px;
+  }
+
+  .ui.success.message {
+    border-color: #2EC4B6;
+    border-style: solid;
+    border-radius: 100px;
+    border-width: 1PX;    
+    color:#2EC4B6;
+    background-color: rgba(0,0,0,0);
+
+    font-family: "Work Sans";
+    font-weight: normal;
+
+    box-shadow: 0 0 0 0 rgba(0,0,0,0) inset;
   }
 }
 
