@@ -25,7 +25,7 @@ const Navbar = (props) => {
 
       <Route exact path="/signup">
         <Menu.Item as={Link} to="/login" className="ecell-primary">
-          Login
+          Log In
         </Menu.Item>
       </Route>
     </Switch>
