@@ -32,9 +32,9 @@ const SignupForm = ({
                   <Grid.Row>
                     <Grid.Column width={16}>
                       <div>
-                        <p style={{ fontSize: '1.2em', fontWeight: '300' }}>Welcome to</p>
-                        <p style={{ fontSize: '3em', lineHeight: '85%' }}>Internship Portal</p>
-                        <p style={{ fontSize: '1em', fontWeight: '300' }}>
+                        <p className="sidebar-line-a">Welcome to</p>
+                        <p className="sidebar-line-b">Internship Portal</p>
+                        <p className="sidebar-line-c">
                           Already have an account ?
                         </p>
 
