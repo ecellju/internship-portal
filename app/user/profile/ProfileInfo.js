@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button, Card, Form, Label, Segment } from 'semantic-ui-react';
+import { Button, Card, Form, Label, Segment, List, Grid, Icon, Modal } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Auth from '../../auth/modules/Auth';
 import User from '../../auth/modules/User';
+import SkillList from './SkillList';
 // const config = {
 //   headers: {
 //     Authorization: `bearer ${Auth.getToken()}`,
@@ -14,7 +15,6 @@ const genderOptions = [
   { key: 'm', text: 'Male', value: 'Male' },
   { key: 'f', text: 'Female', value: 'Female' },
 ];
-
 
 const submitPost = formData =>
   axios.post('/api/user/profile/CV', formData, {
@@ -43,7 +43,12 @@ export default class ProfileInfo extends React.Component {
       editable: false,
       CV: null,
       profile: props.profile,
+      skills: [],
     };
+    this.refreshSkillList = (skills) => {
+      this.setState({ ...this.state, skills });
+    };
+    this.refreshSkillList = this.refreshSkillList.bind(this);
     this.toggleEditability = () => {
       if (this.state.editable) {
         saveProfile(this.state.profile)
@@ -270,6 +275,25 @@ export default class ProfileInfo extends React.Component {
                  //  width={6}
                 />
               </Form.Group>
+            </Form>
+          </Segment>
+        </Card.Content>
+        <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
+          <Segment raised>
+            <Grid style={{ marginTop: 0, marginBottom: 0 }} columns={2} >
+              <Grid.Column floated="left" style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }} width={5}>
+                <Form.Field >
+                  <Label style={{ marginBottom: 20, fontSize: 15, fontWeight: 'bold' }} color="blue" ribbon htmlFor="personaldetails" className="form-labels">
+                    Featured Skills
+                  </Label>
+                </Form.Field>
+              </Grid.Column>
+              <Grid.Column style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }} floated="right" width={5}>
+                <SkillList refreshSkillList={this.refreshSkillList} />
+              </Grid.Column>
+            </Grid>
+            <Form>
+              <List items={this.state.skills} />
             </Form>
           </Segment>
         </Card.Content>
