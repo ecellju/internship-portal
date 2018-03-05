@@ -51,7 +51,6 @@ exports.createPostValidation = (req, res, next) => {
   }
 
   if (hasErrors) {
-    errors.summary = 'Check the form for errors';
     res.status(400).json({
       message: 'Validation error',
       errors,

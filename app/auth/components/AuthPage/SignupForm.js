@@ -52,7 +52,6 @@ const SignupForm = ({
                       </div>
                     </Grid.Column>
                   </Grid.Row>
-
                 </Grid>
               </div>
             </Grid.Column>
@@ -214,14 +213,11 @@ const SignupForm = ({
                   </div>
 
                 </Form>
-
               </div>
             </Grid.Column>
-
           </Grid.Row>
         </Grid>
       </Grid.Column>
-
     </Grid.Row>
   </Grid>
 );
