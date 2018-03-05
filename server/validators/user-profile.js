@@ -7,3 +7,10 @@ exports.saveProfileValidation = (req, res, next) => {
 exports.getProfileValidation = (req, res, next) => {
   next();
 };
+exports.addSkillValidation = (req, res, next) => {
+  next();
+};
+exports.getSkillsValidation = (req, res, next) => {
+  next();
+};
+

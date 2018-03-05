@@ -49,3 +49,28 @@ exports.getProfile = (req, res) => {
   });
 };
 
+exports.addSkill = (req, res) => {
+  console.log('hi');
+  console.log(req.body);
+  StudentModel.findByIdAndUpdate(
+    req.body.userId, {
+      $set: {
+        featuredSkills: req.body.skills,
+      },
+    },
+    (err, docs) => {
+      if (err || !docs) return res.status(200).json({ message: docs });
+      console.log(docs);
+      return res.status(200).json({ message: docs.featuredSkills });
+    },
+  );
+};
+
+exports.getSkills = (req, res) => {
+  console.log(req.query);
+  StudentModel.findById({ _id: req.query.userId }, (err, docs) => {
+    if (err || !docs) return res.status(200).json({ message: 'database error' });
+    console.log('get profile ', docs);
+    return res.status(200).json(docs.featuredSkills[1]);
+  });
+};
