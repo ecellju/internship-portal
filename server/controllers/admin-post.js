@@ -14,6 +14,7 @@ exports.getAllPost = (req, res) => {
     else res.status(200).json(docs);
   });
 };
+
 exports.getPost = (req, res) => {
   PostModel.findById({ _id: req.params.id }, (err, docs) => {
     if (err || !docs) res.status(500).json({ message: 'database error' });
@@ -34,4 +35,3 @@ exports.deletePost = (req, res) => {
     else res.status(200).json({ message: 'post deleted' });
   });
 };
-

@@ -8,19 +8,19 @@ const accessControlValidators = require('../validators/access-control');
 router.get(
   '/admin-list',
   accessControlValidators.getAdminListValidator,
-  accessControlControllers.getAdminListController,
+  accessControlControllers.getAdminListController
 );
 
 router.post(
   '/create-admin',
   accessControlValidators.createAdminValidator,
-  accessControlControllers.createAdminController,
+  accessControlControllers.createAdminController
 );
 
 router.post(
   '/remove-admin',
   accessControlValidators.removeAdminValidator,
-  accessControlControllers.removeAdminController,
+  accessControlControllers.removeAdminController
 );
 
 module.exports = router;
