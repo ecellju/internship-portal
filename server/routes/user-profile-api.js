@@ -9,4 +9,5 @@ router.post('/profile', userProfileValidator.saveProfileValidation, userProfileC
 router.get('/profile', userProfileValidator.getProfileValidation, userProfileController.getProfile);
 router.post('/profile/addSkill', userProfileValidator.addSkillValidation, userProfileController.addSkill);
 router.get('/profile/getSkills', userProfileValidator.getSkillsValidation, userProfileController.getSkills);
+router.get('/unselected-skills', userProfileValidator.getUnselectedSkillsValidation, userProfileController.getUnselectedSkills);
 module.exports = router;

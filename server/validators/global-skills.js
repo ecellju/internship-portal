@@ -4,3 +4,4 @@ exports.getAllSkillsValidation = (req, res, next) => {
 exports.addSkillsValidation = (req, res, next) => {
   next();
 };
+

@@ -4,6 +4,7 @@ const Busboy = require('busboy');
 const mongoose = require('mongoose');
 
 const StudentModel = mongoose.model('Student');
+const SkillModel = mongoose.model('Skill');
 
 exports.uploadCV = (req, res) => {
   console.log('Upload cv end point');
@@ -72,5 +73,35 @@ exports.getSkills = (req, res) => {
     if (err || !docs) return res.status(200).json({ message: 'database error' });
     console.log('get profile ', docs);
     return res.status(200).json(docs.featuredSkills[1]);
+  });
+};
+
+exports.getUnselectedSkills = (req, res) => {
+  console.log(req.query.userId);
+  let userSkills = [];
+  const allSkills = [];
+  StudentModel.findById({ _id: req.query.userId }, (err, docs) => {
+    if (err || !docs) res.status(200).json({ message: 'database error' });
+    else {
+      userSkills = docs.featuredSkills;
+      SkillModel.find({ }, (error, data) => {
+        if (error) res.status(500).json({ message: 'database error' });
+        else {
+          data.forEach((skill) => {
+            allSkills.push(skill.name);
+          });
+          const unselectedSkills = [];
+          allSkills.forEach((skill) => {
+            let found = false;
+            userSkills.forEach((userSkill) => {
+              // console.log(skill, userSkill);
+              if (skill === userSkill) found = true;
+            });
+            if (!found)unselectedSkills.push(skill);
+          });
+          res.status(200).json({ unselectedSkills });
+        }
+      });
+    }
   });
 };

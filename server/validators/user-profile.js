@@ -14,3 +14,6 @@ exports.getSkillsValidation = (req, res, next) => {
   next();
 };
 
+exports.getUnselectedSkillsValidation = (req, res, next) => {
+  next();
+};
