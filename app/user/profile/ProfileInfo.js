@@ -40,6 +40,19 @@ const submitPost = formData =>
       console.log('res');
       return res.data;
     });
+
+// ------------------------------
+const testApiCall = () =>
+  axios.post('/api/user/add', {}, {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
+    },
+  })
+    .then((res) => {
+      console.log('test ---');
+      return res.data;
+    });
+// ------------------
 const saveProfile = (profile) => {
   console.log('profile to be saved is ', profile);
   const userId = User.getId();
@@ -101,6 +114,14 @@ export default class ProfileInfo extends React.Component {
         })
         .catch(console.error());
       console.log('back here ok');
+    };
+    this.handleTest = () => {
+      console.log('loading skill data base');
+      testApiCall()
+        .then((res) => {
+          console.log('done testing', res);
+        })
+        .catch(console.error());
     };
   }
   componentWillMount() {
@@ -326,6 +347,9 @@ export default class ProfileInfo extends React.Component {
             </Grid>
             <Form>
               <ProfileSkillList skills={this.state.skills} />
+            </Form>
+            <Form>
+              <Button primary onClick={this.handleTest}>Test</Button>
             </Form>
           </Segment>
         </Card.Content>

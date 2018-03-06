@@ -18,6 +18,7 @@ exports.getAllSkills = (req, res) => {
 };
 
 exports.addSkills = (req, res) => {
+  console.log('in Api');
   let isError = false;
   skillList.forEach((skill) => {
     console.log(skill);
@@ -28,6 +29,6 @@ exports.addSkills = (req, res) => {
     });
   });
   if (isError) return res.status(500).json({ message: 'database error' });
-  return res.status(500).json({ message: 'doc created' });
+  return res.status(200).json({ message: 'doc created' });
 };
 
