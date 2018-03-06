@@ -62,7 +62,7 @@ exports.addSkill = (req, res) => {
     (err, docs) => {
       if (err || !docs) return res.status(200).json({ message: docs });
       console.log(docs);
-      return res.status(200).json({ message: docs.featuredSkills });
+      return res.status(200).json({ message: 'skills updated' });
     },
   );
 };
@@ -72,7 +72,7 @@ exports.getSkills = (req, res) => {
   StudentModel.findById({ _id: req.query.userId }, (err, docs) => {
     if (err || !docs) return res.status(200).json({ message: 'database error' });
     console.log('get profile ', docs);
-    return res.status(200).json(docs.featuredSkills[1]);
+    return res.status(200).json(docs.featuredSkills);
   });
 };
 
@@ -91,6 +91,7 @@ exports.getUnselectedSkills = (req, res) => {
             allSkills.push(skill.name);
           });
           const unselectedSkills = [];
+          
           allSkills.forEach((skill) => {
             let found = false;
             userSkills.forEach((userSkill) => {
@@ -99,7 +100,7 @@ exports.getUnselectedSkills = (req, res) => {
             });
             if (!found)unselectedSkills.push(skill);
           });
-          res.status(200).json({ unselectedSkills });
+          res.status(200).json(unselectedSkills);
         }
       });
     }

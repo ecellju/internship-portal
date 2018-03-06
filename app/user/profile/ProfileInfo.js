@@ -17,6 +17,19 @@ const genderOptions = [
   { key: 'f', text: 'Female', value: 'Female' },
 ];
 
+const getFeaturededSkills = () => {
+  const userId = User.getId();
+  return axios.get('/api/user/profile/getSkills', {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
+    },
+    params: {
+      userId,
+    },
+  })
+    .then(res => res);
+};
+
 const submitPost = formData =>
   axios.post('/api/user/profile/CV', formData, {
     headers: {
@@ -46,8 +59,15 @@ export default class ProfileInfo extends React.Component {
       profile: props.profile,
       skills: [],
     };
-    this.refreshSkillList = (skills) => {
-      this.setState({ ...this.state, skills });
+    this.refreshSkillList = () => {
+      getFeaturededSkills()
+        .then((res) => {
+        // console.log('THIS ', this);
+          console.log('featured Skills ', res.data);
+          this.setState({ ...this.state, skills: res.data });
+          // console.log('get', this.state);
+        })
+        .catch(console.error());
     };
     this.refreshSkillList = this.refreshSkillList.bind(this);
     this.toggleEditability = () => {
@@ -82,6 +102,17 @@ export default class ProfileInfo extends React.Component {
         .catch(console.error());
       console.log('back here ok');
     };
+  }
+  componentWillMount() {
+    // console.log('Mounting parent');
+    getFeaturededSkills()
+      .then((res) => {
+      // console.log('THIS ', this);
+        console.log('featured Skills ', res.data);
+        this.setState({ ...this.state, skills: res.data });
+        // console.log('get', this.state);
+      })
+      .catch(console.error());
   }
   componentWillReceiveProps(props) {
     this.setState({ profile: props.profile });
