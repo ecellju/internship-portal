@@ -1,35 +1,30 @@
 import React from 'react';
 import { Card, Container } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import PostItem from './PostItem';
+import PostItem from '../../common/post/PostItem';
 
-// const config = {
-//   headers: {
-//     Authorization: `bearer ${Auth.getToken()}`,
-//   },
-// };
+import './styles.scss';
 
 const PostList = props => (
-  <Container text >
-    <Card.Group>
-      {props.posts.map(post => (
-        <PostItem
-          key={post._id}
-          postTitle={post.title}
-          postDescription={post.description}
-          id={post._id}
-        />
-        ))}
-    </Card.Group>
-  </Container>
+  <div className="post-list-container">
+    <Container text >
+      <Card.Group>
+        {props.posts.map(post => (
+          <PostItem
+            key={post._id}
+            isAdmin
+            post={post}
+            id={post._id}
+          />
+          ))}
+      </Card.Group>
+    </Container>
+  </div>
 );
 
 PostList.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,
-
   })).isRequired,
 };
 export default PostList;

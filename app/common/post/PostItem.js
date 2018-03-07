@@ -33,10 +33,12 @@ export default class PostItem extends React.Component {
 
 
   render() {
+    const postDetailsPath =
+      (this.props.isAdmin ? `/admin/posts/${this.props.id}` : `/user/posts/${this.props.id}`);
     return (
       <Card fluid >
         <Card.Content>
-          <Card.Header as={Link} to={`/admin/posts/${this.props.id}`} > {this.props.post.position}</Card.Header>
+          <Card.Header as={Link} to={postDetailsPath} > {this.props.post.position}</Card.Header>
           <Card.Meta>{this.props.post.company}</Card.Meta>
           <Card.Meta>{`Location: ${this.props.post.location}`}</Card.Meta>
           <Card.Description>
@@ -109,6 +111,10 @@ PostItem.propTypes = {
     postedOn: PropTypes.string.isRequired,
     applyBy: PropTypes.string.isRequired,
   }).isRequired,
+  isAdmin: PropTypes.bool,
   id: PropTypes.string.isRequired,
 };
 
+PostItem.defaultProps = {
+  isAdmin: false,
+};
