@@ -4,31 +4,27 @@ const config = require('../config');
 
 
 const SkillModel = mongoose.model('Skill');
-const skillList = [
-  'Database Management', 'C++', 'Machine Learning', 'People Skills', 'Python', 'Full stack development',
-  'C#', 'Java', 'Data Science', 'Leadership',
-];
 
 exports.getAllSkills = (req, res) => {
   console.log(req.query);
   SkillModel.find({ }, (err, docs) => {
     if (err) res.status(500).json({ message: 'database error' });
-    else res.status(200).json(docs);
+    else {
+      const temp = [];
+      docs.forEach((item) => {
+        temp.push(item.name);
+      });
+      res.status(200).json(temp);
+    }
   });
 };
 
 exports.addSkills = (req, res) => {
-  console.log('in Api');
-  let isError = false;
-  skillList.forEach((skill) => {
-    console.log(skill);
-    const item = { name: skill };
-    const newPost = new SkillModel(item);
-    newPost.save((err) => {
-      if (err) isError = true;
-    });
+  console.log('in Api', req.body);
+  const newPost = new SkillModel(req.body);
+  newPost.save((err) => {
+    if (err) res.status(500).json({ message: 'database error' });
+    else res.status(200).json({ message: 'skill list updated' });
   });
-  if (isError) return res.status(500).json({ message: 'database error' });
-  return res.status(200).json({ message: 'doc created' });
 };
 

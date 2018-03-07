@@ -37,6 +37,9 @@ export default class Navbar extends React.Component {
               <Menu.Item name="students" as={NavLink} exact to="/admin/students">
                 Students
               </Menu.Item>
+              <Menu.Item name="actions" as={NavLink} exact to="/admin/actions">
+                Actions
+              </Menu.Item>
               <Menu.Menu position="right">
                 {User.isSuperAdmin() &&
                   <Menu.Item as={NavLink} exact to="/admin/access-control">

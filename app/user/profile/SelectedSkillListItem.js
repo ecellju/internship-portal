@@ -2,7 +2,7 @@ import React from 'react';
 import { Label, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
-export default class AvailableSkillListItem extends React.Component {
+export default class SelectedSkillListItem extends React.Component {
   constructor() {
     super();
     this.handleClick = (event, data) => {
@@ -17,6 +17,6 @@ export default class AvailableSkillListItem extends React.Component {
   }
 }
 
-AvailableSkillListItem.propTypes = {
+SelectedSkillListItem.propTypes = {
   skill: PropTypes.string.isRequired,
 };

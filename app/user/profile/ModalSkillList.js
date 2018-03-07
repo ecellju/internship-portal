@@ -57,8 +57,6 @@ export default class ModalSkillList extends React.Component {
       const temp = this.state.selectedSkills;
       temp.push(skill);
       this.setState({ ...this.state, selectedSkills: temp });
-      // console.log('selected');
-      // console.log(this.state.selectedSkills);
       const newSkillList = this.state.unselectedSkills.filter(e => e !== skill);
       this.setState({ ...this.state, unselectedSkills: newSkillList });
     };
