@@ -29,6 +29,9 @@
 
   $color-primary-green-shade: #228F85;
 
+  $color-highlight-bg-hover: #F4FFFD;
+  $color-highlight-bg-focus: #F9FFFE;
+
   margin-top: 0.5em;
   font-size: 12px;
 
@@ -73,8 +76,6 @@
     overflow: hidden;
     font-family: $font-primary;
 
-    margin-top: calc((100vh - 640px)/2) !important;
-
     @include box-shadow(0em, 0em, 2em, 0em, rgba(0,0,0,0.1));
   }
 
@@ -94,6 +95,10 @@
   .login-button-wrapper {
     float: right;
     margin-top: 1em;
+  }
+
+  .main-container {
+    height: 92vh;
   }
 
   .pointer-message-error {
@@ -142,7 +147,6 @@
     border-radius: 0.64em;
 
     padding: 0em 0em 1.5em 0em;
-    margin-top: calc((100vh - 672px)/2) !important;
 
     overflow: hidden;
 
@@ -274,6 +278,13 @@
     padding: 0.5em 0em 0em 0em;
 
     width: 98% !important;
+
+    @include transition(background-color, 0.5s, ease);
+  }
+
+  .ui.form input[type=text]:hover,
+  .ui.form input[type=password]:hover {
+    background-color: $color-highlight-bg-hover;
   }
 
   .ui.form input[type=text]:focus,
@@ -282,6 +293,8 @@
     border-radius: 0em;
     border-style: none none solid none;
     border-width: 1px;
+
+    background-color: $color-highlight-bg-focus;
 
     font-family: $font-primary;
 

@@ -16,7 +16,7 @@ const LoginForm = ({
   successMessage,
   user,
 }) => (
-  <Grid centered>
+  <Grid verticalAlign="middle" centered className="main-container">
     <Grid.Row>
 
       <Grid.Column width={11} className="login-container">
