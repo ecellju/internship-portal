@@ -27,7 +27,11 @@ exports.saveProfile = (req, res) => {
   StudentModel.findByIdAndUpdate(
     req.body.userId, {
       $set: {
-        profile: req.body.profile, firstName: req.body.profile.firstName, lastName: req.body.profile.lastName, email: req.body.profile.Email,
+        profile: req.body.profile,
+        firstName: req.body.profile.firstName,
+        lastName: req.body.profile.lastName,
+        email: req.body.profile.Email,
+        featuredSkills: req.body.newSkills,
       },
     },
     (err, docs) => {
@@ -91,7 +95,7 @@ exports.getUnselectedSkills = (req, res) => {
             allSkills.push(skill.name);
           });
           const unselectedSkills = [];
-          
+
           allSkills.forEach((skill) => {
             let found = false;
             userSkills.forEach((userSkill) => {

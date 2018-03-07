@@ -17,6 +17,19 @@ const genderOptions = [
   { key: 'f', text: 'Female', value: 'Female' },
 ];
 
+const getUnselectedSkills = () => {
+  const userId = User.getId();
+  return axios.get('/api/user/unselected-skills', {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
+    },
+    params: {
+      userId,
+    },
+  })
+    .then(res => res);
+};
+
 const getFeaturededSkills = () => {
   const userId = User.getId();
   return axios.get('/api/user/profile/getSkills', {
@@ -25,6 +38,18 @@ const getFeaturededSkills = () => {
     },
     params: {
       userId,
+    },
+  })
+    .then(res => res);
+};
+
+const addNewSkills = (newSkills) => {
+  const userId = User.getId();
+  const data = { userId, skills: newSkills };
+  console.log(data);
+  return axios.post('/api/user/profile/addSkill', data, {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
     },
   })
     .then(res => res);
@@ -40,10 +65,10 @@ const submitPost = formData =>
       console.log('res');
       return res.data;
     });
-const saveProfile = (profile) => {
+const saveProfile = (profile, newSkills) => {
   console.log('profile to be saved is ', profile);
   const userId = User.getId();
-  return axios.post('/api/user/profile', { userId, profile }, {
+  return axios.post('/api/user/profile', { userId, profile, newSkills }, {
     headers: {
       Authorization: `bearer ${Auth.getToken()}`,
     },
@@ -57,14 +82,90 @@ export default class ProfileInfo extends React.Component {
       editable: false,
       CV: null,
       profile: props.profile,
-      skills: [],
+      userSkills: [],
+      toDeleteSkills: [],
+      modalUnselectedSkills: [],
+      modalSelectedSkills: [],
     };
+    this.handleAdd = () => {
+      let featuredSkills = [];
+      getFeaturededSkills()
+        .then((res) => {
+          featuredSkills = res.data;
+          const temp = this.state.modalSelectedSkills;
+          for (let i = 0; i < temp.length; i += 1) {
+            featuredSkills.push(temp[i]);
+          }
+          console.log('new skills ', featuredSkills);
+          addNewSkills(featuredSkills)
+            .then((resp) => {
+            // console.log('THIS ', this);
+              console.log(resp);
+              getUnselectedSkills()
+                .then((response) => {
+                // console.log('THIS ', this);
+                  // console.log('unselected Skills ', response.data);
+                  this.setState({ ...this.state, modalUnselectedSkills: response.data });
+                  // console.log('get', this.state);
+                })
+                .catch(console.error());
+              this.refreshSkillList();
+              // console.log('get', this.state);
+            })
+            .catch(console.error());
+          this.setState({ ...this.state, modalSelectedSkills: [] });
+          // console.log('state now', this.state);
+        })
+        .catch(console.error());
+    };
+    this.handleAdd = this.handleAdd.bind(this);
+    this.close = () => {
+      const tempSelected = this.state.modalSelectedSkills;
+      const tempUnselected = this.state.modalUnselectedSkills;
+      // console.log('jjj', tempSelected, tempUnselected);
+      for (let i = 0; i < tempSelected.length; i += 1) {
+        tempUnselected.push(tempSelected[i]);
+      }
+      this.setState({
+        ...this.state, modalSelectedSkills: [], modalUnselectedSkills: tempUnselected,
+      });
+    };
+    this.close = this.close.bind(this);
+    this.removeSkill = (skill) => {
+      const newUserSkills = this.state.userSkills.filter(e => e !== skill);
+      const newtoDeleteSkills = this.state.toDeleteSkills;
+      newtoDeleteSkills.push(skill);
+      this.setState({ ...this.state, userSkills: newUserSkills, toDeleteSkills: newtoDeleteSkills });
+    };
+    this.restoreSkill = (skill) => {
+      const newtoDeleteSkills = this.state.toDeleteSkills.filter(e => e !== skill);
+      const newUserSkills = this.state.userSkills;
+      newUserSkills.push(skill);
+      this.setState({ ...this.state, userSkills: newUserSkills, toDeleteSkills: newtoDeleteSkills });
+    };
+    this.removeSkill = this.removeSkill.bind(this);
+    this.restoreSkill = this.restoreSkill.bind(this);
+    this.modalAddSkill = (skill) => {
+      const temp = this.state.modalSelectedSkills;
+      temp.push(skill);
+      this.setState({ ...this.state, modalSelectedSkills: temp });
+      const newSkillList = this.state.modalUnselectedSkills.filter(e => e !== skill);
+      this.setState({ ...this.state, modalUnselectedSkills: newSkillList });
+    };
+    this.modalRemoveSkill = (skill) => {
+      const newSelected = this.state.modalSelectedSkills.filter(e => e !== skill);
+      const newUnselected = this.state.modalUnselectedSkills;
+      newUnselected.push(skill);
+      this.setState({ ...this.state, modalSelectedSkills: newSelected, modalUnselectedSkills: newUnselected });
+    };
+    this.modalAddSkill = this.modalAddSkill.bind(this);
+    this.modalRemoveSkill = this.modalRemoveSkill.bind(this);
     this.refreshSkillList = () => {
       getFeaturededSkills()
         .then((res) => {
         // console.log('THIS ', this);
           console.log('featured Skills ', res.data);
-          this.setState({ ...this.state, skills: res.data });
+          this.setState({ ...this.state, userSkills: res.data });
           // console.log('get', this.state);
         })
         .catch(console.error());
@@ -72,10 +173,22 @@ export default class ProfileInfo extends React.Component {
     this.refreshSkillList = this.refreshSkillList.bind(this);
     this.toggleEditability = () => {
       if (this.state.editable) {
-        saveProfile(this.state.profile)
+        saveProfile(this.state.profile, this.state.userSkills)
           .then((res) => {
           // console.log('THIS ', this);
             console.log('response on Profile Save is', res);
+            getUnselectedSkills()
+              .then((resp) => {
+              // console.log('THIS ', this);
+                // console.log('unselected Skills ', res.data);
+                this.setState({
+                  ...this.state,
+                  modalUnselectedSkills: resp.data,
+                  toDeleteSkills: [],
+                });
+                // console.log('get', this.state);
+              })
+              .catch(console.error());
           })
           .catch(console.error());
       }
@@ -109,11 +222,19 @@ export default class ProfileInfo extends React.Component {
       .then((res) => {
       // console.log('THIS ', this);
         console.log('featured Skills ', res.data);
-        this.setState({ ...this.state, skills: res.data });
+        getUnselectedSkills()
+          .then((resp) => {
+          // console.log('THIS ', this);
+            // console.log('unselected Skills ', res.data);
+            this.setState({ ...this.state, modalUnselectedSkills: resp.data, userSkills: res.data });
+            // console.log('get', this.state);
+          })
+          .catch(console.error());
         // console.log('get', this.state);
       })
       .catch(console.error());
   }
+
   componentWillReceiveProps(props) {
     this.setState({ profile: props.profile });
   }
@@ -321,11 +442,19 @@ export default class ProfileInfo extends React.Component {
                 </Form.Field>
               </Grid.Column>
               <Grid.Column style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }} floated="right" width={5}>
-                <ModalSkillList refreshSkillList={this.refreshSkillList} />
+                <ModalSkillList
+                  refreshSkillList={this.refreshSkillList}
+                  unselectedSkills={this.state.modalUnselectedSkills}
+                  selectedSkills={this.state.modalSelectedSkills}
+                  addSkill={this.modalAddSkill}
+                  removeSkill={this.modalRemoveSkill}
+                  close={this.close}
+                  handleAdd={this.handleAdd}
+                />
               </Grid.Column>
             </Grid>
             <Form>
-              <ProfileSkillList skills={this.state.skills} />
+              <ProfileSkillList removeSkill={this.removeSkill} restoreSkill={this.restoreSkill} editable={this.state.editable} skills={this.state.userSkills} toDeleteSkills={this.state.toDeleteSkills} />
             </Form>
           </Segment>
         </Card.Content>

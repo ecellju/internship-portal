@@ -2,7 +2,7 @@ import React from 'react';
 import { Label, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
-export default class SelectedSkillListItem extends React.Component {
+export default class EditableProfileSkillListItem extends React.Component {
   constructor() {
     super();
     this.handleClick = (event, data) => {
@@ -18,7 +18,7 @@ export default class SelectedSkillListItem extends React.Component {
   }
 }
 
-SelectedSkillListItem.propTypes = {
+EditableProfileSkillListItem.propTypes = {
   skill: PropTypes.string.isRequired,
   removeSkill: PropTypes.func.isRequired,
 };
