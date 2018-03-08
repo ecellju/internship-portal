@@ -35,6 +35,18 @@
   margin-top: 0.5em;
   font-size: 12px;
 
+  @media screen and (orientation: portrait) {
+    .main-container {
+      height: 92vh;
+    }
+  }
+
+  @media screen and (orientation: landscape) and (min-height: 640px) {
+    .main-container {
+      height: 92vh;
+    }
+  }
+
   .button-row {
     margin-bottom: 1em;
   }
@@ -97,8 +109,8 @@
     margin-top: 1em;
   }
 
-  .main-container {
-    height: 92vh;
+  .no-padding {
+    padding: 0em !important;
   }
 
   .pointer-message-error {
