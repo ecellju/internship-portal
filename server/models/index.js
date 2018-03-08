@@ -4,6 +4,7 @@ const user = require('./user');
 const admin = require('./admin');
 const student = require('./student');
 const post = require('./post');
+const skillList = require('./skill');
 
 module.exports.connect = (uri) => {
   mongoose.connect(uri, {
@@ -21,4 +22,5 @@ module.exports.connect = (uri) => {
   admin.createAdminModel();
   student.createStudentModel();
   post.createPostModel();
+  skillList.createSkillModel();
 };

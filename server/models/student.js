@@ -16,7 +16,7 @@ const StudentSchema = new mongoose.Schema({
   },
   postsApplied: [{ type: mongoose.Schema.Types.ObjectId }],
   postsFavourited: [{ type: mongoose.Schema.Types.ObjectId }],
-  demo: [],
+  featuredSkills: [{ type: String }],
   profile: {
     type: mongoose.Schema.Types.Mixed,
     default: {
