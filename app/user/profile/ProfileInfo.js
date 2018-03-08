@@ -374,6 +374,33 @@ export default class ProfileInfo extends React.Component {
           </Segment>
         </Card.Content>
         <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
+          <Segment raised>
+            <Grid style={{ marginTop: 0, marginBottom: 0 }} columns={2} >
+              <Grid.Column floated="left" style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }} width={5}>
+                <Form.Field >
+                  <Label style={{ marginBottom: 20, fontSize: 15, fontWeight: 'bold' }} color="blue" ribbon htmlFor="personaldetails" className="form-labels">
+                    Featured Skills
+                  </Label>
+                </Form.Field>
+              </Grid.Column>
+              <Grid.Column style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }} floated="right" width={5}>
+                <ModalSkillList
+                  refreshSkillList={this.refreshSkillList}
+                  unselectedSkills={this.state.modalUnselectedSkills}
+                  selectedSkills={this.state.modalSelectedSkills}
+                  addSkill={this.modalAddSkill}
+                  removeSkill={this.modalRemoveSkill}
+                  close={this.close}
+                  handleAdd={this.handleAdd}
+                />
+              </Grid.Column>
+            </Grid>
+            <Form>
+              <ProfileSkillList removeSkill={this.removeSkill} restoreSkill={this.restoreSkill} editable={this.state.editable} skills={this.state.userSkills} toDeleteSkills={this.state.toDeleteSkills} />
+            </Form>
+          </Segment>
+        </Card.Content>
+        <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
           <Form encType="multipart/form-data" onSubmit={this.handleSubmit}>
             <Form.Group>
               <Form.Input
