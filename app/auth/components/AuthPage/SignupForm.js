@@ -15,8 +15,9 @@ const SignupForm = ({
   errors,
   user,
 }) => (
-    <Grid centered>
-      <Grid.Row>
+  <Grid verticalAlign="middle" centered className="main-container">
+    <Grid.Row>
+
       <Grid.Column width={11} className="signup-container">
         <Grid>
           <Grid.Row>
@@ -29,22 +30,30 @@ const SignupForm = ({
                       <Page height="256" />
                     </Grid.Column>
                   </Grid.Row>
+
                   <Grid.Row>
                     <Grid.Column width={16}>
                       <div>
+
                         <p className="sidebar-line-a">Welcome to</p>
                         <p className="sidebar-line-b">Internship Portal</p>
-                        <p className="sidebar-line-c">
-                          Already have an account?
-                        </p>
+                        <p className="sidebar-line-c">Already have an account?</p>
 
                         <div className="signup-button-wrapper">
-                          <Button as={Link} to="/login" className="ecell-primary-button">Log In</Button>
+                          <Button
+                            as={Link}
+                            to="/login"
+                            className="ecell-primary-button"
+                          >
+                            Log In
+                          </Button>
                         </div>
+
                       </div>
                     </Grid.Column>
                   </Grid.Row>
-                </Grid>                
+
+                </Grid>
               </div>
             </Grid.Column>
 
@@ -59,7 +68,7 @@ const SignupForm = ({
 
                 <Grid>
                   <Grid.Row className="user-row">
-                    <Grid.Column width={6}></Grid.Column>
+                    <Grid.Column width={6} />
                     <Grid.Column width={4}>
                       <User />
                     </Grid.Column>
@@ -68,8 +77,9 @@ const SignupForm = ({
 
                 <Form onSubmit={onSubmit}>
                   <Form.Group widths="equal">
+
                     <Form.Field>
-                      <label>First Name</label>
+                      <label htmlFor="signup-first-name">First Name</label>
                       <input
                         id="signup-first-name"
                         name="first-name"
@@ -80,15 +90,20 @@ const SignupForm = ({
                       />
                       <div className="pointer-message-error">
                         {_.has(errors, 'firstName') &&
-                            <Label htmlFor="signup-first-name" basic className="ecell-red" pointing>
+                          <Label
+                            htmlFor="signup-first-name"
+                            basic
+                            pointing
+                            className="ecell-red"
+                          >
                             {errors.firstName}
                           </Label>
                         }
                       </div>
-                      
                     </Form.Field>
+
                     <Form.Field>
-                      <label>Last Name</label>
+                      <label htmlFor="signup-last-name">Last Name</label>
                       <input
                         id="signup-last-name"
                         name="last-name"
@@ -97,19 +112,24 @@ const SignupForm = ({
                         type="text"
                         autoComplete="family-name"
                       />
-                      
+
                       <div className="pointer-message-error">
                         {_.has(errors, 'lastName') &&
-                          <Label htmlFor="signup-last-name" basic className="ecell-red" pointing>
+                          <Label
+                            htmlFor="signup-last-name"
+                            basic
+                            pointing
+                            className="ecell-red"
+                          >
                             {errors.lastName}
                           </Label>
                         }
                       </div>
-                      
                     </Form.Field>
                   </Form.Group>
+
                   <Form.Field>
-                    <label>E-mail</label>
+                    <label htmlFor="signup-email">E-mail</label>
                     <input
                       id="signup-email"
                       name="email"
@@ -118,18 +138,23 @@ const SignupForm = ({
                       type="text"
                       autoComplete="email"
                     />
-                    
+
                     <div className="pointer-message-error">
                       {_.has(errors, 'email') &&
-                        <Label htmlFor="signup-email" basic color="red" className="ecell-red" pointing>
+                        <Label
+                          htmlFor="signup-email"
+                          basic
+                          pointing
+                          className="ecell-red"
+                        >
                           {errors.email}
                         </Label>
                       }
                     </div>
-                    
                   </Form.Field>
+
                   <Form.Field>
-                    <label>Password</label>
+                    <label htmlFor="signup-passowrd">Password</label>
                     <input
                       id="signup-password"
                       name="password"
@@ -141,16 +166,22 @@ const SignupForm = ({
 
                     <div className="pointer-message-error">
                       {_.has(errors, 'password') &&
-                        <Label htmlFor="signup-password" basic className="ecell-red" pointing>
+                        <Label
+                          htmlFor="signup-password"
+                          basic
+                          pointing
+                          className="ecell-red"
+                        >
                           {errors.password}
                         </Label>
                       }
                     </div>
-                    
                   </Form.Field>
-                    
+
                   <Form.Field>
-                    <label>Re-type Password</label>
+                    <label htmlFor="signup-retype-password">
+                      Re-type Password
+                    </label>
                     <input
                       id="signup-retype-password"
                       name="retype-password"
@@ -160,18 +191,30 @@ const SignupForm = ({
                       autoComplete="new-password"
                     />
 
-                      {_.has(errors, 'retype-password') &&
-                        <Label htmlFor="signup-retype-password" className="ecell-red" pointing>
+                    {_.has(errors, 'retype-password') &&
+                      <Label
+                        htmlFor="signup-retype-password"
+                        basic
+                        pointing
+                        className="ecell-red"
+                      >
                           {errors.password}
-                        </Label>
-                      }
-                    
+                      </Label>
+                    }
                   </Form.Field>
+
                   <div className="login-button-wrapper">
-                    <Button primary type="submit" className="ecell-primary-button">Sign Up</Button>
+                    <Button
+                      primary
+                      type="submit"
+                      className="ecell-primary-button"
+                    >
+                      Sign Up
+                    </Button>
                   </div>
+
                 </Form>
-              
+
               </div>
             </Grid.Column>
 
