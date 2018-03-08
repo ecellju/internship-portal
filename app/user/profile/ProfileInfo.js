@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Form, Label, Segment, List, Grid, Icon, Modal } from 'semantic-ui-react';
+import { Button, Card, Form, Label, Segment, List, Grid, Icon, Modal, TextArea } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Auth from '../../auth/modules/Auth';
@@ -455,6 +455,77 @@ export default class ProfileInfo extends React.Component {
             </Grid>
             <Form>
               <ProfileSkillList removeSkill={this.removeSkill} restoreSkill={this.restoreSkill} editable={this.state.editable} skills={this.state.userSkills} toDeleteSkills={this.state.toDeleteSkills} />
+            </Form>
+          </Segment>
+        </Card.Content>
+        <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
+          <Segment raised>
+            <Form.Field >
+              <Label style={{ marginBottom: 20, fontSize: 15, fontWeight: 'bold' }} color="blue" ribbon htmlFor="personaldetails" className="form-labels">
+                Experience
+              </Label>
+            </Form.Field>
+            <Form>
+              <Form.Field>
+                <label htmlFor="internships">Internships</label>
+                <TextArea
+                  name="internships"
+                  value={this.state.profile.internships || ''}
+                  onChange={this.handleChange}
+                  rows="5"
+                  placeholder="Enter past internship details..."
+                />
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="projects">Projects and Trainings</label>
+                <TextArea
+                  name="projects"
+                  value={this.state.profile.projects || ''}
+                  onChange={this.handleChange}
+                  rows="5"
+                  placeholder="Enter past project and training details."
+                />
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="POR">Positions of Responsibility</label>
+                <TextArea
+                  name="POR"
+                  value={this.state.profile.POR || ''}
+                  onChange={this.handleChange}
+                  rows="5"
+                  placeholder="Enter positions of responsibity you might have held"
+                />
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="workSamples">Work Samples</label>
+                <TextArea
+                  name="workSamples"
+                  value={this.state.profile.workSamples || ''}
+                  onChange={this.handleChange}
+                  rows="5"
+                  placeholder="Enter your work samples eg. links to your previous projects, github profile etc..."
+                />
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="CCA">Co-curricular Activities</label>
+                <TextArea
+                  name="CCA"
+                  value={this.state.profile.CCA || ''}
+                  onChange={this.handleChange}
+                  rows="5"
+                  placeholder="Enter your co-curricular activities..."
+                />
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="additionalDetails">Additional Details</label>
+                <TextArea
+                  name="additionalDetails"
+                  value={this.state.profile.additionalDetails || ''}
+                  onChange={this.handleChange}
+                  rows="5"
+                  placeholder="Enter any other additional details you might want to provide..."
+                />
+              </Form.Field>
             </Form>
           </Segment>
         </Card.Content>
