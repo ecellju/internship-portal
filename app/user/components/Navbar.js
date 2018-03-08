@@ -29,6 +29,7 @@ export default class Navbar extends React.Component {
       <div className="Navbar">
         <Menu fixed="top" size="huge">
           <Grid container>
+
             <Grid.Row className="computer only">
               <Menu.Item
                 header
@@ -62,6 +63,7 @@ export default class Navbar extends React.Component {
                 <Menu.Item name="logout" onClick={this.handleLogout} content="Logout" />
               </Menu.Menu>
             </Grid.Row>
+
             <Grid.Row className="tablet mobile only">
               <Menu.Item header name="portal" content="Internship Portal" href="/user/posts" />
               <Menu.Menu position="right">
@@ -114,6 +116,7 @@ export default class Navbar extends React.Component {
                 <Menu.Item name="logout" onClick={this.handleLogout} content="Logout" />
               </Sidebar>
             </Grid.Row>
+
           </Grid>
         </Menu>
       </div>
