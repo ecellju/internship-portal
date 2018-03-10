@@ -489,8 +489,8 @@ export default class ProfileInfo extends React.Component {
               <Form.Field>
                 <label htmlFor="POR">Positions of Responsibility</label>
                 <TextArea
-                  name="POR"
-                  value={this.state.profile.POR || ''}
+                  name="positionOfResponsibility"
+                  value={this.state.profile.positionOfResponsibility || ''}
                   onChange={this.handleChange}
                   rows="5"
                   placeholder="Enter positions of responsibity you might have held"
@@ -509,8 +509,8 @@ export default class ProfileInfo extends React.Component {
               <Form.Field>
                 <label htmlFor="CCA">Co-curricular Activities</label>
                 <TextArea
-                  name="CCA"
-                  value={this.state.profile.CCA || ''}
+                  name="coCurricularActivities"
+                  value={this.state.profile.coCurricularActivities || ''}
                   onChange={this.handleChange}
                   rows="5"
                   placeholder="Enter your co-curricular activities..."
