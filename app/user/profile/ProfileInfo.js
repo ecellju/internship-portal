@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Form, Label, Segment, List, Grid, Icon, Modal, TextArea } from 'semantic-ui-react';
+import { Button, Card, Form, Label, Segment, List, Grid, Icon, Modal, Container } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Auth from '../../auth/modules/Auth';
@@ -296,124 +296,256 @@ export default class ProfileInfo extends React.Component {
                   {this.props.profile.Email}
                 </label>
               </Grid.Column>
-            </Grid>
-            <Form>
-              <ProfileSkillList removeSkill={this.removeSkill} restoreSkill={this.restoreSkill} editable={this.state.editable} skills={this.state.userSkills} toDeleteSkills={this.state.toDeleteSkills} />
-            </Form>
-          </Segment>
-        </Card.Content>
-        <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
-          <Segment raised>
-            <Form.Field >
-              <Label style={{ marginBottom: 20, fontSize: 15, fontWeight: 'bold' }} color="blue" ribbon htmlFor="personaldetails" className="form-labels">
-                Experience
-              </Label>
-            </Form.Field>
-            <Form>
-              <Form.Field>
-                <label htmlFor="internships">Internships</label>
-                <TextArea
-                  name="internships"
-                  value={this.state.profile.internships || ''}
-                  onChange={this.handleChange}
-                  rows="5"
-                  placeholder="Enter past internship details..."
-                />
-              </Form.Field>
-              <Form.Field>
-                <label htmlFor="projects">Projects and Trainings</label>
-                <TextArea
-                  name="projects"
-                  value={this.state.profile.projects || ''}
-                  onChange={this.handleChange}
-                  rows="5"
-                  placeholder="Enter past project and training details."
-                />
-              </Form.Field>
-              <Form.Field>
-                <label htmlFor="POR">Positions of Responsibility</label>
-                <TextArea
-                  name="positionOfResponsibility"
-                  value={this.state.profile.positionOfResponsibility || ''}
-                  onChange={this.handleChange}
-                  rows="5"
-                  placeholder="Enter positions of responsibity you might have held"
-                />
-              </Form.Field>
-              <Form.Field>
-                <label htmlFor="workSamples">Work Samples</label>
-                <TextArea
-                  name="workSamples"
-                  value={this.state.profile.workSamples || ''}
-                  onChange={this.handleChange}
-                  rows="5"
-                  placeholder="Enter your work samples eg. links to your previous projects, github profile etc..."
-                />
-              </Form.Field>
-              <Form.Field>
-                <label htmlFor="CCA">Co-curricular Activities</label>
-                <TextArea
-                  name="coCurricularActivities"
-                  value={this.state.profile.coCurricularActivities || ''}
-                  onChange={this.handleChange}
-                  rows="5"
-                  placeholder="Enter your co-curricular activities..."
-                />
-              </Form.Field>
-              <Form.Field>
-                <label htmlFor="additionalDetails">Additional Details</label>
-                <TextArea
-                  name="additionalDetails"
-                  value={this.state.profile.additionalDetails || ''}
-                  onChange={this.handleChange}
-                  rows="5"
-                  placeholder="Enter any other additional details you might want to provide..."
-                />
-              </Form.Field>
-            </Form>
-          </Segment>
-        </Card.Content>
-        <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
-          <Segment raised>
-            <Grid style={{ marginTop: 0, marginBottom: 0 }} columns={2} >
-              <Grid.Column floated="left" style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }} width={5}>
-                <Form.Field >
-                  <Label style={{ marginBottom: 20, fontSize: 15, fontWeight: 'bold' }} color="blue" ribbon htmlFor="personaldetails" className="form-labels">
-                    Featured Skills
-                  </Label>
-                </Form.Field>
+            </Grid.Row>
+
+            <Grid.Row columns={1} centered className="ecp-dept-row">
+              <Grid.Column textAlign="center" className="ecp-dept-col">
+                <label htmlFor="branch">
+                  {` ${this.props.profile.branch} `}
+                </label>
+                <label htmlFor="year">
+                  {this.props.profile.currentYear}
+                </label>
               </Grid.Column>
-              <Grid.Column style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }} floated="right" width={5}>
-                <ModalSkillList
-                  refreshSkillList={this.refreshSkillList}
-                  unselectedSkills={this.state.modalUnselectedSkills}
-                  selectedSkills={this.state.modalSelectedSkills}
-                  addSkill={this.modalAddSkill}
-                  removeSkill={this.modalRemoveSkill}
-                  close={this.close}
-                  handleAdd={this.handleAdd}
-                />
-              </Grid.Column>
-            </Grid>
-            <Form>
-              <ProfileSkillList removeSkill={this.removeSkill} restoreSkill={this.restoreSkill} editable={this.state.editable} skills={this.state.userSkills} toDeleteSkills={this.state.toDeleteSkills} />
-            </Form>
-          </Segment>
-        </Card.Content>
-        <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
-          <Form encType="multipart/form-data" onSubmit={this.handleSubmit}>
-            <Form.Group>
-              <Form.Input
-                input={{ accept: 'application/pdf' }}
-                type="file"
-                name="userFile"
-                onChange={(e) => { this.setState({ CV: e.target.files[0] }); }}
-              />
-              <Button type="submit">Upload CV</Button>
-            </Form.Group>
-          </Form>
-        </Card.Content>
-      </Card>
+            </Grid.Row>
+
+          </Grid>
+
+        </Grid.Column>
+      </Grid>
+
+
+      // <Card fluid >
+      //   <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
+      //     <Card.Header>
+      //       {editable ? 'Edit Profile Information' : 'Profile Information'}
+      //       <Button
+      //         primary
+      //         floated="right"
+      //         content={editable ? 'Save' : 'Edit'}
+      //         onClick={this.toggleEditability}
+      //       />
+      //     </Card.Header>
+      //   </Card.Content>
+      //   <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
+      //     <Segment raised>
+      //       <Form.Field >
+      //         <Label style={{ marginBottom: 20, fontSize: 15, fontWeight: 'bold' }} color="blue" ribbon htmlFor="personaldetails" className="form-labels">
+      //           Personal Details
+      //         </Label>
+      //       </Form.Field>
+      //       <Form>
+      //         <Form.Group>
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="First name"
+      //             name="firstName"
+      //             value={this.state.profile.firstName || ''}
+      //             onChange={this.handleChange}
+      //             // width={6}
+      //           />
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Middle name"
+      //             name="middleName"
+      //             value={this.state.profile.middleName || ''}
+      //             onChange={this.handleChange}
+      //            // width={4}
+      //           />
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Last name"
+      //             name="lastName"
+      //             value={this.state.profile.lastName || ''}
+      //             onChange={this.handleChange}
+      //             // width={6}
+      //           />
+      //         </Form.Group>
+      //         <Form.Group>
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Birth date"
+      //             type="date"
+      //             name="DOB"
+      //             value={this.state.profile.DOB || ''}
+      //             onChange={this.handleChange}
+      //            // width={4}
+      //           />
+      //           <Form.Select
+      //             readOnly={!editable}
+      //             label="Gender"
+      //             name="gender"
+      //             options={genderOptions}
+      //             value={this.state.profile.gender || ''}
+      //             onChange={(e, { value }) => this.setState({ profile: { ...this.state.profile, gender: value } })}
+      //             // width={6}
+      //           />
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Contact Number"
+      //             name="contactNo"
+      //             value={this.state.profile.contactNo || ''}
+      //             onChange={this.handleChange}
+      //            //  width={6}
+      //           />
+      //         </Form.Group>
+      //         <Form.Group>
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Current Year "
+      //             name="currentYear"
+      //             value={this.state.profile.currentYear || ''}
+      //             onChange={this.handleChange}
+
+      //           />
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Branch"
+      //             name="branch"
+      //             value={this.state.profile.branch || ''}
+      //             onChange={this.handleChange}
+      //           />
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Email"
+      //             name="Email"
+      //             value={this.state.profile.Email || ''}
+      //             onChange={this.handleChange}
+      //           />
+      //         </Form.Group>
+      //       </Form>
+      //     </Segment>
+      //   </Card.Content>
+      //   <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
+      //     <Segment raised>
+      //       <Form.Field >
+      //         <Label style={{ marginBottom: 20, fontSize: 15, fontWeight: 'bold' }} color="blue" ribbon htmlFor="personaldetails" className="form-labels">
+      //           Educational Details
+      //         </Label>
+      //       </Form.Field>
+      //       <Form>
+      //         <Form.Group>
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Degree"
+      //             name="degree"
+      //             value={this.state.profile.degree || ''}
+      //             onChange={this.handleChange}
+      //             // width={6}
+      //           />
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="CGPA/Marks(%)"
+      //             name="cgpa"
+      //             value={this.state.profile.cgpa || ''}
+      //             onChange={this.handleChange}
+      //            // width={4}
+      //           />
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Joining Year"
+      //             name="joinYear"
+      //             value={this.state.profile.joinYear || ''}
+      //             onChange={this.handleChange}
+      //             // width={6}
+      //           />
+      //         </Form.Group>
+      //         <Form.Group>
+      //           <Form.Field
+      //             style={{
+      //               margin: 20, fontSize: 15, color: 'red', fontWeight: 'bold',
+      //               }}
+      //             readOnly="true"
+      //             label="Higher Secondary"
+      //            // width={4}
+      //           />
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Marks(%)"
+      //             name="hsMarks"
+      //             value={this.state.profile.hsMarks || ''}
+      //             onChange={this.handleChange}
+      //            //  width={6}
+      //           />
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Year"
+      //             name="hsYear"
+      //             value={this.state.profile.hsYear || ''}
+      //             onChange={this.handleChange}
+      //            //  width={6}
+      //           />
+      //         </Form.Group>
+      //         <Form.Group>
+      //           <Form.Field
+      //             style={{
+      //               margin: 20, fontSize: 15, color: 'red', fontWeight: 'bold',
+      //               }}
+      //             readOnly="true"
+      //             label="Secondary Exam"
+      //            // width={4}
+      //           />
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Marks(%)"
+      //             name="secondaryMarks"
+      //             value={this.state.profile.secondaryMarks || ''}
+      //             onChange={this.handleChange}
+      //            //  width={6}
+      //           />
+      //           <Form.Input
+      //             readOnly={!editable}
+      //             label="Year"
+      //             name="secondaryYear"
+      //             value={this.state.profile.secondaryYear || ''}
+      //             onChange={this.handleChange}
+      //            //  width={6}
+      //           />
+      //         </Form.Group>
+      //       </Form>
+      //     </Segment>
+      //   </Card.Content>
+      //   <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
+      //     <Segment raised>
+      //       <Grid style={{ marginTop: 0, marginBottom: 0 }} columns={2} >
+      //         <Grid.Column floated="left" style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }} width={5}>
+      //           <Form.Field >
+      //             <Label style={{ marginBottom: 20, fontSize: 15, fontWeight: 'bold' }} color="blue" ribbon htmlFor="personaldetails" className="form-labels">
+      //               Featured Skills
+      //             </Label>
+      //           </Form.Field>
+      //         </Grid.Column>
+      //         <Grid.Column style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }} floated="right" width={5}>
+      //           <ModalSkillList
+      //             refreshSkillList={this.refreshSkillList}
+      //             unselectedSkills={this.state.modalUnselectedSkills}
+      //             selectedSkills={this.state.modalSelectedSkills}
+      //             addSkill={this.modalAddSkill}
+      //             removeSkill={this.modalRemoveSkill}
+      //             close={this.close}
+      //             handleAdd={this.handleAdd}
+      //           />
+      //         </Grid.Column>
+      //       </Grid>
+      //       <Form>
+      //         <ProfileSkillList removeSkill={this.removeSkill} restoreSkill={this.restoreSkill} editable={this.state.editable} skills={this.state.userSkills} toDeleteSkills={this.state.toDeleteSkills} />
+      //       </Form>
+      //     </Segment>
+      //   </Card.Content>
+      //   <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
+      //     <Form encType="multipart/form-data" onSubmit={this.handleSubmit}>
+      //       <Form.Group>
+      //         <Form.Input
+      //           input={{ accept: 'application/pdf' }}
+      //           type="file"
+      //           name="userFile"
+      //           onChange={(e) => { this.setState({ CV: e.target.files[0] }); }}
+      //         />
+      //         <Button type="submit">Upload CV</Button>
+      //       </Form.Group>
+      //     </Form>
+      //   </Card.Content>
+      // </Card>
     );
   }
 }
