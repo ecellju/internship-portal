@@ -5,6 +5,8 @@ import { Menu } from 'semantic-ui-react';
 
 import Auth from '../modules/Auth';
 
+import './styles.scss';
+
 const Navbar = (props) => {
   const LogoutFunction = () => {
     Auth.deauthenticateUser();

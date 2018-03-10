@@ -5,6 +5,8 @@ import Auth from '../../auth/modules/Auth';
 import BrowserHistory from '../../history';
 import User from '../../auth/modules/User';
 
+import './styles.scss';
+
 export default class Navbar extends React.Component {
   constructor() {
     super();
@@ -26,8 +28,8 @@ export default class Navbar extends React.Component {
     const { menuVisible } = this.state;
 
     return (
-      <div className="Navbar">
-        <Menu fixed="top" size="huge">
+      <div className="ecp-navbar">
+        <Menu attached size="huge" className="user-navbar-menu">
           <Grid container>
 
             <Grid.Row className="computer only">
@@ -36,36 +38,65 @@ export default class Navbar extends React.Component {
                 name="portal"
                 content="Internship Portal"
                 href="/user/posts"
+                className="ecell-header"
               />
+
               <Menu.Item
                 name="home"
                 content="Home"
                 as={NavLink}
                 to="/user/posts"
+                className="ecell-item"
               />
               <Menu.Item
                 name="favourites"
                 content="Favourites"
                 as={NavLink}
                 to="/user/favourites"
+                className="ecell-item"
               />
               <Menu.Item
                 name="applications"
                 content="Applications"
                 as={NavLink}
                 to="/user/applications"
+                className="ecell-item"
               />
+
               <Menu.Menu position="right">
                 <Menu.Item>
-                  <Input size="small" icon="search" placeholder="Search..." />
+                  <Input
+                    size="small"
+                    icon="search"
+                    placeholder="Search"
+                    className="ecell-primary-search"
+                  />
                 </Menu.Item>
-                <Menu.Item name="profile" content="Profile" as={NavLink} to="/user/profile" />
-                <Menu.Item name="logout" onClick={this.handleLogout} content="Logout" />
+                <Menu.Item
+                  name="profile"
+                  content="Profile"
+                  as={NavLink}
+                  to="/user/profile"
+                  className="ecell-item"
+                />
+                <Menu.Item
+                  name="logout"
+                  onClick={this.handleLogout}
+                  content="Log Out"
+                  className="ecell-primary margin-left"
+                />
               </Menu.Menu>
             </Grid.Row>
 
             <Grid.Row className="tablet mobile only">
-              <Menu.Item header name="portal" content="Internship Portal" href="/user/posts" />
+              <Menu.Item
+                header
+                name="portal"
+                content="Internship Portal"
+                href="/user/posts"
+                className="ecell-header"
+              />
+
               <Menu.Menu position="right">
                 <Menu.Item>
                   <Button basic toggle icon="content" onClick={this.toggleMenu} />
@@ -78,16 +109,27 @@ export default class Navbar extends React.Component {
                 direction="right"
                 visible={menuVisible}
                 vertical
+                className="ecell-sidebar"
               >
                 <Menu.Item>
                   <Button basic floated="right" icon="remove" onClick={this.toggleMenu} />
                 </Menu.Item>
+
+                <Menu.Item>
+                  <Input
+                    icon="search"
+                    placeholder="Search"
+                    className="ecell-primary-search"
+                  />
+                </Menu.Item>
+
                 <Menu.Item
                   name="home"
                   content="Home"
                   as={NavLink}
                   to="/user/posts"
                   onClick={this.toggleMenu}
+                  className="ecell-sidebar-item"
                 />
                 <Menu.Item
                   name="favourites"
@@ -95,6 +137,7 @@ export default class Navbar extends React.Component {
                   as={NavLink}
                   to="/user/favourites"
                   onClick={this.toggleMenu}
+                  className="ecell-sidebar-item"
                 />
                 <Menu.Item
                   name="applications"
@@ -102,18 +145,24 @@ export default class Navbar extends React.Component {
                   as={NavLink}
                   to="/user/applications"
                   onClick={this.toggleMenu}
+                  className="ecell-sidebar-item"
                 />
-                <Menu.Item>
-                  <Input size="small" icon="search" placeholder="Search..." />
-                </Menu.Item>
+
                 <Menu.Item
                   name="profile"
                   content="Profile"
                   as={NavLink}
                   to="/user/profile"
                   onClick={this.toggleMenu}
+                  className="ecell-sidebar-item"
                 />
-                <Menu.Item name="logout" onClick={this.handleLogout} content="Logout" />
+
+                <Menu.Item
+                  name="logout"
+                  onClick={this.handleLogout}
+                  content="Log Out"
+                  className="ecell-primary margin-top"
+                />
               </Sidebar>
             </Grid.Row>
 

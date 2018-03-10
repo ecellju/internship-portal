@@ -15,10 +15,7 @@ ReactDOM.render(
   <Router history={browserHistory}>
 
     {/* Responsive grid based layout. */}
-    <Grid>
-
-      {/* Empty Grind to center the content column. */}
-      <Grid.Column width={1} />
+    <Grid centered>
 
       {/* Content Column.  */}
       <Grid.Column width={14}>
