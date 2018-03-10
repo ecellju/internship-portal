@@ -5,11 +5,12 @@ import HomeNavigate from '../dashboard/HomeNavigate';
 import StudentList from '../dashboard/StudentList';
 import AccessControlPage from '../containers/AccessControlPage';
 import AdminActions from '../dashboard/AdminActions';
+import SubmitPostPage from '../containers/post/SubmitPostPage';
 
 const styles = {
   root: {
-    paddingTop: '6em',
-    paddingBottom: '2em',
+    paddingTop: '4.5em',
+    // paddingBottom: '2em',
   },
 };
 
@@ -20,6 +21,7 @@ const AdminDashboardRoutes = ({ match }) => (
     <Route path={`${match.url}/actions`} component={AdminActions} />
     <Route path={`${match.url}/students`} component={StudentList} />
     <Route path={`${match.url}/access-control`} component={AccessControlPage} />
+    <Route path={`${match.url}/submit-post`} component={SubmitPostPage} />
   </div>
 );
 

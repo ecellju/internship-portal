@@ -1,10 +1,66 @@
+const _ = require('lodash');
+
 exports.createPostValidation = (req, res, next) => {
-  if (
-    Object.prototype.hasOwnProperty.call(req.body, 'title') &&
-    Object.prototype.hasOwnProperty.call(req.body, 'description')) { next(); } else {
-    res.status(400).json({ message: 'validation error' });
+  const errors = {};
+  let hasErrors = false;
+  if (!_.has(req.body, 'position') || req.body.position.trim().length === 0) {
+    hasErrors = true;
+    errors.position = 'The position field cannot be empty';
+  }
+
+  if (!_.has(req.body, 'company') || req.body.company.trim().length === 0) {
+    hasErrors = true;
+    errors.company = 'The company field cannot be empty';
+  }
+
+  if (!_.has(req.body, 'location') || req.body.location.trim().length === 0) {
+    hasErrors = true;
+    errors.location = 'The location field cannot be empty';
+  }
+
+  if (!_.has(req.body, 'startDate') || req.body.startDate.trim().length === 0) {
+    hasErrors = true;
+    errors.startDate = 'Start date field cannot be empty';
+  } else if (new Date(parseInt(req.body.startDate, 10)) < Date.now()) {
+    hasErrors = true;
+    errors.startDate = 'Start date cannot be before now';
+  }
+
+  if (!_.has(req.body, 'duration') || req.body.duration.trim().length === 0) {
+    hasErrors = true;
+    errors.duration = 'Duration field cannot be empty';
+  } else if (parseInt(req.body.duration, 10) <= 0) {
+    hasErrors = true;
+    errors.duration = 'Duration must be positive';
+  }
+
+  if (!_.has(req.body, 'stipend') || req.body.stipend.trim().length === 0) {
+    hasErrors = true;
+    errors.stipend = 'Stipend field cannot be empty';
+  } else if (parseInt(req.body.stipend, 10) < 0) {
+    hasErrors = true;
+    errors.stipend = 'Stipend must be non-negative';
+  }
+
+  if (!_.has(req.body, 'applyBy') || req.body.applyBy.trim().length === 0) {
+    hasErrors = true;
+    errors.applyBy = 'Apply by field cannot be empty';
+  } else if ((new Date(parseInt(req.body.applyBy, 10))) < Date.now()) {
+    hasErrors = true;
+    errors.applyBy = 'Apply by date cannot be before now';
+  }
+
+  if (hasErrors) {
+    res.status(400).json({
+      message: 'Validation error',
+      errors,
+    });
+    console.log('Validation error for create post request');
+  } else {
+    next();
   }
 };
+
 exports.getAllPostValidation = (req, res, next) => {
   next();
 };

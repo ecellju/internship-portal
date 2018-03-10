@@ -1,9 +1,8 @@
 import React from 'react';
 import { Card, Container } from 'semantic-ui-react';
 import Axios from 'axios';
-import PostItem from '../post/PostItem';
+import PostItem from '../../common/post/PostItem';
 import Auth from '../../auth/modules/Auth';
-import User from '../../auth/modules/User';
 
 export default class HomeTab extends React.Component {
   constructor() {
@@ -29,8 +28,7 @@ export default class HomeTab extends React.Component {
     const postItems = this.state.posts.map(post => (
       <PostItem
         key={post._id}
-        title={post.title}
-        description={post.description}
+        post={post}
         id={post._id}
       />
     ));

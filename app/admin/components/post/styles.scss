@@ -1,0 +1,13 @@
+.submit-post-form-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  form {
+    // width: 90vw;
+    margin-left: 2em;
+    margin-right: 2em;
+    .submit-post-button {
+      margin-top: 1.5em;
+    }
+  }
+}

@@ -1,10 +1,32 @@
+const _ = require('lodash');
 const PostModel = require('mongoose').model('Post');
 
 exports.createPost = (req, res) => {
-  const newPost = new PostModel(req.body);
+  const postDetails = _.cloneDeep(req.body);
+  postDetails.startDate = new Date(parseInt(postDetails.startDate, 10));
+  postDetails.duration = parseInt(postDetails.duration, 10);
+  postDetails.stipend = parseInt(postDetails.stipend, 10);
+  postDetails.applyBy = new Date(parseInt(postDetails.applyBy, 10));
+
+  const newPost = new PostModel(postDetails);
+
+  newPost.position = newPost.position.trim();
+  newPost.company = newPost.company.trim();
+  newPost.location = newPost.location.trim();
+  if (_.has(newPost, 'description')) {
+    newPost.description = newPost.description.trim();
+  }
+
+  newPost.postedOn = new Date();
+
   newPost.save((err) => {
-    if (err) res.status(500).json({ message: 'database error' });
-    else res.status(200).json({ message: 'post created' });
+    if (err) {
+      console.log(err);
+      res.status(500).json({ message: 'database error' });
+    } else {
+      console.log('A new post added');
+      res.status(200).json({ message: 'post created' });
+    }
   });
 };
 

@@ -1,0 +1,21 @@
+.Home {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-new-internship-button {
+  float: right;
+}
+
+.home-header-divider {
+  width: 90%;
+}
+
+.home-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+}
