@@ -36,6 +36,12 @@ const StudentSchema = new mongoose.Schema({
       higherSecondaryYear: '',
       secondaryMarks: '',
       secondaryYear: '',
+      internships: '',
+      projects: '',
+      positionOfResponsibility: '',
+      workSamples: '',
+      coCurricularActivities: '',
+      additinalDetails: '',
     },
   },
 }, options);
