@@ -37,7 +37,7 @@ exports.saveProfile = (req, res) => {
     (err, docs) => {
       if (err || !docs) return res.status(200).json({ message: docs });
       return res.status(200).json({ message: docs });
-    },
+    }
   );
 };
 
@@ -67,7 +67,7 @@ exports.addSkill = (req, res) => {
       if (err || !docs) return res.status(200).json({ message: docs });
       console.log(docs);
       return res.status(200).json({ message: 'skills updated' });
-    },
+    }
   );
 };
 

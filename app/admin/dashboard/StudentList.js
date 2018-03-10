@@ -1,20 +1,57 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Table, Menu, Icon, Container, Form } from 'semantic-ui-react';
-import _ from 'lodash';
 import StudentListItem from './StudentListItem';
+import Auth from '../../auth/modules/Auth';
 
 class StudentList extends Component {
-  constructor() {
-    super();
-    this.studentItems = _.times(10, n => <StudentListItem key={n.toString()} />);
-    this.initialState = { studentName: '', department: '', year: '' };
+  constructor(props) {
+    super(props);
+    this.getStudentItems.bind(this);
+    this.getStudentListItems.bind(this);
+    this.initialState = {
+      studentName: '', department: '', year: '', studentItems: [],
+    };
     this.state = this.initialState;
+    this.getStudentItems();
     this.handleChange = (e, { name, value }) => this.setState({ [name]: value });
     this.handleApplyfilter = (event) => {
       event.preventDefault();
       console.log(this.state.studentName, ' k ', this.state.department, ' ', this.state.year, ' ', this.state);
     };
   }
+
+  getStudentListItems(studentList) {
+    const studentListItems = studentList.map((student, index) =>
+      (<StudentListItem
+        name={`${student.firstName  } ${  student.lastName}`}
+        department={student.profile.branch}
+        year={student.profile.currentYear}
+        key={index.toString()}
+      />),
+    );
+    return studentListItems;
+  }
+
+  getStudentItems() {
+    axios.get('/api/admin/getStudents', {
+      headers: {
+        Authorization: `bearer ${Auth.getToken()}`,
+        page: 1,
+      },
+    })
+      .then((res) => {
+        console.log(res.data.students);
+        const studentList = res.data.students;
+        this.setState({ studentItems: this.getStudentListItems(studentList) });
+        console.log(this.state.studentItems.length);
+        console.log(this.state.studentItems);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   render() {
     return (
       <Container className="StudentList">
@@ -56,7 +93,7 @@ class StudentList extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.studentItems}
+            {this.state.studentItems}
           </Table.Body>
           <Table.Footer>
             <Table.Row>
