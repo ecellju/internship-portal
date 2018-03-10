@@ -79,7 +79,7 @@ const SubmitPostForm = ({
           }
         </Form.Field>
         <Form.Field>
-          <label htmlFor="submit-post-duration">Duration</label>
+          <label htmlFor="submit-post-duration">Duration (in months)</label>
           <input
             name="duration"
             value={internshipDetails.duration}
@@ -95,7 +95,7 @@ const SubmitPostForm = ({
           }
         </Form.Field>
         <Form.Field>
-          <label htmlFor="submit-post-stipend">Stipend</label>
+          <label htmlFor="submit-post-stipend">Stipend (&#8377;)</label>
           <input
             name="stipend"
             value={internshipDetails.stipend}

@@ -50,10 +50,10 @@ export default class PostItem extends React.Component {
                       Start Date
                     </Table.HeaderCell>
                     <Table.HeaderCell>
-                      Duration (Months)
+                      Duration
                     </Table.HeaderCell>
                     <Table.HeaderCell>
-                      Stipend (&#8377;)
+                      Stipend
                     </Table.HeaderCell>
                     <Table.HeaderCell>
                       Posted On
@@ -69,10 +69,10 @@ export default class PostItem extends React.Component {
                       {formatDate(this.props.post.startDate)}
                     </Table.Cell>
                     <Table.Cell>
-                      {this.props.post.duration}
+                      {`${this.props.post.duration} month(s)`}
                     </Table.Cell>
                     <Table.Cell>
-                      {this.props.post.stipend}
+                      &#8377; {this.props.post.stipend}
                     </Table.Cell>
                     <Table.Cell>
                       {formatDate(this.props.post.postedOn)}
@@ -86,15 +86,6 @@ export default class PostItem extends React.Component {
             </div>
           </Card.Description>
         </Card.Content>
-        {/*
-        <Card.Content extra>
-          <Icon
-            name={this.state.favouriteIcon}
-            size="large"
-            className="floated right link"
-            onClick={this.handleFavouriteClick}
-          />
-        </Card.Content> */}
       </Card>
     );
   }
