@@ -1,0 +1,66 @@
+@mixin box-shadow($x, $y, $spread, $blur, $color) {
+  -webkit-box-shadow: $x $y $spread $blur $color;
+  -moz-box-shadow: $x $y $spread $blur $color;
+  box-shadow: $x $y $spread $blur $color;
+}
+
+@mixin box-shadow-inset($x, $y, $spread, $blur, $color) {
+  -webkit-box-shadow: $x $y $spread $blur $color inset;
+  -moz-box-shadow: $x $y $spread $blur $color inset;
+  box-shadow: $x $y $spread $blur $color inset;
+}
+
+@mixin transition($property, $time, $easing) {
+  -webkit-transition: $property $time $easing;
+  -moz-transition: $property $time $easing;
+  -o-transition: $property $time $easing;
+  transition: $property $time $easing;
+}
+
+$font-primary: 'Work Sans';
+$font-secondary: 'Muli';
+
+$color-primary-red: #E71D36;
+$color-primary-light: #FDFFFC;
+$color-primary-green: #2EC4B6;
+$color-primary-yellow: #FF9F1C;
+$color-primary-darkblue: #011627;
+
+$color-primary-green-shade: #228F85;
+
+$color-highlight-bg-hover: #F4FFFD;
+$color-highlight-bg-focus: #F9FFFE;
+
+
+.ecell-profile-main-container {
+  border-radius: 0.5em;
+
+  font-family: $font-primary;
+  font-weight: 200;
+  font-size: 16px;
+
+  margin-top: 2em !important;
+
+  @include box-shadow(0em, 0em, 2em, 0em, rgba(0, 0, 0, 0.1));
+}
+
+.ecp-user-name-row {
+  font-family: $font-secondary;
+  font-size: 32px;
+  font-weight: 200;
+
+  padding-top: 0.5em !important;
+  padding-bottom: 0em !important;
+}
+
+.ecp-email-row {
+  font-size: 16px;
+  padding-top: 1em !important;
+  padding-bottom: 0em !important;
+}
+
+.ecp-dept-row {
+  font-size: 16px;
+  padding-top: 0.5em !important;
+  padding-bottom: 0em !important;
+}
