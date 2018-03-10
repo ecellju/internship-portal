@@ -30,7 +30,20 @@ const PostSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  description: { type: String, default: '' },
+  description: {
+    about: {
+      type: String,
+      default: '',
+    },
+    whoCanApply: {
+      type: String,
+      default: '',
+    },
+    perks: {
+      type: String,
+      default: '',
+    },
+  },
   postedOn: {
     type: Date,
     required: true,

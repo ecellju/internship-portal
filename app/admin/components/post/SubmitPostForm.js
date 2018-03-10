@@ -128,18 +128,50 @@ const SubmitPostForm = ({
         </Form.Field>
       </Form.Group>
       <Form.Field>
-        <label htmlFor="submit-post-description">Description</label>
+        <label htmlFor="submit-post-description-about">About</label>
         <textarea
-          name="description"
-          value={internshipDetails.description}
+          name="description-about"
+          value={internshipDetails.description.about}
           onChange={onChange}
           rows="5"
-          id="submit-post-description"
+          id="submit-post-description-about"
           placeholder="Enter internship details..."
         />
-        {_.has(errors, 'description') &&
-          <Label htmlFor="submit-post-description" basic color="red" pointing>
-            {errors.description}
+        {_.has(errors, 'description.about') &&
+          <Label htmlFor="submit-post-description-about" basic color="red" pointing>
+            {errors.description.about}
+          </Label>
+        }
+      </Form.Field>
+      <Form.Field>
+        <label htmlFor="submit-post-description-who-can-apply">Who can apply</label>
+        <textarea
+          name="description-who-can-apply"
+          value={internshipDetails.description.whoCanApply}
+          onChange={onChange}
+          rows="5"
+          id="submit-post-description-who-can-apply"
+          placeholder="Who can apply for this internship?"
+        />
+        {_.has(errors, 'description.whoCanApply') &&
+          <Label htmlFor="submit-post-description-who-can-apply" basic color="red" pointing>
+            {errors.description.whoCanApply}
+          </Label>
+        }
+      </Form.Field>
+      <Form.Field>
+        <label htmlFor="submit-post-description-perks">Perks</label>
+        <textarea
+          name="description-perks"
+          value={internshipDetails.description.perks}
+          onChange={onChange}
+          rows="5"
+          id="submit-post-description-perks"
+          placeholder="Enter internship perks details..."
+        />
+        {_.has(errors, 'description.perks') &&
+          <Label htmlFor="submit-post-description-perks" basic color="red" pointing>
+            {errors.description.perks}
           </Label>
         }
       </Form.Field>

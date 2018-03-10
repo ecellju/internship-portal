@@ -20,7 +20,11 @@ class SubmitPostPage extends React.Component {
         duration: '',
         stipend: '',
         applyBy: '',
-        description: '',
+        description: {
+          about: '',
+          whoCanApply: '',
+          perks: '',
+        },
       },
     };
     this.submitNewInternship = this.submitNewInternship.bind(this);
@@ -32,7 +36,7 @@ class SubmitPostPage extends React.Component {
     this.setState({
       errors: {},
     });
-    const data = _.clone(this.state.internshipDetails);
+    const data = _.cloneDeep(this.state.internshipDetails);
     data.startDate = new Date(data.startDate).getTime().toString();
     data.applyBy = new Date(data.applyBy).getTime().toString();
     axios.post('/api/admin/posts', data, {
@@ -68,7 +72,7 @@ class SubmitPostPage extends React.Component {
 
   changeInternshipDetails(event) {
     const field = event.target.name;
-    const internshipDetails = _.clone(this.state.internshipDetails);
+    const internshipDetails = _.cloneDeep(this.state.internshipDetails);
     if (field === 'position') {
       internshipDetails.position = event.target.value;
     } else if (field === 'company') {
@@ -83,8 +87,12 @@ class SubmitPostPage extends React.Component {
       internshipDetails.stipend = event.target.value;
     } else if (field === 'apply-by') {
       internshipDetails.applyBy = event.target.value;
-    } else if (field === 'description') {
-      internshipDetails.description = event.target.value;
+    } else if (field === 'description-about') {
+      internshipDetails.description.about = event.target.value;
+    } else if (field === 'description-who-can-apply') {
+      internshipDetails.description.whoCanApply = event.target.value;
+    } else if (field === 'description-perks') {
+      internshipDetails.description.perks = event.target.value;
     }
     this.setState({ internshipDetails });
   }

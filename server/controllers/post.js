@@ -2,12 +2,13 @@ const _ = require('lodash');
 const PostModel = require('mongoose').model('Post');
 
 exports.createPost = (req, res) => {
-  req.body.startDate = new Date(parseInt(req.body.startDate, 10));
-  req.body.duration = parseInt(req.body.duration, 10);
-  req.body.stipend = parseInt(req.body.stipend, 10);
-  req.body.applyBy = new Date(parseInt(req.body.applyBy, 10));
+  const postDetails = _.cloneDeep(req.body);
+  postDetails.startDate = new Date(parseInt(postDetails.startDate, 10));
+  postDetails.duration = parseInt(postDetails.duration, 10);
+  postDetails.stipend = parseInt(postDetails.stipend, 10);
+  postDetails.applyBy = new Date(parseInt(postDetails.applyBy, 10));
 
-  const newPost = new PostModel(req.body);
+  const newPost = new PostModel(postDetails);
 
   newPost.position = newPost.position.trim();
   newPost.company = newPost.company.trim();
