@@ -27,31 +27,41 @@ class StudentList extends Component {
     this.handleChange = (e, { name, value }) => this.setState({ [name]: value });
     this.handleApplyfilter = (event) => {
       event.preventDefault();
-      console.log(this.state.studentName, ' k ', this.state.department, ' ', this.state.year, ' ', this.state);
+      //console.log(this.state.studentName, ' k ', this.state.department, ' ', this.state.year, ' ', this.state);
     };
   }
 
   getPageNavigator() {
     const paginateArray = [];
-    if (this.state.leftPageNavIndex === 1) {
-      paginateArray.push(<Menu.Item as="a" disabled icon> <Icon name="left chevron" /> </Menu.Item>);
-    } else {
-      paginateArray.push(<Menu.Item as="a" icon> <Icon name="left chevron" /> </Menu.Item>);
-    }
+    // if (this.state.leftPageNavIndex === 1) {
+    //   paginateArray.push(<Menu.Item as="a" disabled icon> <Icon name="left chevron" /> </Menu.Item>);
+    // } else {
+    //   paginateArray.push(<Menu.Item as="a" icon> <Icon name="left chevron" /> </Menu.Item>);
+    // }
+    //console.log('leftPageNavIndex', this.state.leftPageNavIndex);
+    paginateArray.push(<Menu.Item
+      icon
+      disabled={this.state.leftPageNavIndex === 1}
+      onClick={() => {
+      //console.log(this);
+    }}
+    >
+      <Icon name="left chevron" />
+    </Menu.Item>);
     let index;
     for (index = this.state.leftPageNavIndex; index <= this.state.rightPageNavIndex; index += 1) {
       paginateArray.push(<button
         value={index}
         key={index}
         onClick={(event) => {
-        console.log('page: ', event.target.value);
-        new Promise((resolve, reject) => {
-          console.log(this);
+        //console.log('page: ', event.target.value);
+        new Promise((resolve) => {
+          //console.log(this);
           this.setState({ currentPage: event.target.value });
           resolve(this);
         })
         .then((studentListReactObject) => {
-          console.log(studentListReactObject);
+          //console.log(studentListReactObject);
           studentListReactObject.getStudentItems();
         })
         .catch(() => {
@@ -77,13 +87,19 @@ class StudentList extends Component {
       },
     })
       .then((res) => {
-        console.log('count', res.data.count);
-        this.setState({
-          leftPageNavIndex: 1,
-          rightPageNavIndex: Math.min(Math.ceil(res.data.count / 10), this.state.leftPageNavIndex + 4),
-          numOfPages: Math.ceil(res.data.count / 10),
-        });
-        this.setState({ pageNavigator: this.getPageNavigator() });
+        //console.log('count', res.data.count);
+        new Promise((resolve) => {
+          this.setState({
+            leftPageNavIndex: 1,
+            rightPageNavIndex: Math.min(Math.ceil(res.data.count / 10), this.state.leftPageNavIndex + 4),
+            numOfPages: Math.ceil(res.data.count / 10),
+          });
+          //console.log('getNumOfStudents', this);
+          resolve(this);
+        })
+          .then((studentListReactObject) => {
+            studentListReactObject.setState({ pageNavigator: studentListReactObject.getPageNavigator() });
+          });
       })
       .catch((error) => {
         console.error(error);
@@ -98,7 +114,7 @@ class StudentList extends Component {
       },
     })
       .then((res) => {
-        console.log(res.data.students);
+        //console.log(res.data.students);
         const studentList = res.data.students;
         this.setState(() => ({
           studentItems: studentList.map((student, index) =>
@@ -109,8 +125,8 @@ class StudentList extends Component {
               key={index.toString()}
             />)),
         }));
-        console.log(this.state.studentItems.length);
-        console.log(this.state.studentItems);
+        //console.log(this.state.studentItems.length);
+        //console.log(this.state.studentItems);
       })
       .catch((error) => {
         console.error(error);
@@ -169,6 +185,7 @@ class StudentList extends Component {
             </Table.Row>
           </Table.Footer>
         </Table>
+        {console.log(this.state)}
       </Container>
     );
   }
