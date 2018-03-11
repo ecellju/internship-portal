@@ -27,23 +27,32 @@ class StudentList extends Component {
     this.handleChange = (e, { name, value }) => this.setState({ [name]: value });
     this.handleApplyfilter = (event) => {
       event.preventDefault();
-      //console.log(this.state.studentName, ' k ', this.state.department, ' ', this.state.year, ' ', this.state);
     };
   }
 
   getPageNavigator() {
+    console.log('getPageNavigator entered');
+    console.log(this.state);
     const paginateArray = [];
-    // if (this.state.leftPageNavIndex === 1) {
-    //   paginateArray.push(<Menu.Item as="a" disabled icon> <Icon name="left chevron" /> </Menu.Item>);
-    // } else {
-    //   paginateArray.push(<Menu.Item as="a" icon> <Icon name="left chevron" /> </Menu.Item>);
-    // }
-    //console.log('leftPageNavIndex', this.state.leftPageNavIndex);
     paginateArray.push(<Menu.Item
       icon
       disabled={this.state.leftPageNavIndex === 1}
       onClick={() => {
-      //console.log(this);
+        new Promise((resolve) => {
+          this.setState(prevState => ({
+          leftPageNavIndex: prevState.leftPageNavIndex - 5,
+          rightPageNavIndex: prevState.leftPageNavIndex - 1,
+          currentPage: prevState.leftPageNavIndex - 1,
+        }));
+        resolve(this);
+      })
+      .then((studentListReactObject) => {
+        studentListReactObject.getStudentItems();
+        studentListReactObject.getPageNavigator();
+      })
+      .catch(() => {
+        console.error('error occurred');
+      });
     }}
     >
       <Icon name="left chevron" />
@@ -54,14 +63,11 @@ class StudentList extends Component {
         value={index}
         key={index}
         onClick={(event) => {
-        //console.log('page: ', event.target.value);
         new Promise((resolve) => {
-          //console.log(this);
-          this.setState({ currentPage: event.target.value });
+          this.setState({ currentPage: parseInt(event.target.value) });
           resolve(this);
         })
         .then((studentListReactObject) => {
-          //console.log(studentListReactObject);
           studentListReactObject.getStudentItems();
         })
         .catch(() => {
@@ -72,12 +78,31 @@ class StudentList extends Component {
         {index}
       </button>);
     }
-    if (this.state.rightPageNavIndex === this.state.numOfPages) {
-      paginateArray.push(<Menu.Item as="a" disabled icon> <Icon name="right chevron" /> </Menu.Item>);
-    } else {
-      paginateArray.push(<Menu.Item as="a" icon> <Icon name="right chevron" /> </Menu.Item>);
-    }
-    return paginateArray;
+    paginateArray.push(<Menu.Item
+      icon
+      disabled={this.state.rightPageNavIndex === this.state.numOfPages}
+      onClick={() => {
+        new Promise((resolve) => {
+          this.setState(prevState => ({
+          leftPageNavIndex: prevState.leftPageNavIndex + 5,
+          rightPageNavIndex: Math.min(prevState.rightPageNavIndex + 5, prevState.numOfPages),
+          currentPage: prevState.leftPageNavIndex + 5,
+        }));
+        resolve(this);
+      })
+      .then((studentListReactObject) => {
+        console.log(studentListReactObject);
+        studentListReactObject.getStudentItems();
+        studentListReactObject.getPageNavigator();
+      })
+      .catch(() => {
+        console.error('error occurred');
+      });
+    }}
+    >
+      <Icon name="right chevron" />
+    </Menu.Item>);
+    this.setState({ pageNavigator: paginateArray });
   }
 
   getNumOfStudents() {
@@ -87,18 +112,16 @@ class StudentList extends Component {
       },
     })
       .then((res) => {
-        //console.log('count', res.data.count);
         new Promise((resolve) => {
           this.setState({
             leftPageNavIndex: 1,
-            rightPageNavIndex: Math.min(Math.ceil(res.data.count / 10), this.state.leftPageNavIndex + 4),
-            numOfPages: Math.ceil(res.data.count / 10),
+            rightPageNavIndex: Math.min(Math.ceil(res.data.count / 2), 5),
+            numOfPages: Math.ceil(res.data.count / 2),
           });
-          //console.log('getNumOfStudents', this);
           resolve(this);
         })
           .then((studentListReactObject) => {
-            studentListReactObject.setState({ pageNavigator: studentListReactObject.getPageNavigator() });
+            studentListReactObject.getPageNavigator();
           });
       })
       .catch((error) => {
@@ -114,7 +137,6 @@ class StudentList extends Component {
       },
     })
       .then((res) => {
-        //console.log(res.data.students);
         const studentList = res.data.students;
         this.setState(() => ({
           studentItems: studentList.map((student, index) =>
@@ -125,8 +147,6 @@ class StudentList extends Component {
               key={index.toString()}
             />)),
         }));
-        //console.log(this.state.studentItems.length);
-        //console.log(this.state.studentItems);
       })
       .catch((error) => {
         console.error(error);
