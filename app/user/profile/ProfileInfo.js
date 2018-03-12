@@ -292,6 +292,9 @@ export default class ProfileInfo extends React.Component {
               size="small"
 
               ref={(c) => { this.gen_info_modal = c; }}
+
+              closeIcon
+              onClose={this.toggleEditability}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -548,6 +551,9 @@ export default class ProfileInfo extends React.Component {
                 closeOnRootNodeClick={false}
                 size="small"
                 ref={(c) => { this.skill_modal = c; }}
+
+                closeIcon
+                onClose={this.toggleEditability}
               >
                 <Modal.Header>
                   <Grid verticalAlign="middle" textAlign="left">
@@ -613,6 +619,8 @@ export default class ProfileInfo extends React.Component {
               closeOnRootNodeClick={false}
               size="small"
               ref={(c) => { this.internship_modal = c; }}
+              closeIcon
+              onClose={this.toggleEditability}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -677,6 +685,9 @@ export default class ProfileInfo extends React.Component {
               closeOnRootNodeClick={false}
               size="small"
               ref={(c) => { this.projects_modal = c; }}
+
+              closeIcon
+              onClose={this.toggleEditability}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -766,6 +777,9 @@ export default class ProfileInfo extends React.Component {
               closeOnRootNodeClick={false}
               size="small"
               ref={(c) => { this.education_modal = c; }}
+
+              closeIcon
+              onClose={this.toggleEditability}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -868,6 +882,9 @@ export default class ProfileInfo extends React.Component {
               closeOnRootNodeClick={false}
               size="small"
               ref={(c) => { this.por_modal = c; }}
+
+              closeIcon
+              onClose={this.toggleEditability}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -932,6 +949,9 @@ export default class ProfileInfo extends React.Component {
               closeOnRootNodeClick={false}
               size="small"
               ref={(c) => { this.work_modal = c; }}
+
+              closeIcon
+              onClose={this.toggleEditability}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -998,6 +1018,9 @@ export default class ProfileInfo extends React.Component {
               closeOnRootNodeClick={false}
               size="small"
               ref={(c) => { this.cca_modal = c; }}
+
+              closeIcon
+              onClose={this.toggleEditability}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -1063,6 +1086,9 @@ export default class ProfileInfo extends React.Component {
               closeOnRootNodeClick={false}
               size="small"
               ref={(c) => { this.additional_modal = c; }}
+
+              closeIcon
+              onClose={this.toggleEditability}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">

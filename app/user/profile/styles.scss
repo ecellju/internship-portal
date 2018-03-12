@@ -180,7 +180,7 @@ a.ui.teal.label:hover,
 }
 
 .general-info-section .general-edit-icon {
-  visibility: hidden;
+  visibility: visible;
 }
 
 .general-info-section:hover .general-edit-icon {
@@ -416,7 +416,7 @@ a.ui.teal.label:hover,
 }
 
 .general-skill-section .general-edit-icon {
-  visibility: hidden;
+  visibility: visible;
   @include transition(all, 0.5s, ease);
 }
 
