@@ -44,7 +44,20 @@ exports.getPost = (req, res) => {
 };
 
 exports.updatePost = (req, res) => {
-  PostModel.findByIdAndUpdate({ _id: req.params.id }, req.body, (err, docs) => {
+  const postDetails = _.cloneDeep(req.body);
+  postDetails.startDate = new Date(parseInt(postDetails.startDate, 10));
+  postDetails.duration = parseInt(postDetails.duration, 10);
+  postDetails.stipend = parseInt(postDetails.stipend, 10);
+  postDetails.applyBy = new Date(parseInt(postDetails.applyBy, 10));
+
+  postDetails.position.trim();
+  postDetails.company.trim();
+  postDetails.location.trim();
+
+
+  postDetails.postedOn = new Date();
+
+  PostModel.findByIdAndUpdate({ _id: req.params.id }, postDetails, (err, docs) => {
     if (err || !docs) res.status(500).json({ message: 'database error' });
     else res.status(200).json({ message: 'post updated' });
   });

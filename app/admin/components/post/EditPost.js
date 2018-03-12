@@ -5,8 +5,19 @@ import _ from 'lodash';
 
 import './styles.scss';
 
-const SubmitPostForm = ({
-  onSubmit, onChange, errors, internshipDetails,
+function formatDate(date) {
+  const d = new Date(date);
+  let monthStr = (d.getMonth() + 1).toString();
+  let dayStr = d.getDate().toString();
+  const yearStr = d.getFullYear();
+  if (monthStr.length < 2) monthStr = `0${monthStr}`;
+  if (dayStr.length < 2) dayStr = `0${dayStr}`;
+  // console.log('date', `${yearStr}-${monthStr}-${dayStr}`);
+  return `${yearStr}-${monthStr}-${dayStr}`;
+}
+
+const EditPost = ({
+  onSave, onChange, errors, internshipDetails,
 }) => (
   <div className="submit-post-form-container">
     {_.has(errors, 'summary') &&
@@ -15,7 +26,7 @@ const SubmitPostForm = ({
         content={errors.summary}
       />
     }
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSave}>
       <Form.Field>
         <label htmlFor="submit-post-position">Position</label>
         <input
@@ -66,7 +77,7 @@ const SubmitPostForm = ({
           <label htmlFor="submit-post-start-date">Start Date</label>
           <input
             name="start-date"
-            value={internshipDetails.startDate}
+            value={formatDate(internshipDetails.startDate)}
             onChange={onChange}
             id="submit-post-start-date"
             type="date"
@@ -114,7 +125,7 @@ const SubmitPostForm = ({
           <label htmlFor="submit-post-apply-by">Apply by</label>
           <input
             name="apply-by"
-            value={internshipDetails.applyBy}
+            value={formatDate(internshipDetails.applyBy)}
             onChange={onChange}
             id="submit-post-apply-by"
             placeholder="Enter the last date of application..."
@@ -176,15 +187,15 @@ const SubmitPostForm = ({
         }
       </Form.Field>
       <div className="submit-post-button">
-        <Button primary type="submit">Post Internship</Button>
+        <Button primary type="submit">Save Changes</Button>
       </div>
     </Form>
   </div>
 );
 
 
-SubmitPostForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+EditPost.propTypes = {
+  onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.shape({
 
@@ -197,8 +208,8 @@ SubmitPostForm.propTypes = {
     duration: PropTypes.string.isRequired,
     stipend: PropTypes.string.isRequired,
     applyBy: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    description: PropTypes.object.isRequired,
   }).isRequired,
 };
 
-export default SubmitPostForm;
+export default EditPost;

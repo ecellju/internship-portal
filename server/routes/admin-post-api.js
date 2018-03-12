@@ -1,10 +1,6 @@
 const express = require('express');
 
 const router = express.Router();
-const globalSkillsController = require('../controllers/global-skills');
-const globalSkillsValidator = require('../validators/global-skills');
-
-// router.post('/profile/CV', globalSkillsValidator.uploadValidation, globalSkillsController.uploadCV);
 const postController = require('../controllers/post');
 const postValidator = require('../validators/post');
 
