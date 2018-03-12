@@ -28,9 +28,9 @@ export default class Navbar extends React.Component {
     const { menuVisible } = this.state;
 
     return (
-      <div className="ecp-navbar">
-        <Menu attached size="huge" className="user-navbar-menu">
-          <Grid container>
+      <div className="ecp-navbar Navbar">
+        <Menu attached size="huge" fixed="top" className="user-navbar-menu">
+          <Grid className="menu-container">
 
             <Grid.Row className="computer only">
               <Menu.Item
@@ -38,7 +38,7 @@ export default class Navbar extends React.Component {
                 name="portal"
                 content="Internship Portal"
                 href="/user/posts"
-                className="ecell-header"
+                className="ecp-ecell-header"
               />
 
               <Menu.Item
@@ -94,12 +94,18 @@ export default class Navbar extends React.Component {
                 name="portal"
                 content="Internship Portal"
                 href="/user/posts"
-                className="ecell-header"
+                className="ecp-ecell-header"
               />
 
               <Menu.Menu position="right">
                 <Menu.Item>
-                  <Button basic toggle icon="content" onClick={this.toggleMenu} />
+                  <Button
+                    basic
+                    toggle
+                    icon="content"
+                    onClick={this.toggleMenu}
+                    className="ecp-toggle-icon"
+                  />
                 </Menu.Item>
               </Menu.Menu>
               <Sidebar

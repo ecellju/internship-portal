@@ -37,13 +37,13 @@
 
   @media screen and (orientation: portrait) {
     .main-container {
-      height: 86vh;
+      height: 82vh;
     }
   }
 
   @media screen and (orientation: landscape) and (min-height: 640px) {
     .main-container {
-      height: 92vh;
+      height: 88vh;
     }
   }
 
@@ -218,6 +218,9 @@
 
     @include box-shadow(0em,0em,1em,0em,rgba(0,0,0,0.05));
     @include transition(all, 0.5s, ease);
+
+    position: absolute;
+    right: 0px;
   }
 
   .ui.button.ecell-primary-button:hover {

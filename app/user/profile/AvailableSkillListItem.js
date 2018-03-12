@@ -13,7 +13,9 @@ export default class AvailableSkillListItem extends React.Component {
 
   render() {
     return (
-      <Label style={{ margin: 10 }} as="a" onClick={this.handleClick}><Icon name="add" />{this.props.skill}</Label>
+      <Label style={{ margin: 10 }}as="a" onClick={this.handleClick}>
+        <Icon name="add" />{this.props.skill}
+      </Label>
     );
   }
 }

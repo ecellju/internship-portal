@@ -1,13 +1,15 @@
 import React from 'react';
-import { Button, Card, Form, Label, Segment, List, Grid, Icon, Modal, Container } from 'semantic-ui-react';
+import { Button, Card, Form, Label, Segment, List, Grid, Icon, Modal, Container, Header, TextArea, Text } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import _ from 'lodash';
+
 import Auth from '../../auth/modules/Auth';
 import User from '../../auth/modules/User';
+import Edit from '../../assets/edit.svg';
 import ModalSkillList from './ModalSkillList';
 import ProfileSkillList from './ProfileSkillList';
 
-import _ from 'lodash';
 
 import './styles.scss';
 import UserIcon from '../../assets/user.svg';
@@ -270,10 +272,211 @@ export default class ProfileInfo extends React.Component {
     const { editable } = this.state;
     return (
 
-      <Grid centered>
+      <Grid verticalAlign="middle" centered>
         <Grid.Column width={10} centered className="ecell-profile-main-container">
 
-          <Grid>
+          <Grid className="general-info-section">
+
+            <Modal
+              trigger={
+                <Grid.Row textAlign="right">
+                  <Grid.Column floated="right" className="general-edit-icon">
+                      <Edit height="16px" onClick={this.toggleEditability} />
+                  </Grid.Column>
+                </Grid.Row>
+              }
+
+              closeOnEscape={false}
+              closeOnRootNodeClick={false}
+              size="small"
+
+              ref={(c) => { this.gen_info_modal = c; }}
+            >
+              <Modal.Header>
+                <Grid verticalAlign="middle" textAlign="left">
+                  <Grid.Row columns={2}>
+                    <Grid.Column className="modal-header" textAlign="left">
+                      General Profile Information
+                    </Grid.Column>
+                    <Grid.Column textAlign="right">
+                      <Button
+                        className="ecell-modal-primary-button"
+                        onClick={() => {
+                          this.toggleEditability();
+                          this.gen_info_modal.setState({ open: false });
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Modal.Header>
+              <Modal.Content scrolling>
+
+                <Grid>
+                  <Form>
+                    <Segment className="ecp-modal-form-segment">
+                      <Form.Group widths="equal">
+                        <Form.Input
+                          label="First Name"
+                          name="firstName"
+                          value={this.state.profile.firstName || ''}
+                          onChange={this.handleChange}
+                        />
+                        <Form.Input
+                          label="Middle Name"
+                          name="middleName"
+                          value={this.state.profile.middleName || ''}
+                          onChange={this.handleChange}
+                        />
+                        <Form.Input
+                          label="Last Name"
+                          name="lastName"
+                          value={this.state.profile.lastName || ''}
+                          onChange={this.handleChange}
+                        />
+                      </Form.Group>
+
+                      <Form.Group widths="equal">
+                        <Form.Input
+                          label="Contact Number"
+                          name="contactNo"
+                          value={this.state.profile.contactNo || ''}
+                          onChange={this.handleChange}
+                        />
+
+                        <Form.Input
+                          label="Email"
+                          name="Email"
+                          value={this.state.profile.Email || ''}
+                          onChange={this.handleChange}
+                        />
+                      </Form.Group>
+
+
+                      <Form.Group widths="equal">
+                        <Form.Input
+                          label="Current Year "
+                          name="currentYear"
+                          value={this.state.profile.currentYear || ''}
+                          onChange={this.handleChange}
+                        />
+
+                        <Form.Input
+                          label="Branch"
+                          name="branch"
+                          value={this.state.profile.branch || ''}
+                          onChange={this.handleChange}
+                        />
+                      </Form.Group>
+                    </Segment>
+
+                    <Segment className="ecp-modal-form-segment">
+                      <Form.Group widths="equal">
+                        <Form.Input
+                          label="Birth date"
+                          type="date"
+                          name="DOB"
+                          value={this.state.profile.DOB || ''}
+                          onChange={this.handleChange}
+                        />
+
+                        <Form.Select
+                          label="Gender"
+                          name="gender"
+                          options={genderOptions}
+                          value={this.state.profile.gender || ''}
+                          onChange={
+                            (e, { value }) =>
+                              this.setState({
+                                profile: {
+                                  ...this.state.profile,
+                                  gender: value,
+                                },
+                              })
+                          }
+                        />
+                      </Form.Group>
+                    </Segment>
+
+                    <Segment className="ecp-modal-form-segment">
+                      <Form.Group widths="equal">
+                        <Form.Input
+                          readOnly={!editable}
+                          label="Degree"
+                          name="degree"
+                          value={this.state.profile.degree || ''}
+                          onChange={this.handleChange}
+                        />
+
+                        <Form.Input
+                          readOnly={!editable}
+                          label="CGPA/Marks(%)"
+                          name="cgpa"
+                          value={this.state.profile.cgpa || ''}
+                          onChange={this.handleChange}
+                        />
+
+                        <Form.Input
+                          readOnly={!editable}
+                          label="Joining Year"
+                          name="joinYear"
+                          value={this.state.profile.joinYear || ''}
+                          onChange={this.handleChange}
+                        />
+                      </Form.Group>
+
+                      <Form.Group widths="equal">
+                        <Form.Field
+                          readOnly="true"
+                          label="Higher Secondary"
+                        />
+
+                        <Form.Input
+                          readOnly={!editable}
+                          label="Marks(%)"
+                          name="hsMarks"
+                          value={this.state.profile.hsMarks || ''}
+                          onChange={this.handleChange}
+                        />
+                        <Form.Input
+                          readOnly={!editable}
+                          label="Year"
+                          name="hsYear"
+                          value={this.state.profile.hsYear || ''}
+                          onChange={this.handleChange}
+                        />
+                      </Form.Group>
+
+                      <Form.Group widths="equal">
+                        <Form.Field
+                          readOnly="true"
+                          label="Secondary Exam"
+                        />
+
+                        <Form.Input
+                          readOnly={!editable}
+                          label="Marks(%)"
+                          name="secondaryMarks"
+                          value={this.state.profile.secondaryMarks || ''}
+                          onChange={this.handleChange}
+                        />
+
+                        <Form.Input
+                          readOnly={!editable}
+                          label="Year"
+                          name="secondaryYear"
+                          value={this.state.profile.secondaryYear || ''}
+                          onChange={this.handleChange}
+                        />
+                      </Form.Group>
+                    </Segment>
+                  </Form>
+                </Grid>
+              </Modal.Content>
+            </Modal>
+
             <Grid.Row columns={1} centered className="ecp-user-image-row">
               <UserIcon height="64" width="64" />
             </Grid.Row>
@@ -290,265 +493,602 @@ export default class ProfileInfo extends React.Component {
               </Grid.Column>
             </Grid.Row>
 
-            <Grid.Row columns={1} centered className="ecp-email-row">
-              <Grid.Column textAlign="center" className="ecp-email-col">
+            <Grid.Row columns={1} centered className="ecp-contact-row">
+              <Grid.Column textAlign="center" className="ecp-contact-col">
                 <label htmlFor="user-email">
-                  {this.props.profile.Email}
+                  {` E-mail: ${this.props.profile.Email} `}
+                </label>
+                <Label circular className="ecp-separator-label" htmlFor="seperator" color="black" />
+                <label htmlFor="user-phone">
+                  {` Phone: ${this.props.profile.contactNo} `}
                 </label>
               </Grid.Column>
             </Grid.Row>
 
             <Grid.Row columns={1} centered className="ecp-dept-row">
               <Grid.Column textAlign="center" className="ecp-dept-col">
+                <label htmlFor="degree">
+                  {`${this.props.profile.degree} `}
+                </label>
                 <label htmlFor="branch">
-                  {` ${this.props.profile.branch} `}
+                  {`${this.props.profile.branch} `}
                 </label>
                 <label htmlFor="year">
-                  {this.props.profile.currentYear}
+                  {` ${this.props.profile.joinYear} `}
+                </label>
+                <Label circular className="ecp-separator-label" htmlFor="seperator" color="black" />
+                <label htmlFor="cgpa">
+                  {` CGPA: ${this.props.profile.cgpa}`}
                 </label>
               </Grid.Column>
             </Grid.Row>
-
           </Grid>
 
+          <Grid centered width={16} className="general-skill-section">
+            <Grid.Row className="ecp-skill-row">
+              <Grid.Column width={1} />
+              <Grid.Column width={14} textAlign="center" className="ecp-skill-col">
+                <Label.Group color="teal">
+                  {this.state.userSkills.map(skill => (
+                    <Label htmlFor="skill-label" as="a"key={skill} className="ecp-skill-label">
+                      {skill}
+                    </Label>
+                  ))}
+                </Label.Group>
+              </Grid.Column>
+
+              <Modal
+                trigger={
+                  <Grid.Column width={1} text-align="right" className="general-edit-icon">
+                    <Edit height="16px" onClick={this.toggleEditability} />
+                  </Grid.Column>
+                }
+                closeOnEscape={false}
+                closeOnRootNodeClick={false}
+                size="small"
+                ref={(c) => { this.skill_modal = c; }}
+              >
+                <Modal.Header>
+                  <Grid verticalAlign="middle" textAlign="left">
+                    <Grid.Row columns={2}>
+                      <Grid.Column className="modal-header" textAlign="left">
+                        Featured Skills
+                      </Grid.Column>
+                      <Grid.Column textAlign="right">
+                        <Button
+                          className="ecell-modal-primary-button"
+                          onClick={() => {
+                            this.toggleEditability();
+                            this.skill_modal.setState({ open: false });
+                          }}
+                        >
+                          Save
+                        </Button>
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </Modal.Header>
+
+                <Modal.Content>
+                  <Form>
+                    <ProfileSkillList
+                      removeSkill={this.removeSkill}
+                      restoreSkill={this.restoreSkill}
+                      editable={this.state.editable}
+                      skills={this.state.userSkills}
+                      toDeleteSkills={
+                        [...this.state.toDeleteSkills, ...this.state.modalUnselectedSkills]}
+                    />
+                  </Form>
+                </Modal.Content>
+              </Modal>
+            </Grid.Row>
+          </Grid>
+
+          <br />
+
+          {/* Internship Section */}
+          <Grid className="general-info-section">
+            <Modal
+              trigger={
+                <Grid.Row textAlign="right" className="section-modal-row">
+                  <Grid.Column floated="right" className="general-edit-icon">
+                    <Edit height="16px" onClick={this.toggleEditability} />
+                  </Grid.Column>
+                </Grid.Row>
+              }
+              closeOnEscape={false}
+              closeOnRootNodeClick={false}
+              size="small"
+              ref={(c) => { this.internship_modal = c; }}
+            >
+              <Modal.Header>
+                <Grid verticalAlign="middle" textAlign="left">
+                  <Grid.Row columns={2}>
+                    <Grid.Column className="modal-header" textAlign="left">
+                      Internships
+                    </Grid.Column>
+                    <Grid.Column textAlign="right">
+                      <Button
+                        className="ecell-modal-primary-button"
+                        onClick={() => {
+                          this.toggleEditability();
+                          this.internship_modal.setState({ open: false });
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Modal.Header>
+
+              <Modal.Content className="textarea-only-modal">
+                <Form.Field>
+                  <TextArea
+                    name="internships"
+                    value={this.state.profile.internships || ''}
+                    onChange={this.handleChange}
+                    rows="5"
+                    placeholder="Enter past internship details..."
+                    className="modal-form-textarea"
+                  />
+                </Form.Field>
+              </Modal.Content>
+            </Modal>
+
+            <Grid.Row centered className="ecp-section-row">
+              <Grid.Column className="ecp-section-col">
+                <label htmlFor="ecp-internship-header" className="ecp-section-header-label">
+                  Internships
+                </label>
+                <p className="ecp-section-text">
+                  {this.props.profile.internships}
+                </p>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+
+          {/* Projects Section */}
+          <Grid className="general-info-section">
+            <Modal
+              trigger={
+                <Grid.Row textAlign="right" className="section-modal-row">
+                  <Grid.Column floated="right" className="general-edit-icon">
+                    <Edit height="16px" onClick={this.toggleEditability} />
+                  </Grid.Column>
+                </Grid.Row>
+              }
+              closeOnEscape={false}
+              closeOnRootNodeClick={false}
+              size="small"
+              ref={(c) => { this.projects_modal = c; }}
+            >
+              <Modal.Header>
+                <Grid verticalAlign="middle" textAlign="left">
+                  <Grid.Row columns={2}>
+                    <Grid.Column className="modal-header" textAlign="left">
+                      Projects &amp; Trainings
+                    </Grid.Column>
+                    <Grid.Column textAlign="right">
+                      <Button
+                        className="ecell-modal-primary-button"
+                        onClick={() => {
+                          this.toggleEditability();
+                          this.projects_modal.setState({ open: false });
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Modal.Header>
+
+              <Modal.Content className="textarea-only-modal">
+                <Form.Field>
+                  <TextArea
+                    name="projects"
+                    value={this.state.profile.projects || ''}
+                    onChange={this.handleChange}
+                    rows="5"
+                    placeholder="Enter past project and training details."
+                    className="modal-form-textarea"
+                  />
+                </Form.Field>
+              </Modal.Content>
+            </Modal>
+
+            <Grid.Row centered className="ecp-section-row">
+              <Grid.Column className="ecp-section-col">
+                <label htmlFor="ecp-projects-header" className="ecp-section-header-label">
+                  Projects &amp; Trainings
+                </label>
+                <p className="ecp-section-text">
+                  {this.props.profile.projects}
+                </p>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+
+          {/* Education Section */}
+          <Grid className="general-info-section">
+            <Modal
+              trigger={
+                <Grid.Row textAlign="right" className="section-modal-row">
+                  <Grid.Column floated="right" className="general-edit-icon">
+                    <Edit height="16px" onClick={this.toggleEditability} />
+                  </Grid.Column>
+                </Grid.Row>
+              }
+              closeOnEscape={false}
+              closeOnRootNodeClick={false}
+              size="small"
+              ref={(c) => { this.education_modal = c; }}
+            >
+              <Modal.Header>
+                <Grid verticalAlign="middle" textAlign="left">
+                  <Grid.Row columns={2}>
+                    <Grid.Column className="modal-header" textAlign="left">
+                      Education
+                    </Grid.Column>
+                    <Grid.Column textAlign="right">
+                      <Button
+                        className="ecell-modal-primary-button"
+                        onClick={() => {
+                          this.toggleEditability();
+                          this.education_modal.setState({ open: false });
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Modal.Header>
+
+              <Modal.Content>
+                <Form>
+                  <Segment className="ecp-modal-form-segment">
+                    <Form.Group widths="equal">
+                      <Form.Field
+                        readOnly="true"
+                        label="Higher Secondary"
+                      />
+
+                      <Form.Input
+                        readOnly={!editable}
+                        label="Marks(%)"
+                        name="hsMarks"
+                        value={this.state.profile.hsMarks || ''}
+                        onChange={this.handleChange}
+                      />
+                      <Form.Input
+                        readOnly={!editable}
+                        label="Year"
+                        name="hsYear"
+                        value={this.state.profile.hsYear || ''}
+                        onChange={this.handleChange}
+                      />
+                    </Form.Group>
+
+                    <Form.Group widths="equal">
+                      <Form.Field
+                        readOnly="true"
+                        label="Secondary Exam"
+                      />
+
+                      <Form.Input
+                        readOnly={!editable}
+                        label="Marks(%)"
+                        name="secondaryMarks"
+                        value={this.state.profile.secondaryMarks || ''}
+                        onChange={this.handleChange}
+                      />
+
+                      <Form.Input
+                        readOnly={!editable}
+                        label="Year"
+                        name="secondaryYear"
+                        value={this.state.profile.secondaryYear || ''}
+                        onChange={this.handleChange}
+                      />
+                    </Form.Group>
+                  </Segment>
+                </Form>
+              </Modal.Content>
+            </Modal>
+
+            <Grid.Row centered width={16} className="ecp-section-row">
+              <Grid.Column className="ecp-section-col">
+                <label htmlFor="ecp-education-header" className="ecp-section-header-label">
+                  Education
+                </label>
+                <br />
+                <div className="ecp-subsection">
+                  <span htmlFor="ecp-subsection-header" className="ecp-subsection-header-label">
+                    Higher Secondary
+                  </span>
+                  <br />
+                  <span className="ecp-section-text">
+                    {`Year of Passing: ${this.props.profile.hsYear}`}
+                  </span>
+                  <br />
+                  <span className="ecp-section-text">
+                    {`Marks: ${this.props.profile.hsMarks}%`}
+                  </span>
+                </div>
+                <br />
+                <div className="ecp-subsection">
+                  <label htmlFor="ecp-subsection-header" className="ecp-subsection-header-label">
+                    Secondary
+                  </label>
+                  <br />
+                  <span className="ecp-section-text">
+                    {`Year of Passing: ${this.props.profile.secondaryYear}`}
+                  </span>
+                  <br />
+                  <span className="ecp-section-text">
+                    {`Marks: ${this.props.profile.secondaryMarks}%`}
+                  </span>
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+
+          {/* Positions of Responsibility Section */}
+          <Grid className="general-info-section">
+            <Modal
+              trigger={
+                <Grid.Row textAlign="right" className="section-modal-row">
+                  <Grid.Column floated="right" className="general-edit-icon">
+                    <Edit height="16px" onClick={this.toggleEditability} />
+                  </Grid.Column>
+                </Grid.Row>
+              }
+              closeOnEscape={false}
+              closeOnRootNodeClick={false}
+              size="small"
+              ref={(c) => { this.por_modal = c; }}
+            >
+              <Modal.Header>
+                <Grid verticalAlign="middle" textAlign="left">
+                  <Grid.Row columns={2}>
+                    <Grid.Column className="modal-header" textAlign="left">
+                      Positions of Responsibility
+                    </Grid.Column>
+                    <Grid.Column textAlign="right">
+                      <Button
+                        className="ecell-modal-primary-button"
+                        onClick={() => {
+                          this.toggleEditability();
+                          this.por_modal.setState({ open: false });
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Modal.Header>
+
+              <Modal.Content className="textarea-only-modal">
+                <Form.Field>
+                  <TextArea
+                    name="positionOfResponsibility"
+                    value={this.state.profile.positionOfResponsibility || ''}
+                    onChange={this.handleChange}
+                    rows="5"
+                    placeholder="Enter positions of responsibity you might have held"
+                    className="modal-form-textarea"
+                  />
+                </Form.Field>
+              </Modal.Content>
+            </Modal>
+
+            <Grid.Row width={16} centered className="ecp-section-row">
+              <Grid.Column className="ecp-section-col">
+                <label htmlFor="ecp-por-header" className="ecp-section-header-label">
+                  Positions of Responsibility
+                </label>
+                <p className="ecp-section-text">
+                  {this.props.profile.positionOfResponsibility}
+                </p>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+
+          {/* Work Samples */}
+          <Grid className="general-info-section">
+            <Modal
+              trigger={
+                <Grid.Row textAlign="right" className="section-modal-row">
+                  <Grid.Column floated="right" className="general-edit-icon">
+                    <Edit height="16px" onClick={this.toggleEditability} />
+                  </Grid.Column>
+                </Grid.Row>
+              }
+              closeOnEscape={false}
+              closeOnRootNodeClick={false}
+              size="small"
+              ref={(c) => { this.work_modal = c; }}
+            >
+              <Modal.Header>
+                <Grid verticalAlign="middle" textAlign="left">
+                  <Grid.Row columns={2}>
+                    <Grid.Column className="modal-header" textAlign="left">
+                      Work Samples
+                    </Grid.Column>
+                    <Grid.Column textAlign="right">
+                      <Button
+                        className="ecell-modal-primary-button"
+                        onClick={() => {
+                          this.toggleEditability();
+                          this.work_modal.setState({ open: false });
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Modal.Header>
+
+              <Modal.Content className="textarea-only-modal">
+                <Form.Field>
+                  <TextArea
+                    name="workSamples"
+                    value={this.state.profile.workSamples || ''}
+                    onChange={this.handleChange}
+                    rows="5"
+                    placeholder="Enter your work samples eg. links to your previous projects, github profile etc..."
+                    className="modal-form-textarea"
+                  />
+                </Form.Field>
+              </Modal.Content>
+            </Modal>
+
+            <Grid.Row width={16} centered className="ecp-section-row">
+              <Grid.Column className="ecp-section-col">
+                <label htmlFor="ecp-work-header" className="ecp-section-header-label">
+                  Work Samples
+                </label>
+                <p className="ecp-section-text">
+                  {this.props.profile.workSamples}
+                </p>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+
+          {/* Co-Curricular Activities Section */}
+          <Grid className="general-info-section">
+            <Modal
+              trigger={
+                <Grid.Row textAlign="right" className="section-modal-row">
+                  <Grid.Column floated="right" className="general-edit-icon">
+                    <Edit height="16px" onClick={this.toggleEditability} />
+                  </Grid.Column>
+                </Grid.Row>
+              }
+              closeOnEscape={false}
+              closeOnRootNodeClick={false}
+              size="small"
+              ref={(c) => { this.cca_modal = c; }}
+            >
+              <Modal.Header>
+                <Grid verticalAlign="middle" textAlign="left">
+                  <Grid.Row columns={2}>
+                    <Grid.Column className="modal-header" textAlign="left">
+                      Co-Curricular Activities
+                    </Grid.Column>
+                    <Grid.Column textAlign="right">
+                      <Button
+                        className="ecell-modal-primary-button"
+                        onClick={() => {
+                          this.toggleEditability();
+                          this.cca_modal.setState({ open: false });
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Modal.Header>
+
+              <Modal.Content className="textarea-only-modal">
+                <Form.Field>
+                  <TextArea
+                    name="coCurricularActivities"
+                    value={this.state.profile.coCurricularActivities || ''}
+                    onChange={this.handleChange}
+                    rows="5"
+                    placeholder="Enter your co-curricular activities..."
+                    className="modal-form-textarea"
+                  />
+                </Form.Field>
+              </Modal.Content>
+            </Modal>
+
+            <Grid.Row width={16} centered className="ecp-section-row">
+              <Grid.Column className="ecp-section-col">
+                <label htmlFor="ecp-co-curr-header" className="ecp-section-header-label">
+                  Co-Curricular Activities
+                </label>
+                <p className="ecp-section-text">
+                  {this.props.profile.coCurricularActivities}
+                </p>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+
+          {/* Additional Details Section */}
+          <Grid className="general-info-section">
+            <Modal
+              trigger={
+                <Grid.Row textAlign="right" className="section-modal-row">
+                  <Grid.Column floated="right" className="general-edit-icon">
+                    <Edit height="16px" onClick={this.toggleEditability} />
+                  </Grid.Column>
+                </Grid.Row>
+              }
+              closeOnEscape={false}
+              closeOnRootNodeClick={false}
+              size="small"
+              ref={(c) => { this.additional_modal = c; }}
+            >
+              <Modal.Header>
+                <Grid verticalAlign="middle" textAlign="left">
+                  <Grid.Row columns={2}>
+                    <Grid.Column className="modal-header" textAlign="left">
+                      Additional Details
+                    </Grid.Column>
+                    <Grid.Column textAlign="right">
+                      <Button
+                        className="ecell-modal-primary-button"
+                        onClick={() => {
+                          this.toggleEditability();
+                          this.additional_modal.setState({ open: false });
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Modal.Header>
+
+              <Modal.Content className="textarea-only-modal">
+                <Form.Field>
+                  <TextArea
+                    name="additionalDetails"
+                    value={this.state.profile.additionalDetails || ''}
+                    onChange={this.handleChange}
+                    rows="5"
+                    placeholder="Enter any other additional details you might want to provide..."
+                    className="modal-form-textarea"
+                  />
+                </Form.Field>
+              </Modal.Content>
+            </Modal>
+
+            <Grid.Row width={16} centered className="ecp-section-row">
+              <Grid.Column className="ecp-section-col">
+                <label htmlFor="ecp-additional-header" className="ecp-section-header-label">
+                  Additional Details
+                </label>
+                <p className="ecp-section-text">
+                  {this.props.profile.additionalDetails}
+                </p>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Grid.Column>
       </Grid>
-
-
-      // <Card fluid >
-      //   <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
-      //     <Card.Header>
-      //       {editable ? 'Edit Profile Information' : 'Profile Information'}
-      //       <Button
-      //         primary
-      //         floated="right"
-      //         content={editable ? 'Save' : 'Edit'}
-      //         onClick={this.toggleEditability}
-      //       />
-      //     </Card.Header>
-      //   </Card.Content>
-      //   <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
-      //     <Segment raised>
-      //       <Form.Field >
-      //         <Label style={{ marginBottom: 20, fontSize: 15, fontWeight: 'bold' }} color="blue" ribbon htmlFor="personaldetails" className="form-labels">
-      //           Personal Details
-      //         </Label>
-      //       </Form.Field>
-      //       <Form>
-      //         <Form.Group>
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="First name"
-      //             name="firstName"
-      //             value={this.state.profile.firstName || ''}
-      //             onChange={this.handleChange}
-      //             // width={6}
-      //           />
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Middle name"
-      //             name="middleName"
-      //             value={this.state.profile.middleName || ''}
-      //             onChange={this.handleChange}
-      //            // width={4}
-      //           />
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Last name"
-      //             name="lastName"
-      //             value={this.state.profile.lastName || ''}
-      //             onChange={this.handleChange}
-      //             // width={6}
-      //           />
-      //         </Form.Group>
-      //         <Form.Group>
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Birth date"
-      //             type="date"
-      //             name="DOB"
-      //             value={this.state.profile.DOB || ''}
-      //             onChange={this.handleChange}
-      //            // width={4}
-      //           />
-      //           <Form.Select
-      //             readOnly={!editable}
-      //             label="Gender"
-      //             name="gender"
-      //             options={genderOptions}
-      //             value={this.state.profile.gender || ''}
-      //             onChange={(e, { value }) => this.setState({ profile: { ...this.state.profile, gender: value } })}
-      //             // width={6}
-      //           />
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Contact Number"
-      //             name="contactNo"
-      //             value={this.state.profile.contactNo || ''}
-      //             onChange={this.handleChange}
-      //            //  width={6}
-      //           />
-      //         </Form.Group>
-      //         <Form.Group>
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Current Year "
-      //             name="currentYear"
-      //             value={this.state.profile.currentYear || ''}
-      //             onChange={this.handleChange}
-
-      //           />
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Branch"
-      //             name="branch"
-      //             value={this.state.profile.branch || ''}
-      //             onChange={this.handleChange}
-      //           />
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Email"
-      //             name="Email"
-      //             value={this.state.profile.Email || ''}
-      //             onChange={this.handleChange}
-      //           />
-      //         </Form.Group>
-      //       </Form>
-      //     </Segment>
-      //   </Card.Content>
-      //   <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
-      //     <Segment raised>
-      //       <Form.Field >
-      //         <Label style={{ marginBottom: 20, fontSize: 15, fontWeight: 'bold' }} color="blue" ribbon htmlFor="personaldetails" className="form-labels">
-      //           Educational Details
-      //         </Label>
-      //       </Form.Field>
-      //       <Form>
-      //         <Form.Group>
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Degree"
-      //             name="degree"
-      //             value={this.state.profile.degree || ''}
-      //             onChange={this.handleChange}
-      //             // width={6}
-      //           />
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="CGPA/Marks(%)"
-      //             name="cgpa"
-      //             value={this.state.profile.cgpa || ''}
-      //             onChange={this.handleChange}
-      //            // width={4}
-      //           />
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Joining Year"
-      //             name="joinYear"
-      //             value={this.state.profile.joinYear || ''}
-      //             onChange={this.handleChange}
-      //             // width={6}
-      //           />
-      //         </Form.Group>
-      //         <Form.Group>
-      //           <Form.Field
-      //             style={{
-      //               margin: 20, fontSize: 15, color: 'red', fontWeight: 'bold',
-      //               }}
-      //             readOnly="true"
-      //             label="Higher Secondary"
-      //            // width={4}
-      //           />
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Marks(%)"
-      //             name="hsMarks"
-      //             value={this.state.profile.hsMarks || ''}
-      //             onChange={this.handleChange}
-      //            //  width={6}
-      //           />
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Year"
-      //             name="hsYear"
-      //             value={this.state.profile.hsYear || ''}
-      //             onChange={this.handleChange}
-      //            //  width={6}
-      //           />
-      //         </Form.Group>
-      //         <Form.Group>
-      //           <Form.Field
-      //             style={{
-      //               margin: 20, fontSize: 15, color: 'red', fontWeight: 'bold',
-      //               }}
-      //             readOnly="true"
-      //             label="Secondary Exam"
-      //            // width={4}
-      //           />
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Marks(%)"
-      //             name="secondaryMarks"
-      //             value={this.state.profile.secondaryMarks || ''}
-      //             onChange={this.handleChange}
-      //            //  width={6}
-      //           />
-      //           <Form.Input
-      //             readOnly={!editable}
-      //             label="Year"
-      //             name="secondaryYear"
-      //             value={this.state.profile.secondaryYear || ''}
-      //             onChange={this.handleChange}
-      //            //  width={6}
-      //           />
-      //         </Form.Group>
-      //       </Form>
-      //     </Segment>
-      //   </Card.Content>
-      //   <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
-      //     <Segment raised>
-      //       <Grid style={{ marginTop: 0, marginBottom: 0 }} columns={2} >
-      //         <Grid.Column floated="left" style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }} width={5}>
-      //           <Form.Field >
-      //             <Label style={{ marginBottom: 20, fontSize: 15, fontWeight: 'bold' }} color="blue" ribbon htmlFor="personaldetails" className="form-labels">
-      //               Featured Skills
-      //             </Label>
-      //           </Form.Field>
-      //         </Grid.Column>
-      //         <Grid.Column style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }} floated="right" width={5}>
-      //           <ModalSkillList
-      //             refreshSkillList={this.refreshSkillList}
-      //             unselectedSkills={this.state.modalUnselectedSkills}
-      //             selectedSkills={this.state.modalSelectedSkills}
-      //             addSkill={this.modalAddSkill}
-      //             removeSkill={this.modalRemoveSkill}
-      //             close={this.close}
-      //             handleAdd={this.handleAdd}
-      //           />
-      //         </Grid.Column>
-      //       </Grid>
-      //       <Form>
-      //         <ProfileSkillList removeSkill={this.removeSkill} restoreSkill={this.restoreSkill} editable={this.state.editable} skills={this.state.userSkills} toDeleteSkills={this.state.toDeleteSkills} />
-      //       </Form>
-      //     </Segment>
-      //   </Card.Content>
-      //   <Card.Content style={{ marginLeft: 20, marginRight: 20 }}>
-      //     <Form encType="multipart/form-data" onSubmit={this.handleSubmit}>
-      //       <Form.Group>
-      //         <Form.Input
-      //           input={{ accept: 'application/pdf' }}
-      //           type="file"
-      //           name="userFile"
-      //           onChange={(e) => { this.setState({ CV: e.target.files[0] }); }}
-      //         />
-      //         <Button type="submit">Upload CV</Button>
-      //       </Form.Group>
-      //     </Form>
-      //   </Card.Content>
-      // </Card>
     );
   }
 }
+
 ProfileInfo.propTypes = {
   profile: PropTypes.shape().isRequired,
 };

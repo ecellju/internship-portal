@@ -6,14 +6,21 @@ export default class DeletedProfileSkillListItem extends React.Component {
   constructor() {
     super();
     this.handleClick = (event, data) => {
-      console.log(data.children[1]);
-      this.props.restoreSkill(data.children[1]);
+      console.log(data.children[0].props.children);
+      this.props.restoreSkill(data.children[0].props.children);
     };
   }
 
   render() {
     return (
-      <Label as="a" onClick={this.handleClick} style={{ margin: 10 }} ><Icon name="checkmark" />{this.props.skill}</Label>
+      <Label
+        onClick={this.handleClick}
+        key={this.props.skill}
+        className="hover-add-label"
+      >
+        <span className="hover-label-text">{this.props.skill}</span>
+        <Icon className="hover-visible" name="checkmark" />
+      </Label>
     );
   }
 }

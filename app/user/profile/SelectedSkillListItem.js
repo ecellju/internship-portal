@@ -13,7 +13,9 @@ export default class SelectedSkillListItem extends React.Component {
 
   render() {
     return (
-      <Label as="a" onClick={this.handleClick} style={{ margin: 10 }} ><Icon name="remove" />{this.props.skill}</Label>
+      <Label as="a" onClick={this.handleClick} style={{ margin: 10 }}>
+        <Icon name="remove" />{this.props.skill}
+      </Label>
     );
   }
 }
