@@ -2,8 +2,8 @@ const UserModel = require('mongoose').model('User');
 
 exports.getStudentList = (req, res) => {
   console.log('page', req.headers.page);
-  const numOfSkippedDocuments = (req.headers.page - 1) * 2;
-  const limitOfDocumentsInPage = 2;
+  const numOfSkippedDocuments = (req.headers.page - 1) * 5;
+  const limitOfDocumentsInPage = 5;
   const query = UserModel.find({ kind: 'Student' }).skip(numOfSkippedDocuments).limit(limitOfDocumentsInPage);
   query.exec((err, docs) => {
     if (err) {

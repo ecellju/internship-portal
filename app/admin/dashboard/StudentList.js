@@ -31,8 +31,6 @@ class StudentList extends Component {
   }
 
   getPageNavigator() {
-    console.log('getPageNavigator entered');
-    console.log(this.state);
     const paginateArray = [];
     paginateArray.push(<Menu.Item
       icon
@@ -115,8 +113,8 @@ class StudentList extends Component {
         new Promise((resolve) => {
           this.setState({
             leftPageNavIndex: 1,
-            rightPageNavIndex: Math.min(Math.ceil(res.data.count / 2), 5),
-            numOfPages: Math.ceil(res.data.count / 2),
+            rightPageNavIndex: Math.min(Math.ceil(res.data.count / 5), 5),
+            numOfPages: Math.ceil(res.data.count / 5),
           });
           resolve(this);
         })
@@ -144,6 +142,10 @@ class StudentList extends Component {
               name={`${student.firstName} ${student.lastName}`}
               department={student.profile.branch}
               year={student.profile.currentYear}
+              email={student.profile.Email}
+              cgpa={student.profile.cgpa}
+              phone={student.profile.contactNo}
+              id={student._id}
               key={index.toString()}
             />)),
         }));
@@ -190,6 +192,9 @@ class StudentList extends Component {
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell>Department</Table.HeaderCell>
               <Table.HeaderCell>Year</Table.HeaderCell>
+              <Table.HeaderCell>Email</Table.HeaderCell>
+              <Table.HeaderCell>Cgpa</Table.HeaderCell>
+              <Table.HeaderCell>Phone</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -197,7 +202,7 @@ class StudentList extends Component {
           </Table.Body>
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan="3">
+              <Table.HeaderCell colSpan="6">
                 <Menu floated="right" pagination>
                   {this.state.pageNavigator}
                 </Menu>

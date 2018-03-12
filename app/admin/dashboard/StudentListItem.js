@@ -19,6 +19,9 @@ class StudentListItem extends React.Component {
         <Table.Cell> {this.props.name} </Table.Cell>
         <Table.Cell> {this.props.department} </Table.Cell>
         <Table.Cell> {this.props.year} </Table.Cell>
+        <Table.Cell> {this.props.email} </Table.Cell>
+        <Table.Cell> {this.props.cgpa} </Table.Cell>
+        <Table.Cell> {this.props.phone} </Table.Cell>
       </Table.Row>
     );
   }
