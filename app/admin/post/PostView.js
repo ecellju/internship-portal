@@ -3,7 +3,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import { Button, Menu, Container } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import DisplayPost from '../components/post/DisplayPost';
+import DisplayPost from '../../common/post/DisplayPost';
 import EditPost from '../components/post/EditPost';
 import Auth from '../../auth/modules/Auth';
 import browserHistory from '../../history';
@@ -22,18 +22,6 @@ const fetchPostById = postId =>
       return post;
     })
     .catch(console.error));
-const SubmitEdits = (postId, post) =>
-  (axios.put(`/api/admin/posts/${postId}`, post, {
-    headers: {
-      Authorization: `bearer ${Auth.getToken()}`,
-    },
-  })
-    .then((resp) => {
-      console.log('response is ', resp);
-      return resp.data;
-    })
-    .catch(console.error));
-
 
 const handleViewApplicants = (event) => {
   console.log('View Applicants :', event);
@@ -46,11 +34,6 @@ class PostView extends React.Component {
     this.state = { post: null, editable: false, errors: {} };
     this.handleChange = (e, { name, value }) =>
       this.setState({ post: { ...this.state.post, [name]: value } });
-    this.handleSubmitEdits = () => {
-      const post = { ...this.state.post };
-      SubmitEdits(post._id, post);
-      browserHistory.push('/admin/posts');
-    };
     this.changeInternshipDetails = this.changeInternshipDetails.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
     this.toggleEditability = () => {
