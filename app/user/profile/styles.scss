@@ -90,6 +90,11 @@ $color-highlight-bg-focus: #F9FFFE;
   font-size: 20px;
   font-weight: 500;
 
+  position: relative;
+  left: -16px;
+
+  color: $color-primary-green;
+
   text-transform: uppercase;
 }
 
@@ -100,7 +105,7 @@ $color-highlight-bg-focus: #F9FFFE;
 }
 
 .ecp-section-text {
-  margin-top: 0.25em;
+  margin-top: 1em;
   margin-bottom: 1.25em;
 }
 
@@ -169,7 +174,8 @@ a.ui.teal.label:hover,
 }
 
 .general-edit-icon {
-  float: right;
+  position: relative;
+  left: -20px;
   @include transition(all, 1s, ease-in);
 }
 
@@ -404,6 +410,8 @@ a.ui.teal.label:hover,
 
 .general-edit-icon {
   float: right;
+  cursor: pointer;
+  color: $color-primary-green-shade;
   @include transition(all, 0.5s, ease);
 }
 
@@ -445,4 +453,15 @@ a.ui.teal.label:hover,
 .textarea-only-modal.content {
   margin-top: 0.5em !important;
   padding: 0.5em !important;
+}
+
+.relative-24-d {
+  position: relative;
+  top: 2.5px;
+  margin-right: 6px;
+}
+
+.ui.grid.general-info-section {
+  margin-top: 1em !important;
+  margin-bottom: 0.25em !important;
 }
