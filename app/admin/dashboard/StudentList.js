@@ -1,19 +1,158 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Table, Menu, Icon, Container, Form } from 'semantic-ui-react';
-import _ from 'lodash';
 import StudentListItem from './StudentListItem';
+import Auth from '../../auth/modules/Auth';
 
 class StudentList extends Component {
-  constructor() {
-    super();
-    this.studentItems = _.times(10, n => <StudentListItem key={n.toString()} />);
-    this.initialState = { studentName: '', department: '', year: '' };
+  constructor(props) {
+    super(props);
+    this.getStudentItems.bind(this);
+    this.getNumOfStudents.bind(this);
+    this.getPageNavigator.bind(this);
+    this.initialState = {
+      studentName: '',
+      department: '',
+      year: '',
+      studentItems: [],
+      pageNavigator: [],
+      leftPageNavIndex: null,
+      rightPageNavIndex: null,
+      numOfPages: null,
+      currentPage: 1,
+    };
     this.state = this.initialState;
+    this.getStudentItems();
+    this.getNumOfStudents();
     this.handleChange = (e, { name, value }) => this.setState({ [name]: value });
     this.handleApplyfilter = (event) => {
       event.preventDefault();
-      console.log(this.state.studentName, ' k ', this.state.department, ' ', this.state.year, ' ', this.state);
     };
+  }
+
+  getPageNavigator() {
+    const paginateArray = [];
+    paginateArray.push(<Menu.Item
+      icon
+      disabled={this.state.leftPageNavIndex === 1}
+      onClick={() => {
+        new Promise((resolve) => {
+          this.setState(prevState => ({
+          leftPageNavIndex: prevState.leftPageNavIndex - 5,
+          rightPageNavIndex: prevState.leftPageNavIndex - 1,
+          currentPage: prevState.leftPageNavIndex - 1,
+        }));
+        resolve(this);
+      })
+      .then((studentListReactObject) => {
+        studentListReactObject.getStudentItems();
+        studentListReactObject.getPageNavigator();
+      })
+      .catch(() => {
+        console.error('error occurred');
+      });
+    }}
+    >
+      <Icon name="left chevron" />
+    </Menu.Item>);
+    let index;
+    for (index = this.state.leftPageNavIndex; index <= this.state.rightPageNavIndex; index += 1) {
+      paginateArray.push(<button
+        value={index}
+        key={index}
+        onClick={(event) => {
+        new Promise((resolve) => {
+          this.setState({ currentPage: parseInt(event.target.value) });
+          resolve(this);
+        })
+        .then((studentListReactObject) => {
+          studentListReactObject.getStudentItems();
+        })
+        .catch(() => {
+          console.error('error occurred');
+        });
+      }}
+      >
+        {index}
+      </button>);
+    }
+    paginateArray.push(<Menu.Item
+      icon
+      disabled={this.state.rightPageNavIndex === this.state.numOfPages}
+      onClick={() => {
+        new Promise((resolve) => {
+          this.setState(prevState => ({
+          leftPageNavIndex: prevState.leftPageNavIndex + 5,
+          rightPageNavIndex: Math.min(prevState.rightPageNavIndex + 5, prevState.numOfPages),
+          currentPage: prevState.leftPageNavIndex + 5,
+        }));
+        resolve(this);
+      })
+      .then((studentListReactObject) => {
+        console.log(studentListReactObject);
+        studentListReactObject.getStudentItems();
+        studentListReactObject.getPageNavigator();
+      })
+      .catch(() => {
+        console.error('error occurred');
+      });
+    }}
+    >
+      <Icon name="right chevron" />
+    </Menu.Item>);
+    this.setState({ pageNavigator: paginateArray });
+  }
+
+  getNumOfStudents() {
+    axios.get('/api/admin/getNumOfStudents', {
+      headers: {
+        Authorization: `bearer ${Auth.getToken()}`,
+      },
+    })
+      .then((res) => {
+        new Promise((resolve) => {
+          this.setState({
+            leftPageNavIndex: 1,
+            rightPageNavIndex: Math.min(Math.ceil(res.data.count / 5), 5),
+            numOfPages: Math.ceil(res.data.count / 5),
+          });
+          resolve(this);
+        })
+          .then((studentListReactObject) => {
+            studentListReactObject.getPageNavigator();
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  getStudentItems() {
+    axios.get('/api/admin/getStudents', {
+      headers: {
+        Authorization: `bearer ${Auth.getToken()}`,
+        page: this.state.currentPage,
+      },
+    })
+      .then((res) => {
+        const studentList = res.data.students;
+        this.setState(() => ({
+          studentItems: studentList.map((student, index) =>
+            (<StudentListItem
+              name={`${student.firstName} ${student.lastName}`}
+              department={student.profile.branch}
+              year={student.profile.currentYear}
+              email={student.profile.Email}
+              cgpa={student.profile.cgpa}
+              phone={student.profile.contactNo}
+              id={student._id}
+              key={index.toString()}
+            />)),
+        }));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
   render() {
     return (
@@ -53,30 +192,25 @@ class StudentList extends Component {
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell>Department</Table.HeaderCell>
               <Table.HeaderCell>Year</Table.HeaderCell>
+              <Table.HeaderCell>Email</Table.HeaderCell>
+              <Table.HeaderCell>Cgpa</Table.HeaderCell>
+              <Table.HeaderCell>Phone</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.studentItems}
+            {this.state.studentItems}
           </Table.Body>
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan="3">
+              <Table.HeaderCell colSpan="6">
                 <Menu floated="right" pagination>
-                  <Menu.Item as="a" icon>
-                    <Icon name="left chevron" />
-                  </Menu.Item>
-                  <Menu.Item as="a">1</Menu.Item>
-                  <Menu.Item as="a">2</Menu.Item>
-                  <Menu.Item as="a">3</Menu.Item>
-                  <Menu.Item as="a">4</Menu.Item>
-                  <Menu.Item as="a" icon>
-                    <Icon name="right chevron" />
-                  </Menu.Item>
+                  {this.state.pageNavigator}
                 </Menu>
               </Table.HeaderCell>
             </Table.Row>
           </Table.Footer>
         </Table>
+        {console.log(this.state)}
       </Container>
     );
   }
