@@ -14,6 +14,9 @@ class StudentList extends Component {
       studentName: '',
       department: '',
       year: '',
+      appliedStudentName: '',
+      appliedDepartment: '',
+      appliedYear: '',
       studentItems: [],
       pageNavigator: [],
       leftPageNavIndex: null,
@@ -24,9 +27,28 @@ class StudentList extends Component {
     this.state = this.initialState;
     this.getStudentItems();
     this.getNumOfStudents();
-    this.handleChange = (e, { name, value }) => this.setState({ [name]: value });
+    this.handleChange = (e, { name, value }) => {
+      this.setState({ [name]: value });
+    };
     this.handleApplyfilter = (event) => {
       event.preventDefault();
+      new Promise((resolve) => {
+        this.setState({
+          currentPage: 1,
+          appliedStudentName: this.state.studentName,
+          appliedDepartment: this.state.department,
+          appliedYear: this.state.year,
+        });
+        resolve(this);
+      })
+      .then((studentListReactObject) => {
+        console.log(studentListReactObject.state);
+        studentListReactObject.getStudentItems();
+        studentListReactObject.getNumOfStudents();
+      })
+      .catch(() => {
+        console.error('error occurred');
+      })
     };
   }
 
@@ -107,14 +129,17 @@ class StudentList extends Component {
     axios.get('/api/admin/getNumOfStudents', {
       headers: {
         Authorization: `bearer ${Auth.getToken()}`,
+        studentName: this.state.appliedStudentName,
+        department: this.state.appliedDepartment,
+        year: this.state.appliedYear,
       },
     })
       .then((res) => {
         new Promise((resolve) => {
           this.setState({
             leftPageNavIndex: 1,
-            rightPageNavIndex: Math.min(Math.ceil(res.data.count / 5), 5),
-            numOfPages: Math.ceil(res.data.count / 5),
+            rightPageNavIndex: Math.min(Math.ceil(res.data.count / 2), 5),
+            numOfPages: Math.ceil(res.data.count / 2),
           });
           resolve(this);
         })
@@ -132,6 +157,9 @@ class StudentList extends Component {
       headers: {
         Authorization: `bearer ${Auth.getToken()}`,
         page: this.state.currentPage,
+        studentName: this.state.appliedStudentName,
+        department: this.state.appliedDepartment,
+        year: this.state.appliedYear,
       },
     })
       .then((res) => {
@@ -210,7 +238,6 @@ class StudentList extends Component {
             </Table.Row>
           </Table.Footer>
         </Table>
-        {console.log(this.state)}
       </Container>
     );
   }
