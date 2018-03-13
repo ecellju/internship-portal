@@ -8,7 +8,6 @@ import Auth from '../../auth/modules/Auth';
 import User from '../../auth/modules/User';
 import Add from '../../assets/add.svg';
 import Edit from '../../assets/edit.svg';
-import ModalSkillList from './ModalSkillList';
 import ProfileSkillList from './ProfileSkillList';
 
 
@@ -46,18 +45,6 @@ const getFeaturededSkills = () => {
     .then(res => res);
 };
 
-const addNewSkills = (newSkills) => {
-  const userId = User.getId();
-  const data = { userId, skills: newSkills };
-  console.log(data);
-  return axios.post('/api/user/profile/addSkill', data, {
-    headers: {
-      Authorization: `bearer ${Auth.getToken()}`,
-    },
-  })
-    .then(res => res);
-};
-
 const submitPost = formData =>
   axios.post('/api/user/profile/CV', formData, {
     headers: {
@@ -89,124 +76,51 @@ export default class ProfileInfo extends React.Component {
       CV: null,
       profile: props.profile,
       userSkills: [],
-      toDeleteSkills: [],
-      modalUnselectedSkills: [],
-      modalSelectedSkills: [],
+      unselectedSkills: [],
       oldState: {},
     };
 
-    this.handleAdd = () => {
-      let featuredSkills = [];
-      getFeaturededSkills()
-        .then((res) => {
-          featuredSkills = res.data;
 
-          const temp = this.state.modalSelectedSkills;
-          for (let i = 0; i < temp.length; i += 1) {
-            featuredSkills.push(temp[i]);
-          }
-
-          console.log('new skills ', featuredSkills);
-
-          addNewSkills(featuredSkills)
-            .then((resp) => {
-              console.log(resp);
-              getUnselectedSkills()
-                .then((response) => {
-                  this.setState({ ...this.state, modalUnselectedSkills: response.data });
-                })
-                .catch(console.error());
-              this.refreshSkillList();
-            })
-            .catch(console.error());
-          this.setState({ ...this.state, modalSelectedSkills: [] });
-        })
-        .catch(console.error());
-    };
-
-    this.handleAdd = this.handleAdd.bind(this);
-
-    this.close = () => {
-      const tempSelected = this.state.modalSelectedSkills;
-      const tempUnselected = this.state.modalUnselectedSkills;
-      for (let i = 0; i < tempSelected.length; i += 1) {
-        tempUnselected.push(tempSelected[i]);
-      }
-      this.setState({
-        ...this.state,
-        modalSelectedSkills: [],
-        modalUnselectedSkills: tempUnselected,
-      });
-    };
-
-    this.close = this.close.bind(this);
+    /* handler for edit modal close icon */
     this.closeEdit = () => {
       const prevState = this.state.oldState;
-      // console.log('in old state', prevState);
+      console.log('in old state', prevState);
       this.setState({
         editable: false,
         profile: prevState.profile,
         userSkills: prevState.userSkills,
-        toDeleteSkills: prevState.toDeleteSkills,
-        modalUnselectedSkills: prevState.modalUnselectedSkills,
-        modalSelectedSkills: prevState.modalSelectedSkills,
+        unselectedSkills: prevState.unselectedSkills,
         oldState: {},
       });
     };
 
     this.closeEdit = this.closeEdit.bind(this);
+
+    /* remove a skill in the edit modal */
     this.removeSkill = (skill) => {
       const newUserSkills = this.state.userSkills.filter(e => e !== skill);
-      const newtoDeleteSkills = this.state.toDeleteSkills;
-      newtoDeleteSkills.push(skill);
+      const newUnselectedSkills = this.state.unselectedSkills;
+      newUnselectedSkills.push(skill);
       this.setState({
-        ...this.state,
         userSkills: newUserSkills,
-        toDeleteSkills: newtoDeleteSkills,
+        unselectedSkills: newUnselectedSkills,
       });
     };
 
     this.removeSkill = this.removeSkill.bind(this);
 
-
+    /* to restore a skill in the edit skill modal */
     this.restoreSkill = (skill) => {
-      const newtoDeleteSkills = this.state.toDeleteSkills.filter(e => e !== skill);
+      const newUnselectedSkills = this.state.unselectedSkills.filter(e => e !== skill);
       const newUserSkills = this.state.userSkills;
       newUserSkills.push(skill);
       this.setState({
-        ...this.state,
         userSkills: newUserSkills,
-        toDeleteSkills: newtoDeleteSkills,
+        unselectedSkills: newUnselectedSkills,
       });
     };
 
     this.restoreSkill = this.restoreSkill.bind(this);
-
-
-    this.modalAddSkill = (skill) => {
-      const temp = this.state.modalSelectedSkills;
-      temp.push(skill);
-      this.setState({ ...this.state, modalSelectedSkills: temp });
-      const newSkillList = this.state.modalUnselectedSkills.filter(e => e !== skill);
-      this.setState({ ...this.state, modalUnselectedSkills: newSkillList });
-    };
-
-    this.modalAddSkill = this.modalAddSkill.bind(this);
-
-
-    this.modalRemoveSkill = (skill) => {
-      const newSelected = this.state.modalSelectedSkills.filter(e => e !== skill);
-      const newUnselected = this.state.modalUnselectedSkills;
-      newUnselected.push(skill);
-      this.setState({
-        ...this.state,
-        modalSelectedSkills: newSelected,
-        modalUnselectedSkills: newUnselected,
-      });
-    };
-
-    this.modalRemoveSkill = this.modalRemoveSkill.bind(this);
-
 
     this.refreshSkillList = () => {
       getFeaturededSkills()
@@ -224,7 +138,7 @@ export default class ProfileInfo extends React.Component {
 
     this.toggleEditability = () => {
       const prevState = this.state;
-      // console.log('old state saved',prevState);
+      console.log('old state saved', prevState);
       if (this.state.editable) {
         saveProfile(this.state.profile, this.state.userSkills)
           .then((res) => {
@@ -233,8 +147,7 @@ export default class ProfileInfo extends React.Component {
               .then((resp) => {
                 this.setState({
                   ...this.state,
-                  modalUnselectedSkills: resp.data,
-                  toDeleteSkills: [],
+                  unselectedSkills: resp.data,
                 });
               })
               .catch(console.error());
@@ -275,7 +188,7 @@ export default class ProfileInfo extends React.Component {
           .then((resp) => {
             this.setState({
               ...this.state,
-              modalUnselectedSkills: resp.data,
+              unselectedSkills: resp.data,
               userSkills: res.data,
             });
           })
@@ -574,8 +487,8 @@ export default class ProfileInfo extends React.Component {
                 size="small"
                 ref={(c) => { this.skill_modal = c; }}
 
-                closeIcon
-                onClose={this.closeEdit}
+                // closeIcon
+                // onClose={this.closeEdit}
               >
                 <Modal.Header>
                   <Grid verticalAlign="middle" textAlign="left">
@@ -605,8 +518,7 @@ export default class ProfileInfo extends React.Component {
                       restoreSkill={this.restoreSkill}
                       editable={this.state.editable}
                       skills={this.state.userSkills}
-                      toDeleteSkills={
-                        [...this.state.toDeleteSkills, ...this.state.modalUnselectedSkills]}
+                      unselectedSkills={this.state.unselectedSkills}
                     />
                   </Form>
                 </Modal.Content>
