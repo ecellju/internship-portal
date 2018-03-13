@@ -92,6 +92,7 @@ export default class ProfileInfo extends React.Component {
       toDeleteSkills: [],
       modalUnselectedSkills: [],
       modalSelectedSkills: [],
+      oldState: {},
     };
 
     this.handleAdd = () => {
@@ -139,8 +140,21 @@ export default class ProfileInfo extends React.Component {
     };
 
     this.close = this.close.bind(this);
+    this.closeEdit = () => {
+      const prevState = this.state.oldState;
+      // console.log('in old state', prevState);
+      this.setState({
+        editable: false,
+        profile: prevState.profile,
+        userSkills: prevState.userSkills,
+        toDeleteSkills: prevState.toDeleteSkills,
+        modalUnselectedSkills: prevState.modalUnselectedSkills,
+        modalSelectedSkills: prevState.modalSelectedSkills,
+        oldState: {},
+      });
+    };
 
-
+    this.closeEdit = this.closeEdit.bind(this);
     this.removeSkill = (skill) => {
       const newUserSkills = this.state.userSkills.filter(e => e !== skill);
       const newtoDeleteSkills = this.state.toDeleteSkills;
@@ -209,6 +223,8 @@ export default class ProfileInfo extends React.Component {
     this.refreshSkillList = this.refreshSkillList.bind(this);
 
     this.toggleEditability = () => {
+      const prevState = this.state;
+      // console.log('old state saved',prevState);
       if (this.state.editable) {
         saveProfile(this.state.profile, this.state.userSkills)
           .then((res) => {
@@ -224,6 +240,9 @@ export default class ProfileInfo extends React.Component {
               .catch(console.error());
           })
           .catch(console.error());
+      }
+      else {
+        this.setState({ oldState: prevState });
       }
       console.log('edit/save ', this.state.editable);
       this.setState({ editable: !this.state.editable });
@@ -294,7 +313,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.gen_info_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -556,7 +575,7 @@ export default class ProfileInfo extends React.Component {
                 ref={(c) => { this.skill_modal = c; }}
 
                 closeIcon
-                onClose={this.toggleEditability}
+                onClose={this.closeEdit}
               >
                 <Modal.Header>
                   <Grid verticalAlign="middle" textAlign="left">
@@ -623,7 +642,7 @@ export default class ProfileInfo extends React.Component {
               size="small"
               ref={(c) => { this.internship_modal = c; }}
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -690,7 +709,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.projects_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -782,7 +801,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.education_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -887,7 +906,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.por_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -954,7 +973,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.work_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -1023,7 +1042,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.cca_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -1091,7 +1110,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.additional_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
