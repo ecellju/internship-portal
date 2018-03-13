@@ -1,60 +1,77 @@
 import React from 'react';
-import { Container, Header, Button } from 'semantic-ui-react';
+import axios from 'axios';
+import _ from 'lodash';
+import { Button, Menu, Container } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import Axios from 'axios';
+import DisplayPost from '../../common/post/DisplayPost';
 import Auth from '../../auth/modules/Auth';
 import User from '../../auth/modules/User';
+import browserHistory from '../../history';
 
-export default class PostView extends React.Component {
+const fetchPostById = postId =>
+  (axios.get(`/api/user/posts/${postId}`, {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
+    },
+  })
+    .then((resp) => {
+      console.log('response is ', resp);
+      const post = resp.data;
+      post.stipend = `${post.stipend}`;
+      post.duration = `${post.duration}`;
+      return post;
+    })
+    .catch(console.error));
+
+class PostView extends React.Component {
   constructor(props) {
     super(props);
-
-    const { id } = props.match.params;
-
-    this.state = {
-      title: '',
-      description: '',
-      id,
-    };
-
-    this.fetchSinglePost = () => {
-      Axios.get(`/api/user/posts/${this.state.id}`, {
-        headers: {
-          Authorization: `bearer ${Auth.getToken()}`,
-        },
-      }).then((resp) => {
-        const { title, description } = resp.data;
-        this.setState(...this.state, { title, description });
-      }).catch(console.error);
-    };
-
+    this.state = { post: null };
     this.handleApply = () => {
       const userId = User.getId();
-      Axios.post(`/api/user/posts/${this.state.id}/addStudent`, { userId }, {
+      axios.post(`/api/user/posts/${this.state.post._id}/addStudent`, { userId }, {
         headers: {
           Authorization: `bearer ${Auth.getToken()}`,
         },
-      }).then(console.log).catch(console.error);
+      })
+        .then(() => {
+          this.props.history.goBack();
+        })
+        .catch(console.error);
     };
   }
 
   componentWillMount() {
-    this.fetchSinglePost();
+    fetchPostById(this.props.match.params.id)
+      .then(post => this.setState({ ...this.state, post }));
+    // console.log('hiii', this.state);
   }
 
   render() {
-    const { title, description } = this.state;
+    if (!this.state.post) {
+      return <div>Loading...</div>;
+    }
     return (
-      <Container text textAlign="justified">
-        <Header as="h1">{title}</Header>
-        <p>{description}</p>
-        <Button primary floated="right" onClick={this.handleApply}>
-          Apply
-        </Button>
+      <Container text className="main" textAlign="justified">
+        <div>
+          <DisplayPost
+            internshipDetails={this.state.post}
+          />
+          <Menu>
+            <Menu.Menu position="right">
+              <Menu.Item>
+                <Button primary floated="right" onClick={this.handleApply} >Apply</Button>
+              </Menu.Item>
+            </Menu.Menu>
+          </Menu>
+        </div>
       </Container>
     );
   }
 }
+/* const SubmitPostPage = () => (
+  <SubmitPostForm />
+); */
 
 PostView.propTypes = {
   match: PropTypes.shape({
@@ -62,4 +79,17 @@ PostView.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  history: PropTypes.shape({
+    goBack: PropTypes.func.isRequired,
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
 };
+export default PostView;
+
+/* SubmitPostPage.propTypes = {
+  history: PropTypes.shape({
+    goBack: PropTypes.func.isRequired,
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
+};
+*/
