@@ -14,6 +14,10 @@ function formatDate(date) {
   const yearStr = d.getFullYear();
   return `${dayStr}/${monthStr}/${yearStr}`;
 }
+function getLastToken(url) {
+  const arr = url.split('/');
+  return arr.pop(); // .pop() removes and returns the last item of the array
+}
 export default class PostItem extends React.Component {
   constructor() {
     super();
@@ -45,6 +49,10 @@ export default class PostItem extends React.Component {
               Authorization: `bearer ${Auth.getToken()}`,
             },
           }).then(console.log).catch(console.error);
+          const token = getLastToken(window.location.href);
+          if (token === 'favourites') {
+            window.location.reload();
+          }
           return { favouriteIcon: 'remove bookmark' };
         }
         Axios.post(`/api/user/${userId}/addFavourite`, { postId: this.props.id }, {
@@ -52,6 +60,10 @@ export default class PostItem extends React.Component {
             Authorization: `bearer ${Auth.getToken()}`,
           },
         }).then(console.log).catch(console.error);
+        const token = getLastToken(window.location.href);
+        if (token === 'favourites') {
+          window.location.reload();
+        }
         return { favouriteIcon: 'bookmark' };
       });
     };
