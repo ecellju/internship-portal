@@ -8,7 +8,6 @@ import Auth from '../../auth/modules/Auth';
 import User from '../../auth/modules/User';
 import Add from '../../assets/add.svg';
 import Edit from '../../assets/edit.svg';
-import ModalSkillList from './ModalSkillList';
 import ProfileSkillList from './ProfileSkillList';
 
 
@@ -46,18 +45,6 @@ const getFeaturededSkills = () => {
     .then(res => res);
 };
 
-const addNewSkills = (newSkills) => {
-  const userId = User.getId();
-  const data = { userId, skills: newSkills };
-  console.log(data);
-  return axios.post('/api/user/profile/addSkill', data, {
-    headers: {
-      Authorization: `bearer ${Auth.getToken()}`,
-    },
-  })
-    .then(res => res);
-};
-
 const submitPost = formData =>
   axios.post('/api/user/profile/CV', formData, {
     headers: {
@@ -89,110 +76,51 @@ export default class ProfileInfo extends React.Component {
       CV: null,
       profile: props.profile,
       userSkills: [],
-      toDeleteSkills: [],
-      modalUnselectedSkills: [],
-      modalSelectedSkills: [],
+      unselectedSkills: [],
+      oldState: {},
     };
 
-    this.handleAdd = () => {
-      let featuredSkills = [];
-      getFeaturededSkills()
-        .then((res) => {
-          featuredSkills = res.data;
 
-          const temp = this.state.modalSelectedSkills;
-          for (let i = 0; i < temp.length; i += 1) {
-            featuredSkills.push(temp[i]);
-          }
-
-          console.log('new skills ', featuredSkills);
-
-          addNewSkills(featuredSkills)
-            .then((resp) => {
-              console.log(resp);
-              getUnselectedSkills()
-                .then((response) => {
-                  this.setState({ ...this.state, modalUnselectedSkills: response.data });
-                })
-                .catch(console.error());
-              this.refreshSkillList();
-            })
-            .catch(console.error());
-          this.setState({ ...this.state, modalSelectedSkills: [] });
-        })
-        .catch(console.error());
-    };
-
-    this.handleAdd = this.handleAdd.bind(this);
-
-    this.close = () => {
-      const tempSelected = this.state.modalSelectedSkills;
-      const tempUnselected = this.state.modalUnselectedSkills;
-      for (let i = 0; i < tempSelected.length; i += 1) {
-        tempUnselected.push(tempSelected[i]);
-      }
+    /* handler for edit modal close icon */
+    this.closeEdit = () => {
+      const prevState = this.state.oldState;
+      console.log('in old state', prevState);
       this.setState({
-        ...this.state,
-        modalSelectedSkills: [],
-        modalUnselectedSkills: tempUnselected,
+        editable: false,
+        profile: prevState.profile,
+        userSkills: prevState.userSkills,
+        unselectedSkills: prevState.unselectedSkills,
+        oldState: {},
       });
     };
 
-    this.close = this.close.bind(this);
+    this.closeEdit = this.closeEdit.bind(this);
 
-
+    /* remove a skill in the edit modal */
     this.removeSkill = (skill) => {
       const newUserSkills = this.state.userSkills.filter(e => e !== skill);
-      const newtoDeleteSkills = this.state.toDeleteSkills;
-      newtoDeleteSkills.push(skill);
+      const newUnselectedSkills = this.state.unselectedSkills;
+      newUnselectedSkills.push(skill);
       this.setState({
-        ...this.state,
         userSkills: newUserSkills,
-        toDeleteSkills: newtoDeleteSkills,
+        unselectedSkills: newUnselectedSkills,
       });
     };
 
     this.removeSkill = this.removeSkill.bind(this);
 
-
+    /* to restore a skill in the edit skill modal */
     this.restoreSkill = (skill) => {
-      const newtoDeleteSkills = this.state.toDeleteSkills.filter(e => e !== skill);
+      const newUnselectedSkills = this.state.unselectedSkills.filter(e => e !== skill);
       const newUserSkills = this.state.userSkills;
       newUserSkills.push(skill);
       this.setState({
-        ...this.state,
         userSkills: newUserSkills,
-        toDeleteSkills: newtoDeleteSkills,
+        unselectedSkills: newUnselectedSkills,
       });
     };
 
     this.restoreSkill = this.restoreSkill.bind(this);
-
-
-    this.modalAddSkill = (skill) => {
-      const temp = this.state.modalSelectedSkills;
-      temp.push(skill);
-      this.setState({ ...this.state, modalSelectedSkills: temp });
-      const newSkillList = this.state.modalUnselectedSkills.filter(e => e !== skill);
-      this.setState({ ...this.state, modalUnselectedSkills: newSkillList });
-    };
-
-    this.modalAddSkill = this.modalAddSkill.bind(this);
-
-
-    this.modalRemoveSkill = (skill) => {
-      const newSelected = this.state.modalSelectedSkills.filter(e => e !== skill);
-      const newUnselected = this.state.modalUnselectedSkills;
-      newUnselected.push(skill);
-      this.setState({
-        ...this.state,
-        modalSelectedSkills: newSelected,
-        modalUnselectedSkills: newUnselected,
-      });
-    };
-
-    this.modalRemoveSkill = this.modalRemoveSkill.bind(this);
-
 
     this.refreshSkillList = () => {
       getFeaturededSkills()
@@ -209,6 +137,8 @@ export default class ProfileInfo extends React.Component {
     this.refreshSkillList = this.refreshSkillList.bind(this);
 
     this.toggleEditability = () => {
+      const prevState = _.cloneDeep(this.state);
+      console.log('old state saved', prevState);
       if (this.state.editable) {
         saveProfile(this.state.profile, this.state.userSkills)
           .then((res) => {
@@ -217,13 +147,15 @@ export default class ProfileInfo extends React.Component {
               .then((resp) => {
                 this.setState({
                   ...this.state,
-                  modalUnselectedSkills: resp.data,
-                  toDeleteSkills: [],
+                  unselectedSkills: resp.data,
                 });
               })
               .catch(console.error());
           })
           .catch(console.error());
+      }
+      else {
+        this.setState({ oldState: prevState });
       }
       console.log('edit/save ', this.state.editable);
       this.setState({ editable: !this.state.editable });
@@ -256,7 +188,7 @@ export default class ProfileInfo extends React.Component {
           .then((resp) => {
             this.setState({
               ...this.state,
-              modalUnselectedSkills: resp.data,
+              unselectedSkills: resp.data,
               userSkills: res.data,
             });
           })
@@ -294,7 +226,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.gen_info_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -489,9 +421,9 @@ export default class ProfileInfo extends React.Component {
               <Grid.Column textAlign="center">
                 <label htmlFor="user-name">
                   {_.filter([
-                    this.props.profile.firstName,
-                    this.props.profile.middleName,
-                    this.props.profile.lastName,
+                    this.state.profile.firstName,
+                    this.state.profile.middleName,
+                    this.state.profile.lastName,
                   ]).join(' ')}
                 </label>
               </Grid.Column>
@@ -500,11 +432,11 @@ export default class ProfileInfo extends React.Component {
             <Grid.Row columns={1} centered className="ecp-contact-row">
               <Grid.Column textAlign="center" className="ecp-contact-col">
                 <label htmlFor="user-email">
-                  {` E-mail: ${this.props.profile.Email || ''} `}
+                  {` E-mail: ${this.state.profile.Email || ''} `}
                 </label>
                 <Label circular className="ecp-separator-label" htmlFor="seperator" color="black" />
                 <label htmlFor="user-phone">
-                  {` Phone: ${this.props.profile.contactNo || ''} `}
+                  {` Phone: ${this.state.profile.contactNo || ''} `}
                 </label>
               </Grid.Column>
             </Grid.Row>
@@ -512,18 +444,21 @@ export default class ProfileInfo extends React.Component {
             <Grid.Row columns={1} centered className="ecp-dept-row">
               <Grid.Column textAlign="center" className="ecp-dept-col">
                 <label htmlFor="degree">
-                  {`${this.props.profile.degree || ''} `}
+                  {` ${this.state.profile.degree || ''} `}
                 </label>
+                <Label circular className="ecp-separator-label" htmlFor="seperator" color="black" />
                 <label htmlFor="branch">
-                  {`${this.props.profile.branch || ''} `}
+                  {` ${this.state.profile.branch || ''} `}
                 </label>
+                <Label circular className="ecp-separator-label" htmlFor="seperator" color="black" />
                 <label htmlFor="year">
-                  {` ${this.props.profile.joinYear || ''} `}
+                  {` Class of ${this.state.profile.joinYear || ''} `}
                 </label>
                 <Label circular className="ecp-separator-label" htmlFor="seperator" color="black" />
                 <label htmlFor="cgpa">
-                  {` CGPA: ${this.props.profile.cgpa || ''}`}
+                  {` CGPA: ${this.state.profile.cgpa || ''}`}
                 </label>
+                <Label circular className="ecp-separator-label" htmlFor="seperator" color="black" />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -553,7 +488,7 @@ export default class ProfileInfo extends React.Component {
                 ref={(c) => { this.skill_modal = c; }}
 
                 closeIcon
-                onClose={this.toggleEditability}
+                onClose={this.closeEdit}
               >
                 <Modal.Header>
                   <Grid verticalAlign="middle" textAlign="left">
@@ -583,8 +518,7 @@ export default class ProfileInfo extends React.Component {
                       restoreSkill={this.restoreSkill}
                       editable={this.state.editable}
                       skills={this.state.userSkills}
-                      toDeleteSkills={
-                        [...this.state.toDeleteSkills, ...this.state.modalUnselectedSkills]}
+                      unselectedSkills={this.state.unselectedSkills}
                     />
                   </Form>
                 </Modal.Content>
@@ -602,7 +536,7 @@ export default class ProfileInfo extends React.Component {
                   Internships
                 </label>
                 <p className="ecp-section-text">
-                  {this.props.profile.internships || ''}
+                  {this.state.profile.internships || ''}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -620,7 +554,7 @@ export default class ProfileInfo extends React.Component {
               size="small"
               ref={(c) => { this.internship_modal = c; }}
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -668,7 +602,7 @@ export default class ProfileInfo extends React.Component {
                   Projects &amp; Trainings
                 </label>
                 <p className="ecp-section-text">
-                  {this.props.profile.projects || ''}
+                  {this.state.profile.projects || ''}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -687,7 +621,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.projects_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -741,11 +675,11 @@ export default class ProfileInfo extends React.Component {
                   </span>
                   <br />
                   <span className="ecp-section-text">
-                    {`Year of Passing: ${this.props.profile.hsYear || ''}`}
+                    {`Year of Passing: ${this.state.profile.hsYear || ''}`}
                   </span>
                   <br />
                   <span className="ecp-section-text">
-                    {`Marks: ${this.props.profile.hsMarks || ''}%`}
+                    {`Marks: ${this.state.profile.hsMarks || ''}%`}
                   </span>
                 </div>
                 <br />
@@ -755,11 +689,11 @@ export default class ProfileInfo extends React.Component {
                   </label>
                   <br />
                   <span className="ecp-section-text">
-                    {`Year of Passing: ${this.props.profile.secondaryYear || ''}`}
+                    {`Year of Passing: ${this.state.profile.secondaryYear || ''}`}
                   </span>
                   <br />
                   <span className="ecp-section-text">
-                    {`Marks: ${this.props.profile.secondaryMarks || ''}%`}
+                    {`Marks: ${this.state.profile.secondaryMarks || ''}%`}
                   </span>
                 </div>
               </Grid.Column>
@@ -779,7 +713,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.education_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -865,7 +799,7 @@ export default class ProfileInfo extends React.Component {
                   Positions of Responsibility
                 </label>
                 <p className="ecp-section-text">
-                  {this.props.profile.positionOfResponsibility || ''}
+                  {this.state.profile.positionOfResponsibility || ''}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -884,7 +818,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.por_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -932,7 +866,7 @@ export default class ProfileInfo extends React.Component {
                   Work Samples
                 </label>
                 <p className="ecp-section-text">
-                  {this.props.profile.workSamples || ''}
+                  {this.state.profile.workSamples || ''}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -951,7 +885,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.work_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -1001,7 +935,7 @@ export default class ProfileInfo extends React.Component {
                   Co-Curricular Activities
                 </label>
                 <p className="ecp-section-text">
-                  {this.props.profile.coCurricularActivities || ''}
+                  {this.state.profile.coCurricularActivities || ''}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -1020,7 +954,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.cca_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">
@@ -1069,7 +1003,7 @@ export default class ProfileInfo extends React.Component {
                   Additional Details
                 </label>
                 <p className="ecp-section-text">
-                  {this.props.profile.additionalDetails || ''}
+                  {this.state.profile.additionalDetails || ''}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -1088,7 +1022,7 @@ export default class ProfileInfo extends React.Component {
               ref={(c) => { this.additional_modal = c; }}
 
               closeIcon
-              onClose={this.toggleEditability}
+              onClose={this.closeEdit}
             >
               <Modal.Header>
                 <Grid verticalAlign="middle" textAlign="left">

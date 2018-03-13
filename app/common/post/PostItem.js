@@ -1,8 +1,10 @@
 import React from 'react';
-import { Card, Table } from 'semantic-ui-react';
+import { Card, Table, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import Axios from 'axios';
+import Auth from '../../auth/modules/Auth';
+import User from '../../auth/modules/User';
 import './styles.scss';
 
 function formatDate(date) {
@@ -12,32 +14,80 @@ function formatDate(date) {
   const yearStr = d.getFullYear();
   return `${dayStr}/${monthStr}/${yearStr}`;
 }
+function getLastToken(url) {
+  const arr = url.split('/');
+  return arr.pop(); // .pop() removes and returns the last item of the array
+}
 export default class PostItem extends React.Component {
   constructor() {
     super();
 
-    this.favouritedState = { favourited: true, favouriteIcon: 'heart' };
-    this.unfavouritedState = { favourited: false, favouriteIcon: 'empty heart' };
+    this.state = { favouriteIcon: 'remove bookmark' };
 
-    this.state = this.unfavouritedState;
+    this.findFavouriteState = () => {
+      const userId = User.getId();
+      Axios.get(`/api/user/isFavourited/${userId}/${this.props.id}`, {
+        headers: {
+          Authorization: `bearer ${Auth.getToken()}`,
+        },
+      }).then(({ data }) => {
+        const { isFavourited } = data;
+        if (isFavourited) {
+          this.setState({ favouriteIcon: 'bookmark' });
+        } else {
+          this.setState({ favouriteIcon: 'remove bookmark' });
+        }
+      }).catch(console.error);
+    };
 
     this.handleFavouriteClick = () => {
       this.setState((state) => {
-        if (state.favourited) {
-          return this.unfavouritedState;
+        const userId = User.getId();
+        if (state.favouriteIcon === 'bookmark') {
+          Axios.post(`/api/user/${userId}/removeFavourite`, { postId: this.props.id }, {
+            headers: {
+              Authorization: `bearer ${Auth.getToken()}`,
+            },
+          }).then(console.log).catch(console.error);
+          const token = getLastToken(window.location.href);
+          if (token === 'favourites') {
+            window.location.reload();
+          }
+          return { favouriteIcon: 'remove bookmark' };
         }
-        return this.favouritedState;
+        Axios.post(`/api/user/${userId}/addFavourite`, { postId: this.props.id }, {
+          headers: {
+            Authorization: `bearer ${Auth.getToken()}`,
+          },
+        }).then(console.log).catch(console.error);
+        const token = getLastToken(window.location.href);
+        if (token === 'favourites') {
+          window.location.reload();
+        }
+        return { favouriteIcon: 'bookmark' };
       });
     };
   }
 
-
+  componentWillMount() {
+    this.findFavouriteState();
+  }
   render() {
     const postDetailsPath =
       (this.props.isAdmin ? `/admin/posts/${this.props.id}` : `/user/posts/${this.props.id}`);
     return (
       <Card fluid >
         <Card.Content>
+          <div>
+            {!this.props.isAdmin &&
+              <Icon
+                name={this.state.favouriteIcon}
+                size="large"
+                className="link floated right"
+                onClick={this.handleFavouriteClick}
+              />
+              }
+          </div>
           <Card.Header as={Link} to={postDetailsPath} > {this.props.post.position}</Card.Header>
           <Card.Meta>{this.props.post.company}</Card.Meta>
           <Card.Meta>{`Location: ${this.props.post.location}`}</Card.Meta>

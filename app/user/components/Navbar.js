@@ -50,7 +50,7 @@ export default class Navbar extends React.Component {
               />
               <Menu.Item
                 name="favourites"
-                content="Favourites"
+                content="Saved Posts"
                 as={NavLink}
                 to="/user/favourites"
                 className="ecell-item"
@@ -139,7 +139,7 @@ export default class Navbar extends React.Component {
                 />
                 <Menu.Item
                   name="favourites"
-                  content="Favourites"
+                  content="Saved Posts"
                   as={NavLink}
                   to="/user/favourites"
                   onClick={this.toggleMenu}

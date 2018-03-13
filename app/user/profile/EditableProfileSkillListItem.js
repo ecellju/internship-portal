@@ -17,6 +17,7 @@ export default class EditableProfileSkillListItem extends React.Component {
         onClick={this.handleClick}
         key={this.props.skill}
         className="hover-delete-label"
+        as="a"
       >
         <span className="hover-label-text">{this.props.skill}</span>
         <Icon className="hover-visible" name="remove" />
