@@ -137,7 +137,7 @@ export default class ProfileInfo extends React.Component {
     this.refreshSkillList = this.refreshSkillList.bind(this);
 
     this.toggleEditability = () => {
-      const prevState = this.state;
+      const prevState = _.cloneDeep(this.state);
       console.log('old state saved', prevState);
       if (this.state.editable) {
         saveProfile(this.state.profile, this.state.userSkills)
@@ -487,8 +487,8 @@ export default class ProfileInfo extends React.Component {
                 size="small"
                 ref={(c) => { this.skill_modal = c; }}
 
-                // closeIcon
-                // onClose={this.closeEdit}
+                closeIcon
+                onClose={this.closeEdit}
               >
                 <Modal.Header>
                   <Grid verticalAlign="middle" textAlign="left">
