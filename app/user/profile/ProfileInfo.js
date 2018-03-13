@@ -489,9 +489,9 @@ export default class ProfileInfo extends React.Component {
               <Grid.Column textAlign="center">
                 <label htmlFor="user-name">
                   {_.filter([
-                    this.props.profile.firstName,
-                    this.props.profile.middleName,
-                    this.props.profile.lastName,
+                    this.state.profile.firstName,
+                    this.state.profile.middleName,
+                    this.state.profile.lastName,
                   ]).join(' ')}
                 </label>
               </Grid.Column>
@@ -500,11 +500,11 @@ export default class ProfileInfo extends React.Component {
             <Grid.Row columns={1} centered className="ecp-contact-row">
               <Grid.Column textAlign="center" className="ecp-contact-col">
                 <label htmlFor="user-email">
-                  {` E-mail: ${this.props.profile.Email || ''} `}
+                  {` E-mail: ${this.state.profile.Email || ''} `}
                 </label>
                 <Label circular className="ecp-separator-label" htmlFor="seperator" color="black" />
                 <label htmlFor="user-phone">
-                  {` Phone: ${this.props.profile.contactNo || ''} `}
+                  {` Phone: ${this.state.profile.contactNo || ''} `}
                 </label>
               </Grid.Column>
             </Grid.Row>
@@ -512,18 +512,21 @@ export default class ProfileInfo extends React.Component {
             <Grid.Row columns={1} centered className="ecp-dept-row">
               <Grid.Column textAlign="center" className="ecp-dept-col">
                 <label htmlFor="degree">
-                  {`${this.props.profile.degree || ''} `}
+                  {` ${this.state.profile.degree || ''} `}
                 </label>
+                <Label circular className="ecp-separator-label" htmlFor="seperator" color="black" />
                 <label htmlFor="branch">
-                  {`${this.props.profile.branch || ''} `}
+                  {` ${this.state.profile.branch || ''} `}
                 </label>
+                <Label circular className="ecp-separator-label" htmlFor="seperator" color="black" />
                 <label htmlFor="year">
-                  {` ${this.props.profile.joinYear || ''} `}
+                  {` Class of ${this.state.profile.joinYear || ''} `}
                 </label>
                 <Label circular className="ecp-separator-label" htmlFor="seperator" color="black" />
                 <label htmlFor="cgpa">
-                  {` CGPA: ${this.props.profile.cgpa || ''}`}
+                  {` CGPA: ${this.state.profile.cgpa || ''}`}
                 </label>
+                <Label circular className="ecp-separator-label" htmlFor="seperator" color="black" />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -602,7 +605,7 @@ export default class ProfileInfo extends React.Component {
                   Internships
                 </label>
                 <p className="ecp-section-text">
-                  {this.props.profile.internships || ''}
+                  {this.state.profile.internships || ''}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -668,7 +671,7 @@ export default class ProfileInfo extends React.Component {
                   Projects &amp; Trainings
                 </label>
                 <p className="ecp-section-text">
-                  {this.props.profile.projects || ''}
+                  {this.state.profile.projects || ''}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -741,11 +744,11 @@ export default class ProfileInfo extends React.Component {
                   </span>
                   <br />
                   <span className="ecp-section-text">
-                    {`Year of Passing: ${this.props.profile.hsYear || ''}`}
+                    {`Year of Passing: ${this.state.profile.hsYear || ''}`}
                   </span>
                   <br />
                   <span className="ecp-section-text">
-                    {`Marks: ${this.props.profile.hsMarks || ''}%`}
+                    {`Marks: ${this.state.profile.hsMarks || ''}%`}
                   </span>
                 </div>
                 <br />
@@ -755,11 +758,11 @@ export default class ProfileInfo extends React.Component {
                   </label>
                   <br />
                   <span className="ecp-section-text">
-                    {`Year of Passing: ${this.props.profile.secondaryYear || ''}`}
+                    {`Year of Passing: ${this.state.profile.secondaryYear || ''}`}
                   </span>
                   <br />
                   <span className="ecp-section-text">
-                    {`Marks: ${this.props.profile.secondaryMarks || ''}%`}
+                    {`Marks: ${this.state.profile.secondaryMarks || ''}%`}
                   </span>
                 </div>
               </Grid.Column>
@@ -865,7 +868,7 @@ export default class ProfileInfo extends React.Component {
                   Positions of Responsibility
                 </label>
                 <p className="ecp-section-text">
-                  {this.props.profile.positionOfResponsibility || ''}
+                  {this.state.profile.positionOfResponsibility || ''}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -932,7 +935,7 @@ export default class ProfileInfo extends React.Component {
                   Work Samples
                 </label>
                 <p className="ecp-section-text">
-                  {this.props.profile.workSamples || ''}
+                  {this.state.profile.workSamples || ''}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -1001,7 +1004,7 @@ export default class ProfileInfo extends React.Component {
                   Co-Curricular Activities
                 </label>
                 <p className="ecp-section-text">
-                  {this.props.profile.coCurricularActivities || ''}
+                  {this.state.profile.coCurricularActivities || ''}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -1069,7 +1072,7 @@ export default class ProfileInfo extends React.Component {
                   Additional Details
                 </label>
                 <p className="ecp-section-text">
-                  {this.props.profile.additionalDetails || ''}
+                  {this.state.profile.additionalDetails || ''}
                 </p>
               </Grid.Column>
             </Grid.Row>
