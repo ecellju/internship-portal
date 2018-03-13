@@ -1,8 +1,8 @@
 const UserModel = require('mongoose').model('User');
 
 exports.getStudentList = (req, res) => {
-  const numOfSkippedDocuments = (req.headers.page - 1) * 2;
-  const limitOfDocumentsInPage = 2;
+  const numOfSkippedDocuments = (req.headers.page - 1) * 10;
+  const limitOfDocumentsInPage = 10;
   const queryCriteria = { kind: 'Student' };
   if (req.headers.department !== '') {
     queryCriteria['profile.branch'] = req.headers.department;

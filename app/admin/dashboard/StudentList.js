@@ -156,8 +156,8 @@ class StudentList extends Component {
         new Promise((resolve) => {
           this.setState({
             leftPageNavIndex: 1,
-            rightPageNavIndex: Math.min(Math.ceil(res.data.count / 2), 5),
-            numOfPages: Math.ceil(res.data.count / 2),
+            rightPageNavIndex: Math.min(Math.ceil(res.data.count / 10), 5),
+            numOfPages: Math.ceil(res.data.count / 10),
           });
           resolve(this);
         })
@@ -188,7 +188,7 @@ class StudentList extends Component {
               name={`${student.firstName} ${student.lastName}`}
               department={student.profile.branch}
               year={student.profile.currentYear}
-              email={student.profile.Email}
+              email={student.email}
               cgpa={student.profile.cgpa}
               phone={student.profile.contactNo}
               id={student._id}
