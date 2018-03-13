@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Table, Menu, Icon, Container, Form } from 'semantic-ui-react';
+import { Table, Menu, Icon, Container, Form, Dropdown } from 'semantic-ui-react';
 import StudentListItem from './StudentListItem';
 import Auth from '../../auth/modules/Auth';
 
@@ -10,26 +10,66 @@ class StudentList extends Component {
     this.getStudentItems.bind(this);
     this.getNumOfStudents.bind(this);
     this.getPageNavigator.bind(this);
+    this.getAllSkills.bind(this);
     this.initialState = {
-      studentName: '',
+      skills: [],
       department: '',
       year: '',
+      appliedSkills: [],
+      appliedDepartment: '',
+      appliedYear: '',
       studentItems: [],
       pageNavigator: [],
       leftPageNavIndex: null,
       rightPageNavIndex: null,
       numOfPages: null,
       currentPage: 1,
+      allSkills: [],
     };
     this.state = this.initialState;
     this.getStudentItems();
     this.getNumOfStudents();
-    this.handleChange = (e, { name, value }) => this.setState({ [name]: value });
+    this.getAllSkills();
+    this.handleChange = (e, { name, value }) => {
+      this.setState({ [name]: value });
+    };
     this.handleApplyfilter = (event) => {
       event.preventDefault();
+      new Promise((resolve) => {
+        this.setState({
+          currentPage: 1,
+          appliedSkills: this.state.skills,
+          appliedDepartment: this.state.department,
+          appliedYear: this.state.year,
+        });
+        resolve(this);
+      })
+        .then((studentListReactObject) => {
+          console.log(studentListReactObject.state);
+          studentListReactObject.getStudentItems();
+          studentListReactObject.getNumOfStudents();
+        })
+        .catch(() => {
+          console.error('error occurred');
+        })
     };
   }
-
+  getAllSkills() {
+    axios.get('/api/user/all-skills', {
+      headers: {
+        Authorization: `bearer ${Auth.getToken()}`,
+      },
+    })
+      .then((res) => {
+        const allSkills = res.data;
+        const allSkillsViewObject = [];
+        let index;
+        for (index = 0; index < allSkills.length; index += 1) {
+          allSkillsViewObject.push({ key: index, text: allSkills[index], value: allSkills[index] });
+          this.setState({ allSkills: allSkillsViewObject });
+        }
+      });
+  }
   getPageNavigator() {
     const paginateArray = [];
     paginateArray.push(<Menu.Item
@@ -107,14 +147,17 @@ class StudentList extends Component {
     axios.get('/api/admin/getNumOfStudents', {
       headers: {
         Authorization: `bearer ${Auth.getToken()}`,
+        skills: this.state.appliedSkills,
+        department: this.state.appliedDepartment,
+        year: this.state.appliedYear,
       },
     })
       .then((res) => {
         new Promise((resolve) => {
           this.setState({
             leftPageNavIndex: 1,
-            rightPageNavIndex: Math.min(Math.ceil(res.data.count / 5), 5),
-            numOfPages: Math.ceil(res.data.count / 5),
+            rightPageNavIndex: Math.min(Math.ceil(res.data.count / 10), 5),
+            numOfPages: Math.ceil(res.data.count / 10),
           });
           resolve(this);
         })
@@ -132,6 +175,9 @@ class StudentList extends Component {
       headers: {
         Authorization: `bearer ${Auth.getToken()}`,
         page: this.state.currentPage,
+        skills: this.state.appliedSkills,
+        department: this.state.appliedDepartment,
+        year: this.state.appliedYear,
       },
     })
       .then((res) => {
@@ -142,7 +188,7 @@ class StudentList extends Component {
               name={`${student.firstName} ${student.lastName}`}
               department={student.profile.branch}
               year={student.profile.currentYear}
-              email={student.profile.Email}
+              email={student.email}
               cgpa={student.profile.cgpa}
               phone={student.profile.contactNo}
               id={student._id}
@@ -159,12 +205,14 @@ class StudentList extends Component {
       <Container className="StudentList">
         <Form onSubmit={this.handleApplyfilter}>
           <Form.Group widths="equal">
-            <Form.Input
-              className="studentName"
-              icon="search"
-              name="studentName"
-              value={this.state.studentName}
-              placeholder="Student Name"
+            <Dropdown
+              className="skills"
+              name="skills"
+              placeholder="Skills"
+              fluid
+              multiple
+              selection
+              options={this.state.allSkills}
               onChange={this.handleChange}
             />
             <Form.Input
@@ -210,7 +258,6 @@ class StudentList extends Component {
             </Table.Row>
           </Table.Footer>
         </Table>
-        {console.log(this.state)}
       </Container>
     );
   }
