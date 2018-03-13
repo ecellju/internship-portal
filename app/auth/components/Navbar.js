@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route, Link, withRouter } from 'react-router-dom';
+import { Switch, Route, Link, withRouter, Grid } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 
 import Auth from '../modules/Auth';
+
+import './styles.scss';
 
 const Navbar = (props) => {
   const LogoutFunction = () => {
@@ -33,14 +35,14 @@ const Navbar = (props) => {
 
   return (
     <Menu attached size="huge" className="navbar">
-      <Menu.Menu>
-        <Menu.Item header as={Link} to="/" className="ecell-header">
-          Internship Portal
-        </Menu.Item>
-      </Menu.Menu>
-      <Menu.Menu position="right">
-        {Auth.isUserAuthenticated() ? LogoutMenuItem : SwitchWhenUnauthenticated}
-      </Menu.Menu>
+        <Menu.Menu>
+          <Menu.Item header as={Link} to="/" className="ecell-header">
+            Internship Portal
+          </Menu.Item>
+        </Menu.Menu>
+        <Menu.Menu position="right">
+          {Auth.isUserAuthenticated() ? LogoutMenuItem : SwitchWhenUnauthenticated}
+        </Menu.Menu>
     </Menu>
   );
 };

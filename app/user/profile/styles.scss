@@ -1,0 +1,467 @@
+@mixin box-shadow($x, $y, $spread, $blur, $color) {
+  -webkit-box-shadow: $x $y $spread $blur $color !important;
+  -moz-box-shadow: $x $y $spread $blur $color !important;
+  box-shadow: $x $y $spread $blur $color !important;
+}
+
+@mixin box-shadow-inset($x, $y, $spread, $blur, $color) {
+  -webkit-box-shadow: $x $y $spread $blur $color inset;
+  -moz-box-shadow: $x $y $spread $blur $color inset;
+  box-shadow: $x $y $spread $blur $color inset;
+}
+
+@mixin transition($property, $time, $easing) {
+  -webkit-transition: $property $time $easing;
+  -moz-transition: $property $time $easing;
+  -o-transition: $property $time $easing;
+  transition: $property $time $easing;
+}
+
+$font-primary: 'Work Sans';
+$font-secondary: 'Muli';
+
+$color-primary-red: #E71D36;
+$color-primary-light: #FDFFFC;
+$color-primary-green: #2EC4B6;
+$color-primary-yellow: #FF9F1C;
+$color-primary-darkblue: #011627;
+
+$color-primary-green-shade: #228F85;
+
+$color-highlight-bg-hover: #F4FFFD;
+$color-highlight-bg-focus: #F9FFFE;
+
+.ecell-profile-main-container {
+  border-radius: 0.5em;
+
+  font-family: $font-primary;
+  font-weight: 200;
+  font-size: 16px;
+
+  padding-bottom: 4em !important;
+
+  margin-top: 2em !important;
+  margin-bottom: 2em !important;
+
+  @include box-shadow(0em, 0em, 0.45em, 0em, rgba(0, 0, 0, 0.1));
+}
+
+.ecp-user-name-row {
+  font-size: 32px;
+  font-weight: 200;
+
+  padding-top: 0.5em !important;
+  padding-bottom: 0em !important;
+}
+
+.ecp-contact-row {
+  font-size: 16px;
+  padding-top: 1em !important;
+  padding-bottom: 0em !important;
+}
+
+.ecp-dept-row {
+  font-size: 16px;
+  padding-top: 0.5em !important;
+  padding-bottom: 0em !important;
+}
+
+.ecp-acad-card {
+  border-radius: 0em !important;
+
+  @include box-shadow(0, 0, 0em, 0em, rgba(0,0,0,0));
+}
+
+.ecp-acad-col {
+  max-width: 24em;
+}
+
+.ecp-acad-card-header {
+  font-family: $font-primary;
+  margin-bottom: 0.25em;
+}
+
+.ecp-acad-card-val {
+  font-size: 32px !important;
+  font-weight: 300;
+}
+
+.ecp-section-header-label {
+  font-size: 20px;
+  font-weight: 500;
+
+  position: relative;
+  left: -16px;
+
+  color: $color-primary-green;
+
+  text-transform: uppercase;
+}
+
+.ecp-subsection-header-label {
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.ecp-section-text {
+  margin-top: 1em;
+  margin-bottom: 1.25em;
+}
+
+.ui.circular.label.ecp-separator-label {
+  font-size: 2px !important;
+
+  min-width: 1em !important;
+  max-width: 1em !important;
+  min-height: 1em !important;
+  max-height: 1em !important;
+
+  margin-top: 2px 0 4px 0 !important;
+}
+
+.ecp-skill-col {
+  max-width: 48em;
+}
+
+a.ui.teal.label,
+.ui.teal.labels .label,
+.ecp-skill-label {
+  border-color: $color-primary-green !important;
+  border-radius: 100px !important;
+  border-width: 1px !important;
+
+  background-color: rgba(0,0,0,0) !important;
+  color: $color-primary-green !important;
+
+  font-family: $font-primary !important;
+  font-weight: 300 !important;
+}
+
+a.ui.teal.label:hover,
+.ui.teal.labels .label:hover,
+.ecp-skill-label:hover {
+  background-color: rgba(0, 0, 0, 0) !important;
+  color: $color-primary-green-shade !important;
+}
+
+.ecp-section-row {
+  padding-left: 4em !important;
+  padding-right: 4em !important;
+  padding-top: 0.25em !important;
+  padding-bottom: 0.25em !important;
+
+  margin-top: 0.25em !important;
+  margin-bottom: 0.25em !important;
+}
+
+.ecp-section-text {
+  white-space: pre-line;
+}
+
+.float-right {
+  float: right;
+}
+
+.icon-edit {
+  margin-right: 2em !important;
+  margin-top: 0.5em !important;
+}
+
+.ecp-subsection {
+  margin-top: 0.5em;
+  margin-bottom: 0.25em;
+}
+
+.general-edit-icon {
+  position: relative;
+  left: -20px;
+  @include transition(all, 1s, ease-in);
+}
+
+.general-info-section .general-edit-icon {
+  visibility: visible;
+}
+
+.general-info-section:hover .general-edit-icon {
+  visibility: visible;
+}
+
+.ui.form {
+  width: 100%;
+  margin: 0em;
+}
+
+.ui.form .field {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.ui.form .fields {
+  margin-bottom: 1em;
+}
+
+.ui.form input[type=date] {
+  max-width: 15em;
+}
+
+.ui.form input[type=date],
+.ui.form input[type=text],
+.ui.form input[type=password] {
+  border-radius: 0em;
+  border-style: none none solid none;
+  border-width: 1px;
+  color: $color-primary-darkblue;
+  font-family: $font-primary;
+  font-size: 16px;
+  margin: 0em 0em 0em 0.5em;
+  padding: 0.5em 0em 0em 0em;
+  width: 98% !important;
+  @include transition(background-color, 0.5s, ease);
+}
+
+.ui.form input[type=date]:hover,
+.ui.form input[type=text]:hover,
+.ui.form input[type=password]:hover {
+  background-color: $color-highlight-bg-hover;
+}
+
+.ui.form input[type=date]:focus,
+.ui.form input[type=text]:focus,
+.ui.form input[type=password]:focus {
+  border-color: $color-primary-green;
+  border-radius: 0em;
+  border-style: none none solid none;
+  border-width: 1px;
+  background-color: $color-highlight-bg-focus;
+  font-family: $font-primary;
+}
+
+.ui.form .field>label {
+  font-family: $font-primary;
+  color: $color-primary-darkblue;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 2px 0em 0em 0.6em;
+  margin: 0em;
+
+  text-align: left;
+}
+
+.ui.selection.dropdown {
+  border-radius: 0em;
+  border-style: none none solid none;
+  border-width: 1px;
+
+  color: $color-primary-darkblue;
+
+  font-family: $font-primary;
+  font-size: 16px;
+
+  margin: 0em 0em 0em 0.6em;
+  padding: 0.75em 0em 0em 0.2em;
+
+  max-width: 15em;
+
+  @include transition(all, 0.5s, ease);
+}
+
+.ui.selection.dropdown .menu {
+  border-radius: 0em;
+  border-style: none none solid none;
+  border-width: 1px;
+  color: $color-primary-darkblue;
+  font-family: $font-primary;
+
+  font-size: 16px;
+  max-width: 15em;
+  @include transition(all, 0.5s, ease);
+}
+
+.ui.selection.dropdown .menu .active.item {
+  font-weight: 600;
+}
+
+.ui.segment.ecp-modal-form-segment {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-top: 1em;
+  padding-bottom: 0em;
+  @include box-shadow(0, 0, 2em, 0, rgba(0,0,0,0.05));
+}
+
+.ui.button.ecell-modal-primary-button {
+  border-radius: 100px;
+  border-color: $color-primary-green;
+  border-style: solid;
+  border-width: 1px;
+  font-family: $font-primary;
+  font-weight: 400;
+  background-color: rgba(255, 255, 255, 0);
+  color: $color-primary-green;
+  @include box-shadow(0em, 0em, 1em, 0em, rgba(0, 0, 0, 0.05));
+  @include transition(all, 0.5s, ease);
+}
+
+.ui.button.ecell-modal-primary-button:hover {
+  border-color: $color-primary-green;
+  border-radius: 100px;
+  border-style: solid;
+  border-width: 1px;
+  background-color: $color-primary-green;
+  color: rgba(255, 255, 255, 1);
+  @include box-shadow(0em, 0em, 1.5em, 0em, rgba(0, 0, 0, 0.1));
+}
+
+.ui.button.ecell-modal-primary-button:active {
+  border-color: $color-primary-green-shade;
+  border-radius: 100px;
+  border-style: solid;
+  border-width: 1px;
+  background-color: $color-primary-green-shade;
+  color: rgba(255, 255, 255, 1);
+  @include box-shadow(0em, 0em, 1.5em, 0em, rgba(0, 0, 0, 0.1));
+}
+
+.modal-header {
+  font-family: $font-primary !important;
+  font-weight: 600 !important;
+}
+
+.edit-container {
+  width: 100%;
+}
+
+.ui.label.hover-delete-label {
+  border-color: $color-primary-red;
+  border-radius: 100px !important;
+  border-style: solid;
+
+  background-color: $color-primary-light;
+  color: $color-primary-red;
+
+  font-family: $font-primary;
+  font-weight: 400;
+
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+
+  margin: 0.2em;
+
+  @include transition(all, 0.5s, ease);
+}
+
+.ui.label.hover-delete-label:hover {
+  background-color: $color-primary-red;
+  color: $color-primary-light;
+}
+
+.ui.label.hover-delete-label .hover-label-text {
+  margin: 0em 1em 0em 1em;
+}
+
+.ui.label.hover-delete-label .hover-visible {
+  visibility: hidden;
+}
+
+.ui.label.hover-delete-label:hover .hover-visible {
+  visibility: visible;
+}
+
+.ui.label.hover-add-label {
+  border-color: $color-primary-red;
+  border-radius: 100px !important;
+  border-style: solid;
+
+  background-color: $color-primary-light;
+  color: $color-primary-green;
+
+  font-family: $font-primary;
+  font-weight: 400;
+
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+
+  margin: 0.2em;
+
+  @include transition(all, 0.5s, ease);
+}
+
+.ui.label.hover-add-label:hover {
+  background-color: $color-primary-green;
+  color: $color-primary-light;
+}
+
+.ui.label.hover-add-label .hover-label-text {
+  margin: 0em 1em 0em 1em;
+}
+
+.ui.label.hover-add-label .hover-visible {
+  visibility: hidden;
+}
+
+.ui.label.hover-add-label:hover .hover-visible {
+  visibility: visible;
+}
+
+.general-skill-section {
+  @include transition(all, 0.5s, ease);
+}
+
+.general-edit-icon {
+  float: right;
+  cursor: pointer;
+  color: $color-primary-green-shade;
+  @include transition(all, 0.5s, ease);
+}
+
+.general-skill-section .general-edit-icon {
+  visibility: visible;
+  @include transition(all, 0.5s, ease);
+}
+
+.general-skill-section:hover .general-edit-icon {
+  visibility: visible;
+  @include transition(all, 0.5s, ease);
+}
+
+.section-modal-row {
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+.modal-form-textarea {
+  width: 100%;
+  font-family: $font-primary;
+
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  line-height: 140%;
+}
+
+.modal-form-textarea:focus {
+  border-color: $color-primary-green;
+
+}
+
+.textarea-only-modal.content {
+  margin-top: 0.5em !important;
+  padding: 0.5em !important;
+}
+
+.relative-24-d {
+  position: relative;
+  top: 2.5px;
+  margin-right: 6px;
+}
+
+.ui.grid.general-info-section {
+  margin-top: 1em !important;
+  margin-bottom: 0.25em !important;
+}

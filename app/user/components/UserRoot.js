@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Navbar from './Navbar';
+// import Navbar from './Navbar';
 import HomeNavigate from '../dashboard/HomeNavigate';
 import FavouritesTab from '../dashboard/FavouritesTab';
 import ApplicationsTab from '../dashboard/ApplicationsTab';
@@ -9,8 +9,8 @@ import ProfilePage from '../profile/ProfilePage';
 
 const styles = {
   root: {
-    paddingTop: '6em',
-    paddingBottom: '2em',
+    // paddingTop: '6em',
+    // paddingBottom: '2em',
   },
 };
 

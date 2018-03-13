@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 const Routes = () => (
   <div className="Main">
     <Navbar />
+    <br />
     <div className="User">
       <Switch>
         <Route path="/user" component={UserRoot} />

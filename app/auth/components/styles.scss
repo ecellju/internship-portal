@@ -1,0 +1,101 @@
+@mixin box-shadow($x, $y, $spread, $blur, $color) {
+  -webkit-box-shadow: $x $y $spread $blur $color !important;
+  -moz-box-shadow: $x $y $spread $blur $color !important;
+  box-shadow: $x $y $spread $blur $color !important;
+}
+
+@mixin box-shadow-inset($x, $y, $spread, $blur, $color) {
+  -webkit-box-shadow: $x $y $spread $blur $color inset;
+  -moz-box-shadow: $x $y $spread $blur $color inset;
+  box-shadow: $x $y $spread $blur $color inset;
+}
+
+@mixin transition($property, $time, $easing) {
+  -webkit-transition: $property $time $easing;
+  -moz-transition: $property $time $easing;
+  -o-transition: $property $time $easing;
+  transition: $property $time $easing;
+}
+
+$font-primary: 'Work Sans';
+$font-secondary: 'Muli';
+$color-primary-red: #E71D36;
+$color-primary-light: #FDFFFC;
+$color-primary-green: #2EC4B6;
+$color-primary-yellow: #FF9F1C;
+$color-primary-darkblue: #011627;
+$color-primary-green-shade: #228F85;
+$color-highlight-bg-hover: #F4FFFD;
+$color-highlight-bg-focus: #F9FFFE;
+
+.ui.menu .header.item.ecell-header {
+  font-family: 'Work Sans';
+  font-weight: 400;
+  color: #011627;
+
+  border-radius: 0em !important;
+
+  background-color: rgba(255, 255, 255, 0);
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.ui.menu .header.item.ecell-header:hover {
+  background-color: #011627;
+  color: rgba(255, 255, 255, 1);
+}
+
+.ui.menu .item.ecell-primary {
+  border-radius: 100px;
+  border-style: solid;
+  border-width: 1px;
+  font-family: 'Work Sans';
+  border-color: #2EC4B6;
+  border-style: solid;
+  border-width: 1px;
+  color: #2EC4B6;
+  background-color: rgba(255, 255, 255, 0);
+  -webkit-box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.05);
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.ui.menu .item.ecell-primary:hover {
+  border-radius: 100px;
+  border-color: #2EC4B6;
+  border-style: solid;
+  border-width: 1px;
+  background-color: #2EC4B6;
+  color: rgba(255, 255, 255, 1);
+  -webkit-box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+  margin-top: 0em !important;
+  padding-top: 0.5em !important;
+  padding-bottom: 0.5em !important;
+  max-height: 4em;
+}
+
+.ui.attached.menu,
+.ui.attached.menu:not(.tabular) {
+  border: none;
+  margin-top: 0.5em;
+}
+
+.ui.menu.attached {
+  border-style: none;
+  @include box-shadow(0,0,0,0,rgba(0,0,0,0));
+}
+
+.ui.menu .item:before {
+  background: rgba(0, 0, 0, 0);
+}

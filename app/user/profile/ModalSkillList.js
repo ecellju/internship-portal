@@ -32,6 +32,7 @@ export default class ModalSkillList extends React.Component {
         addSkill={this.props.addSkill}
       />
     ));
+
     const selectedSkillItems = this.props.selectedSkills.map(item => (
       <SelectedSkillListItem
         key={item}
@@ -39,6 +40,7 @@ export default class ModalSkillList extends React.Component {
         removeSkill={this.props.removeSkill}
       />
     ));
+
     return (
       <div>
         <Button onClick={this.open} size="small" >

@@ -1,0 +1,242 @@
+@mixin box-shadow($x, $y, $spread, $blur, $color) {
+  -webkit-box-shadow: $x $y $spread $blur $color !important;
+     -moz-box-shadow: $x $y $spread $blur $color !important;
+          box-shadow: $x $y $spread $blur $color !important;
+}
+
+@mixin box-shadow-inset($x, $y, $spread, $blur, $color) {
+  -webkit-box-shadow: $x $y $spread $blur $color inset;
+     -moz-box-shadow: $x $y $spread $blur $color inset;
+          box-shadow: $x $y $spread $blur $color inset;
+}
+
+@mixin transition($property, $time, $easing) {
+  -webkit-transition: $property $time $easing;
+     -moz-transition: $property $time $easing;
+       -o-transition: $property $time $easing;
+          transition: $property $time $easing;
+}
+
+$font-primary: 'Work Sans';
+
+$color-primary-red: #E71D36;
+$color-primary-light: #FDFFFC;
+$color-primary-green: #2EC4B6;
+$color-primary-yellow: #FF9F1C;
+$color-primary-darkblue: #011627;
+
+$color-primary-green-shade: #228F85;
+
+$color-highlight-bg-hover: #F4FFFD;
+$color-highlight-bg-focus: #F9FFFE;
+
+@media screen and (max-width: 1100px) and (min-width:1000px) {
+  .menu-container {
+    margin-left: 0vw !important;
+    min-width: 100vw;
+    max-width: 100vw;
+  }
+}
+
+@media not screen and (max-width: 1100px) and (min-width:1000px) {
+  .menu-container {
+    margin-left: 5vw !important;
+    min-width: 90vw;
+    max-width: 90vw;
+  }
+}
+
+.margin-left {
+  margin-left: 1em;
+}
+
+.margin-top {
+  margin-top: 1em;
+}
+
+.ecp-navbar {
+  height: 4em;
+  min-height: 4em;
+  max-height: 4em;
+
+  font-family: $font-primary;
+
+  margin-top: 0.5em;
+
+  overflow: hidden;
+}
+
+.ui.basic.button.ecp-toggle-icon {
+  border-radius: 0em;
+  color: $color-primary-light !important;
+
+  @include transition(all, 0.5s, ease);
+}
+
+.ui.basic.button.ecp-toggle-icon:hover {
+  background-color: $color-primary-light !important;
+  color: $color-primary-darkblue !important;
+}
+
+.search.icon {
+  color: $color-primary-darkblue;
+}
+
+.sticky-navbar {
+  z-index: 20;
+}
+
+.ui.basic.button {
+  @include box-shadow(0, 0, 0, 0, rgba(0,0,0,0));
+}
+
+.ui.basic.button:hover {
+  @include box-shadow(0, 0, 0, 0, rgba(0, 0, 0, 0));
+}
+
+
+.ui.menu .item.ecell-item {
+  border-style: solid none solid none;
+  border-color: rgba(0,0,0,0);
+  border-width: 0.125em;
+
+  color: $color-primary-light;
+
+  @include transition(all, 0.5s, ease);
+}
+
+.ui.menu .item.ecell-item:hover {
+  background: $color-primary-darkblue;
+  color: $color-primary-light;
+
+  border-bottom-color: $color-primary-light;
+}
+
+.ui.menu .active.item.ecell-item {
+  border-bottom-style: solid;
+  border-bottom-color: $color-primary-green;
+
+  background-color: rgba(0,0,0,0);
+}
+
+.ui.menu .item.ecell-sidebar-item {
+  border-style: none solid none solid;
+  border-color: rgba(0, 0, 0, 0);
+  border-width: 0.125em;
+  @include transition(all, 0.5s, ease);
+}
+
+.ui.menu .item.ecell-sidebar-item:hover {
+  background: white;
+  border-left-color: $color-primary-darkblue;
+}
+
+.ui.menu .active.item.ecell-sidebar-item {
+  border-left-style: solid;
+  border-left-color: $color-primary-green;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.ui.attached.menu,
+.ui.attached.menu:not(.tabular) {
+  border: none;
+}
+
+.ui.menu.fixed.user-navbar-menu {
+  border-style: none;
+  font-family: $font-primary;
+  @include box-shadow(0, 0, 0.5em, 0, rgba(0,0,0,0.1));
+}
+
+.ui.input.ecell-primary-search input {
+  border-radius: 100px;
+  font-family: $font-primary;
+}
+
+.ui.input.ecell-primary-search input:focus {
+  border-color: $color-primary-green;
+}
+
+.ui.menu .item:before {
+  background: rgba(0, 0, 0, 0);
+}
+
+.ui.menu>.item:first-child {
+  border-radius: 0px !important;
+}
+
+.ui.menu.fixed .item:last-child {
+  border-radius: 100px !important;
+}
+
+.ui.menu .item.ecell-primary {
+  border-radius: 100px !important;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #2EC4B6;
+  border-style: solid;
+  border-width: 1px;
+
+  font-family: $font-primary;
+
+  color: $color-primary-green;
+  background-color: rgba(255, 255, 255, 0);
+
+  @include box-shadow(0em,0em,1em,0em,rgba(0,0,0,0.1));
+  @include transition(all,0.5s,ease);
+}
+
+.ui.menu .item.ecell-primary:hover {
+  border-radius: 100px;
+  border-color: #2EC4B6;
+  border-style: solid;
+  border-width: 1px;
+
+  background-color: #2EC4B6;
+  color: rgba(255, 255, 255, 1);
+
+  @include box-shadow(0em, 0em, 1em, 0em, rgba(0,0,0,0.1));
+}
+
+.ui.menu .header.item.ecp-ecell-header {
+  font-family: 'Work Sans';
+  font-weight: 400;
+
+  border-right-style: solid;
+  border-width: 1px;
+  border-color: $color-primary-light;
+
+  color: $color-primary-light;
+  background-color: rgba(255, 255, 255, 0);
+
+  @include transition(all, 0.5s, ease);
+
+  margin-right: 1em;
+}
+
+.ui.menu .header.item.ecp-ecell-header:hover {
+  background-color: $color-primary-light;
+  color: $color-primary-darkblue;
+}
+
+.ui.sidebar.ecell-sidebar {
+  padding: 0em 1em 0em 1em;
+}
+
+.ui.vertical.menu .item:before {
+  background: rgba(0,0,0,0);
+
+}
+
+.user-navbar-menu {
+
+  background-color: $color-primary-darkblue !important;
+  color: $color-primary-light !important;
+
+  margin-top: 0em !important;
+  padding-top: 0.5em !important;
+  padding-bottom: 0.5em !important;
+
+  max-height: 4em;
+}
+

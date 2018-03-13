@@ -135,7 +135,7 @@ const LoginForm = ({
                     </div>
                   </Form.Field>
 
-                  <Grid>
+                  <Grid container>
                     <Grid.Row className="button-row">
 
                       {/* To be converted into a button/link in future when it works. */}

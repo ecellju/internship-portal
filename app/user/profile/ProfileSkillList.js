@@ -39,16 +39,8 @@ export default class ProfileSkillList extends React.Component {
       />
     ));
 
-    if (!this.state.editable) {
-      return (
-        <div>
-          { skillItems }
-        </div>
-      );
-    }
     return (
       <div>
-        <Divider />
         { editableSkillItems }
         <Divider />
         { deletedSkillItems }
