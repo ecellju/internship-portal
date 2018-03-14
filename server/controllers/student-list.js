@@ -1,4 +1,5 @@
 const UserModel = require('mongoose').model('User');
+const StudentModel = require('mongoose').model('Student');
 
 exports.getStudentList = (req, res) => {
   const numOfSkippedDocuments = (req.headers.page - 1) * 10;
@@ -47,5 +48,12 @@ exports.getNumOfStudents = (req, res) => {
     } else {
       res.status(200).json({ count });
     }
+  });
+};
+
+exports.getProfile = (req, res) => {
+  StudentModel.findById({ _id: req.params.id }, (err, docs) => {
+    if (err || !docs) res.status(500).json({ message: 'database error' });
+    else { res.status(200).json(docs); }
   });
 };
