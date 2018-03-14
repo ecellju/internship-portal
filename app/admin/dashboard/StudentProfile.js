@@ -1,16 +1,26 @@
 import React from 'react';
-import { Button, Form, Label, Segment, Grid, Modal, TextArea, Divider } from 'semantic-ui-react';
+import { Button, Form, Label, Grid, Modal, TextArea, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import _ from 'lodash';
 
 import Auth from '../../auth/modules/Auth';
-import User from '../../auth/modules/User';
 import Add from '../../assets/add.svg';
-import Edit from '../../assets/edit.svg';
 
 import './styles.scss';
 import UserIcon from '../../assets/user.svg';
+
+const fetchProfileById = profileId =>
+  (axios.get(`/api/admin/get-profile/${profileId}`, {
+    headers: {
+      Authorization: `bearer ${Auth.getToken()}`,
+    },
+  })
+    .then((resp) => {
+      console.log(resp.data);
+      return resp.data;
+    })
+    .catch(console.error));
 
 
 export default class StudentProfile extends React.Component {
@@ -18,233 +28,32 @@ export default class StudentProfile extends React.Component {
     super(props);
 
     this.state = {
-      editable: false,
-      CV: null,
-      profile: props.profile,
+      profile: {},
       userSkills: [],
-      unselectedSkills: [],
-      oldState: {},
     };
   }
-    
-  componentWillMount() {
-  }
 
-  componentWillReceiveProps(props) {
-    this.setState({ profile: props.profile });
+  componentWillMount() {
+    console.log(`/api/admin/get-profile/${this.props.match.params.id}`);
+    fetchProfileById(this.props.match.params.id)
+      .then((res) => {
+        this.setState({ profile: res.profile, userSkills: res.featuredSkills });
+
+      })
+      .catch(console.error);
   }
 
   render() {
+    console.log(this.state);
+    if (!this.state.profile || !this.state.userSkills) {
+      return (<p>Loading...</p>);
+    }
     return (
 
       <Grid verticalAlign="middle" centered>
         <Grid.Column width={10} centered className="ecell-profile-main-container">
 
           <Grid className="general-info-section">
-
-            <Modal
-              trigger={
-                <Grid.Row textAlign="right">
-                  <Grid.Column floated="right" className="general-edit-icon">
-                    <Edit height="16px" onClick={this.toggleEditability} />
-                  </Grid.Column>
-                </Grid.Row>
-              }
-
-              closeOnEscape={false}
-              closeOnRootNodeClick={false}
-              size="small"
-
-              ref={(c) => { this.gen_info_modal = c; }}
-
-              closeIcon
-              onClose={this.closeEdit}
-            >
-              <Modal.Header>
-                <Grid verticalAlign="middle" textAlign="left">
-                  <Grid.Row columns={2}>
-                    <Grid.Column className="modal-header" textAlign="left">
-                      General Profile Information
-                    </Grid.Column>
-                    <Grid.Column textAlign="right">
-                      <Button
-                        className="ecell-modal-primary-button"
-                        onClick={() => {
-                          this.toggleEditability();
-                          this.gen_info_modal.setState({ open: false });
-                        }}
-                      >
-                        Save
-                      </Button>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Modal.Header>
-              <Modal.Content scrolling>
-
-                <Grid>
-                  <Form>
-                    <Segment className="ecp-modal-form-segment">
-                      <Form.Group widths="equal">
-                        <Form.Input
-                          label="First Name"
-                          name="firstName"
-                          value={this.state.profile.firstName || ''}
-                          onChange={this.handleChange}
-                        />
-                        <Form.Input
-                          label="Middle Name"
-                          name="middleName"
-                          value={this.state.profile.middleName || ''}
-                          onChange={this.handleChange}
-                        />
-                        <Form.Input
-                          label="Last Name"
-                          name="lastName"
-                          value={this.state.profile.lastName || ''}
-                          onChange={this.handleChange}
-                        />
-                      </Form.Group>
-
-                      <Form.Group widths="equal">
-                        <Form.Input
-                          label="Contact Number"
-                          name="contactNo"
-                          value={this.state.profile.contactNo || ''}
-                          onChange={this.handleChange}
-                        />
-
-                        <Form.Input
-                          label="Email"
-                          name="Email"
-                          value={this.state.profile.Email || ''}
-                          onChange={this.handleChange}
-                        />
-                      </Form.Group>
-
-
-                      <Form.Group widths="equal">
-                        <Form.Input
-                          label="Current Year "
-                          name="currentYear"
-                          value={this.state.profile.currentYear || ''}
-                          onChange={this.handleChange}
-                        />
-
-                        <Form.Input
-                          label="Branch"
-                          name="branch"
-                          value={this.state.profile.branch || ''}
-                          onChange={this.handleChange}
-                        />
-                      </Form.Group>
-                    </Segment>
-
-                    <Segment className="ecp-modal-form-segment">
-                      <Form.Group widths="equal">
-                        <Form.Input
-                          label="Birth date"
-                          type="date"
-                          name="DOB"
-                          value={this.state.profile.DOB || ''}
-                          onChange={this.handleChange}
-                        />
-
-                        <Form.Select
-                          label="Gender"
-                          name="gender"
-                          options={genderOptions}
-                          value={this.state.profile.gender || ''}
-                          onChange={
-                            (e, { value }) =>
-                              this.setState({
-                                profile: {
-                                  ...this.state.profile,
-                                  gender: value,
-                                },
-                              })
-                          }
-                        />
-                      </Form.Group>
-                    </Segment>
-
-                    <Segment className="ecp-modal-form-segment">
-                      <Form.Group widths="equal">
-                        <Form.Input
-                          readOnly={!editable}
-                          label="Degree"
-                          name="degree"
-                          value={this.state.profile.degree || ''}
-                          onChange={this.handleChange}
-                        />
-
-                        <Form.Input
-                          readOnly={!editable}
-                          label="CGPA/Marks(%)"
-                          name="cgpa"
-                          value={this.state.profile.cgpa || ''}
-                          onChange={this.handleChange}
-                        />
-
-                        <Form.Input
-                          readOnly={!editable}
-                          label="Joining Year"
-                          name="joinYear"
-                          value={this.state.profile.joinYear || ''}
-                          onChange={this.handleChange}
-                        />
-                      </Form.Group>
-
-                      <Form.Group widths="equal">
-                        <Form.Field
-                          readOnly="true"
-                          label="Higher Secondary"
-                        />
-
-                        <Form.Input
-                          readOnly={!editable}
-                          label="Marks(%)"
-                          name="hsMarks"
-                          value={this.state.profile.hsMarks || ''}
-                          onChange={this.handleChange}
-                        />
-                        <Form.Input
-                          readOnly={!editable}
-                          label="Year"
-                          name="hsYear"
-                          value={this.state.profile.hsYear || ''}
-                          onChange={this.handleChange}
-                        />
-                      </Form.Group>
-
-                      <Form.Group widths="equal">
-                        <Form.Field
-                          readOnly="true"
-                          label="Secondary Exam"
-                        />
-
-                        <Form.Input
-                          readOnly={!editable}
-                          label="Marks(%)"
-                          name="secondaryMarks"
-                          value={this.state.profile.secondaryMarks || ''}
-                          onChange={this.handleChange}
-                        />
-
-                        <Form.Input
-                          readOnly={!editable}
-                          label="Year"
-                          name="secondaryYear"
-                          value={this.state.profile.secondaryYear || ''}
-                          onChange={this.handleChange}
-                        />
-                      </Form.Group>
-                    </Segment>
-                  </Form>
-                </Grid>
-              </Modal.Content>
-            </Modal>
-
             <Grid.Row columns={1} centered className="ecp-user-image-row">
               <UserIcon height="64" width="64" />
             </Grid.Row>
@@ -307,54 +116,6 @@ export default class StudentProfile extends React.Component {
                   ))}
                 </Label.Group>
               </Grid.Column>
-
-              <Modal
-                trigger={
-                  <Grid.Column width={1} text-align="right" className="general-edit-icon">
-                    <Edit height="16px" onClick={this.toggleEditability} />
-                  </Grid.Column>
-                }
-                closeOnEscape={false}
-                closeOnRootNodeClick={false}
-                size="small"
-                ref={(c) => { this.skill_modal = c; }}
-
-                closeIcon
-                onClose={this.closeEdit}
-              >
-                <Modal.Header>
-                  <Grid verticalAlign="middle" textAlign="left">
-                    <Grid.Row columns={2}>
-                      <Grid.Column className="modal-header" textAlign="left">
-                        Featured Skills
-                      </Grid.Column>
-                      <Grid.Column textAlign="right">
-                        <Button
-                          className="ecell-modal-primary-button"
-                          onClick={() => {
-                            this.toggleEditability();
-                            this.skill_modal.setState({ open: false });
-                          }}
-                        >
-                          Save
-                        </Button>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                </Modal.Header>
-
-                <Modal.Content>
-                  <Form>
-                    <ProfileSkillList
-                      removeSkill={this.removeSkill}
-                      restoreSkill={this.restoreSkill}
-                      editable={this.state.editable}
-                      skills={this.state.userSkills}
-                      unselectedSkills={this.state.unselectedSkills}
-                    />
-                  </Form>
-                </Modal.Content>
-              </Modal>
             </Grid.Row>
           </Grid>
 
@@ -372,56 +133,6 @@ export default class StudentProfile extends React.Component {
                 </p>
               </Grid.Column>
             </Grid.Row>
-
-            <Modal
-              trigger={
-                <Grid.Row centered className="ecp-section-row">
-                  <Grid.Column floated="right" className="general-edit-icon" onClick={this.toggleEditability} >
-                    <Add className="relative-24-d" height="16px" width="16px" />Edit Internship
-                  </Grid.Column>
-                </Grid.Row>
-              }
-              closeOnEscape={false}
-              closeOnRootNodeClick={false}
-              size="small"
-              ref={(c) => { this.internship_modal = c; }}
-              closeIcon
-              onClose={this.closeEdit}
-            >
-              <Modal.Header>
-                <Grid verticalAlign="middle" textAlign="left">
-                  <Grid.Row columns={2}>
-                    <Grid.Column className="modal-header" textAlign="left">
-                      Internships
-                    </Grid.Column>
-                    <Grid.Column textAlign="right">
-                      <Button
-                        className="ecell-modal-primary-button"
-                        onClick={() => {
-                          this.toggleEditability();
-                          this.internship_modal.setState({ open: false });
-                        }}
-                      >
-                        Save
-                      </Button>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Modal.Header>
-
-              <Modal.Content className="textarea-only-modal">
-                <Form.Field>
-                  <TextArea
-                    name="internships"
-                    value={this.state.profile.internships || ''}
-                    onChange={this.handleChange}
-                    rows="5"
-                    placeholder="Enter past internship details..."
-                    className="modal-form-textarea"
-                  />
-                </Form.Field>
-              </Modal.Content>
-            </Modal>
           </Grid>
 
           <Divider />
@@ -438,57 +149,6 @@ export default class StudentProfile extends React.Component {
                 </p>
               </Grid.Column>
             </Grid.Row>
-
-            <Modal
-              trigger={
-                <Grid.Row className="ecp-section-row">
-                  <Grid.Column className="general-edit-icon" onClick={this.toggleEditability} >
-                    <Add className="relative-24-d" height="16px" width="16px" />Edit Projects
-                  </Grid.Column>
-                </Grid.Row>
-              }
-              closeOnEscape={false}
-              closeOnRootNodeClick={false}
-              size="small"
-              ref={(c) => { this.projects_modal = c; }}
-
-              closeIcon
-              onClose={this.closeEdit}
-            >
-              <Modal.Header>
-                <Grid verticalAlign="middle" textAlign="left">
-                  <Grid.Row columns={2}>
-                    <Grid.Column className="modal-header" textAlign="left">
-                      Projects &amp; Trainings
-                    </Grid.Column>
-                    <Grid.Column textAlign="right">
-                      <Button
-                        className="ecell-modal-primary-button"
-                        onClick={() => {
-                          this.toggleEditability();
-                          this.projects_modal.setState({ open: false });
-                        }}
-                      >
-                        Save
-                      </Button>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Modal.Header>
-
-              <Modal.Content className="textarea-only-modal">
-                <Form.Field>
-                  <TextArea
-                    name="projects"
-                    value={this.state.profile.projects || ''}
-                    onChange={this.handleChange}
-                    rows="5"
-                    placeholder="Enter past project and training details."
-                    className="modal-form-textarea"
-                  />
-                </Form.Field>
-              </Modal.Content>
-            </Modal>
           </Grid>
 
           <Divider />
@@ -530,95 +190,6 @@ export default class StudentProfile extends React.Component {
                 </div>
               </Grid.Column>
             </Grid.Row>
-
-            <Modal
-              trigger={
-                <Grid.Row className="ecp-section-row">
-                  <Grid.Column className="general-edit-icon" onClick={this.toggleEditability} >
-                    <Add className="relative-24-d" height="16px" width="16px" />Edit Education
-                  </Grid.Column>
-                </Grid.Row>
-              }
-              closeOnEscape={false}
-              closeOnRootNodeClick={false}
-              size="small"
-              ref={(c) => { this.education_modal = c; }}
-
-              closeIcon
-              onClose={this.closeEdit}
-            >
-              <Modal.Header>
-                <Grid verticalAlign="middle" textAlign="left">
-                  <Grid.Row columns={2}>
-                    <Grid.Column className="modal-header" textAlign="left">
-                      Education
-                    </Grid.Column>
-                    <Grid.Column textAlign="right">
-                      <Button
-                        className="ecell-modal-primary-button"
-                        onClick={() => {
-                          this.toggleEditability();
-                          this.education_modal.setState({ open: false });
-                        }}
-                      >
-                        Save
-                      </Button>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Modal.Header>
-
-              <Modal.Content>
-                <Form>
-                  <Segment className="ecp-modal-form-segment">
-                    <Form.Group widths="equal">
-                      <Form.Field
-                        readOnly="true"
-                        label="Higher Secondary"
-                      />
-
-                      <Form.Input
-                        readOnly={!editable}
-                        label="Marks(%)"
-                        name="hsMarks"
-                        value={this.state.profile.hsMarks || ''}
-                        onChange={this.handleChange}
-                      />
-                      <Form.Input
-                        readOnly={!editable}
-                        label="Year"
-                        name="hsYear"
-                        value={this.state.profile.hsYear || ''}
-                        onChange={this.handleChange}
-                      />
-                    </Form.Group>
-
-                    <Form.Group widths="equal">
-                      <Form.Field
-                        readOnly="true"
-                        label="Secondary Exam"
-                      />
-
-                      <Form.Input
-                        readOnly={!editable}
-                        label="Marks(%)"
-                        name="secondaryMarks"
-                        value={this.state.profile.secondaryMarks || ''}
-                        onChange={this.handleChange}
-                      />
-
-                      <Form.Input
-                        readOnly={!editable}
-                        label="Year"
-                        name="secondaryYear"
-                        value={this.state.profile.secondaryYear || ''}
-                        onChange={this.handleChange}
-                      />
-                    </Form.Group>
-                  </Segment>
-                </Form>
-              </Modal.Content>
-            </Modal>
           </Grid>
 
           <Divider />
@@ -635,57 +206,6 @@ export default class StudentProfile extends React.Component {
                 </p>
               </Grid.Column>
             </Grid.Row>
-
-            <Modal
-              trigger={
-                <Grid.Row className="ecp-section-row">
-                  <Grid.Column className="general-edit-icon" onClick={this.toggleEditability} >
-                    <Add className="relative-24-d" height="16px" width="16px" />Edit Positions
-                  </Grid.Column>
-                </Grid.Row>
-              }
-              closeOnEscape={false}
-              closeOnRootNodeClick={false}
-              size="small"
-              ref={(c) => { this.por_modal = c; }}
-
-              closeIcon
-              onClose={this.closeEdit}
-            >
-              <Modal.Header>
-                <Grid verticalAlign="middle" textAlign="left">
-                  <Grid.Row columns={2}>
-                    <Grid.Column className="modal-header" textAlign="left">
-                      Positions of Responsibility
-                    </Grid.Column>
-                    <Grid.Column textAlign="right">
-                      <Button
-                        className="ecell-modal-primary-button"
-                        onClick={() => {
-                          this.toggleEditability();
-                          this.por_modal.setState({ open: false });
-                        }}
-                      >
-                        Save
-                      </Button>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Modal.Header>
-
-              <Modal.Content className="textarea-only-modal">
-                <Form.Field>
-                  <TextArea
-                    name="positionOfResponsibility"
-                    value={this.state.profile.positionOfResponsibility || ''}
-                    onChange={this.handleChange}
-                    rows="5"
-                    placeholder="Enter positions of responsibity you might have held"
-                    className="modal-form-textarea"
-                  />
-                </Form.Field>
-              </Modal.Content>
-            </Modal>
           </Grid>
 
           <Divider />
@@ -702,57 +222,6 @@ export default class StudentProfile extends React.Component {
                 </p>
               </Grid.Column>
             </Grid.Row>
-
-            <Modal
-              trigger={
-                <Grid.Row className="ecp-section-row">
-                  <Grid.Column className="general-edit-icon" onClick={this.toggleEditability} >
-                    <Add className="relative-24-d" height="16px" width="16px" />Edit Work Samples
-                  </Grid.Column>
-                </Grid.Row>
-              }
-              closeOnEscape={false}
-              closeOnRootNodeClick={false}
-              size="small"
-              ref={(c) => { this.work_modal = c; }}
-
-              closeIcon
-              onClose={this.closeEdit}
-            >
-              <Modal.Header>
-                <Grid verticalAlign="middle" textAlign="left">
-                  <Grid.Row columns={2}>
-                    <Grid.Column className="modal-header" textAlign="left">
-                      Work Samples
-                    </Grid.Column>
-                    <Grid.Column textAlign="right">
-                      <Button
-                        className="ecell-modal-primary-button"
-                        onClick={() => {
-                          this.toggleEditability();
-                          this.work_modal.setState({ open: false });
-                        }}
-                      >
-                        Save
-                      </Button>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Modal.Header>
-
-              <Modal.Content className="textarea-only-modal">
-                <Form.Field>
-                  <TextArea
-                    name="workSamples"
-                    value={this.state.profile.workSamples || ''}
-                    onChange={this.handleChange}
-                    rows="5"
-                    placeholder="Enter your work samples eg. links to your previous projects, github profile etc..."
-                    className="modal-form-textarea"
-                  />
-                </Form.Field>
-              </Modal.Content>
-            </Modal>
           </Grid>
 
           <Divider />
@@ -771,57 +240,6 @@ export default class StudentProfile extends React.Component {
                 </p>
               </Grid.Column>
             </Grid.Row>
-
-            <Modal
-              trigger={
-                <Grid.Row className="ecp-section-row">
-                  <Grid.Column className="general-edit-icon" onClick={this.toggleEditability} >
-                    <Add className="relative-24-d" height="16px" width="16px" />Edit Co-curricular Activities
-                  </Grid.Column>
-                </Grid.Row>
-              }
-              closeOnEscape={false}
-              closeOnRootNodeClick={false}
-              size="small"
-              ref={(c) => { this.cca_modal = c; }}
-
-              closeIcon
-              onClose={this.closeEdit}
-            >
-              <Modal.Header>
-                <Grid verticalAlign="middle" textAlign="left">
-                  <Grid.Row columns={2}>
-                    <Grid.Column className="modal-header" textAlign="left">
-                      Co-Curricular Activities
-                    </Grid.Column>
-                    <Grid.Column textAlign="right">
-                      <Button
-                        className="ecell-modal-primary-button"
-                        onClick={() => {
-                          this.toggleEditability();
-                          this.cca_modal.setState({ open: false });
-                        }}
-                      >
-                        Save
-                      </Button>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Modal.Header>
-
-              <Modal.Content className="textarea-only-modal">
-                <Form.Field>
-                  <TextArea
-                    name="coCurricularActivities"
-                    value={this.state.profile.coCurricularActivities || ''}
-                    onChange={this.handleChange}
-                    rows="5"
-                    placeholder="Enter your co-curricular activities..."
-                    className="modal-form-textarea"
-                  />
-                </Form.Field>
-              </Modal.Content>
-            </Modal>
           </Grid>
 
           <Divider />
@@ -839,57 +257,6 @@ export default class StudentProfile extends React.Component {
                 </p>
               </Grid.Column>
             </Grid.Row>
-
-            <Modal
-              trigger={
-                <Grid.Row className="ecp-section-row">
-                  <Grid.Column className="general-edit-icon" onClick={this.toggleEditability}>
-                    <Add className="relative-24-d" height="16px" width="16px" />Edit Additional Details
-                  </Grid.Column>
-                </Grid.Row>
-              }
-              closeOnEscape={false}
-              closeOnRootNodeClick={false}
-              size="small"
-              ref={(c) => { this.additional_modal = c; }}
-
-              closeIcon
-              onClose={this.closeEdit}
-            >
-              <Modal.Header>
-                <Grid verticalAlign="middle" textAlign="left">
-                  <Grid.Row columns={2}>
-                    <Grid.Column className="modal-header" textAlign="left">
-                      Additional Details
-                    </Grid.Column>
-                    <Grid.Column textAlign="right">
-                      <Button
-                        className="ecell-modal-primary-button"
-                        onClick={() => {
-                          this.toggleEditability();
-                          this.additional_modal.setState({ open: false });
-                        }}
-                      >
-                        Save
-                      </Button>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Modal.Header>
-
-              <Modal.Content className="textarea-only-modal">
-                <Form.Field>
-                  <TextArea
-                    name="additionalDetails"
-                    value={this.state.profile.additionalDetails || ''}
-                    onChange={this.handleChange}
-                    rows="5"
-                    placeholder="Enter any other additional details you might want to provide..."
-                    className="modal-form-textarea"
-                  />
-                </Form.Field>
-              </Modal.Content>
-            </Modal>
           </Grid>
 
         </Grid.Column>
@@ -898,6 +265,6 @@ export default class StudentProfile extends React.Component {
   }
 }
 
-ProfileInfo.propTypes = {
+StudentProfile.propTypes = {
   profile: PropTypes.shape().isRequired,
 };

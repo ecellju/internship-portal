@@ -9,6 +9,7 @@ const StudentListNavigate = ({ match }) => (
   <div>
     <Route exact path={match.url} component={StudentList} />
     <Route path={`${match.url}/:id`} component={StudentProfile} />
+    {/* <Route path={`${match.url}/:id`} render={<p>Hi</p>} /> */}
   </div>
 );
 

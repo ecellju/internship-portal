@@ -52,6 +52,7 @@ exports.getNumOfStudents = (req, res) => {
 };
 
 exports.getProfile = (req, res) => {
+  console.log('In API');
   StudentModel.findById({ _id: req.params.id }, (err, docs) => {
     if (err || !docs) res.status(500).json({ message: 'database error' });
     else { res.status(200).json(docs); }
