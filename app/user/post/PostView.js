@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import _ from 'lodash';
-import { Button, Menu, Container } from 'semantic-ui-react';
+import { Button, Container, Grid } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import DisplayPost from '../../common/post/DisplayPost';
 import Auth from '../../auth/modules/Auth';
@@ -53,17 +53,27 @@ class PostView extends React.Component {
     }
     return (
       <Container text className="main" textAlign="justified">
-        <div>
+        <div className="internship-detail-view-container">
           <DisplayPost
             internshipDetails={this.state.post}
           />
-          <Menu>
-            <Menu.Menu position="right">
-              <Menu.Item>
-                <Button primary floated="right" onClick={this.handleApply} >Apply</Button>
-              </Menu.Item>
-            </Menu.Menu>
-          </Menu>
+
+          <Grid container>
+            <Grid.Row className="post-section-label-row">
+              <Grid.Column floated="right" className="post-apply-button">
+                <Button
+                  primary
+                  floated="right"
+                  onClick={this.handleApply}
+                >
+                  Apply
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
+
+          </Grid>
+
+
         </div>
       </Container>
     );
