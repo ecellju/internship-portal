@@ -1,16 +1,13 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
-import browserHistory from '../../history';
+// import browserHistory from '../../history';
 
 class StudentListItem extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick.bind(this);
-  }
-
-  handleClick(event) {
-    console.log(event);
-    browserHistory.push('/user/profile');
+    this.handleClick = () => {
+      console.log(this.props.id);
+    };
   }
 
   render() {
