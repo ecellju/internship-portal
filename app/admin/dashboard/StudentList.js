@@ -51,7 +51,7 @@ class StudentList extends Component {
         })
         .catch(() => {
           console.error('error occurred');
-        })
+        });
     };
   }
   getAllSkills() {
@@ -94,7 +94,7 @@ class StudentList extends Component {
     }}
     >
       <Icon name="left chevron" />
-    </Menu.Item>);
+                       </Menu.Item>);
     let index;
     for (index = this.state.leftPageNavIndex; index <= this.state.rightPageNavIndex; index += 1) {
       paginateArray.push(<button
@@ -114,7 +114,7 @@ class StudentList extends Component {
       }}
       >
         {index}
-      </button>);
+                         </button>);
     }
     paginateArray.push(<Menu.Item
       icon
@@ -139,7 +139,7 @@ class StudentList extends Component {
     }}
     >
       <Icon name="right chevron" />
-    </Menu.Item>);
+                       </Menu.Item>);
     this.setState({ pageNavigator: paginateArray });
   }
 

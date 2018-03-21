@@ -1,3 +1,79 @@
+@mixin box-shadow($x, $y, $spread, $blur, $color) {
+  -webkit-box-shadow: $x $y $spread $blur $color !important;
+  -moz-box-shadow: $x $y $spread $blur $color !important;
+  box-shadow: $x $y $spread $blur $color !important;
+}
+
+@mixin box-shadow-inset($x, $y, $spread, $blur, $color) {
+  -webkit-box-shadow: $x $y $spread $blur $color inset;
+  -moz-box-shadow: $x $y $spread $blur $color inset;
+  box-shadow: $x $y $spread $blur $color inset;
+}
+
+@mixin transition($property, $time, $easing) {
+  -webkit-transition: $property $time $easing;
+  -moz-transition: $property $time $easing;
+  -o-transition: $property $time $easing;
+  transition: $property $time $easing;
+}
+
+$font-primary: 'Work Sans';
+$font-secondary: 'Muli';
+$color-primary-red: #E71D36;
+$color-primary-light: #FDFFFC;
+$color-primary-green: #2EC4B6;
+$color-primary-yellow: #FF9F1C;
+$color-primary-darkblue: #011627;
+$color-primary-green-shade: #228F85;
+$color-highlight-bg-hover: #F4FFFD;
+$color-highlight-bg-focus: #F9FFFE;
+
+.internship-detail-view-container {
+
+  border-radius: 0.5em;
+  @include box-shadow(0em, 0em, 1.5em, 0em, rgba(0, 0, 0, 0.05));
+
+  padding-bottom: 2em !important;
+}
+
+.post-details {
+
+  margin-top: 2em !important;
+  padding-top: 1em !important;
+
+  font-family: $font-primary;
+  font-size: 16px;
+}
+
+.post-section-label-row {
+  position: relative;
+  left: -1px;
+
+  text-transform: uppercase;
+
+  font-weight: 600;
+  font-size: 18px;
+
+  padding-top: 0em !important;
+  padding-bottom: 0em !important;
+
+  color: $color-primary-green;
+}
+
+.post-section-details-row {
+  padding-top: 1.2em !important;
+  padding-bottom: 0.25em !important;
+}
+
+.post-view-grouped-row {
+  padding: 0em !important;
+}
+
+.post-apply-button {
+  position: relative;
+  left: -1px;
+}
+
 .post-table-container {
   margin-top: 1em;
 }
